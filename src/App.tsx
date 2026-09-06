@@ -8,6 +8,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import TopVideoBanner from './components/home/TopVideoBanner';
 import HeroCarousel3D from './components/home/HeroCarousel3D';
+import HeroScrollStory from './components/home/HeroScrollStory';
 import BannerSection from './components/home/BannerSection';
 import WelcomeSection from './components/home/WelcomeSection';
 import Fw3dProductSection from './components/home/Fw3dProductSection';
@@ -134,13 +135,13 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#222222] selection:bg-[#dce6f0] selection:text-[#234d77] overflow-x-hidden font-sans">
+    <div className="min-h-screen bg-white text-[#222222] selection:bg-[#dce6f0] selection:text-[#234d77] overflow-x-clip font-sans">
       {/* 1. Header Navigation with Overlapping Centered Emblem */}
       <Header onOpenQuoteModal={() => handleOpenQuote()} />
 
       <main>
-        {/* 2. 3D Circular Hero Banner (replaces TopVideoBanner) */}
-        <HeroCarousel3D
+        {/* 2. Scroll-Driven Sticky Hero Showcase (Apple-Grade Scrollytelling) */}
+        <HeroScrollStory
           slides={HERO_SLIDES_3D}
           onOpenQuoteModal={(name) => handleOpenQuote(name)}
         />
