@@ -32,7 +32,7 @@ const HERO_SLIDES_3D: SlideData3D[] = [
       'High-quality acrylic jars, bottles, and containers crafted for luxury beauty brands. From skincare to color cosmetics, our precision-molded packaging delivers exceptional shelf presence and product protection.',
     primaryButton: { text: 'Explore Cosmetics', href: '#our-products-sec' },
     secondaryButton: { text: 'Request Quote', href: '#contact-quote' },
-    image: '/Cosmetics.png',
+    image: '/Cosmetics.webp',
     theme: 'indigo-blue',
     trustSignals: [
       { text: 'ISO 9001:2015 Certified' },
@@ -55,7 +55,7 @@ const HERO_SLIDES_3D: SlideData3D[] = [
       'ISO-certified medical-grade packaging for pharmaceutical and healthcare products. Our cleanroom-manufactured containers meet WHO standards and GMP requirements for safe medicine storage.',
     primaryButton: { text: 'View Pharma Line', href: '#our-products-sec' },
     secondaryButton: { text: 'Contact Us', href: '#contact-quote' },
-    image: '/PHARMACEUTICAL (3).png',
+    image: '/pharmaceutical.webp',
     theme: 'emerald-teal',
     trustSignals: [
       { text: 'GMP Certified Facility' },
@@ -78,7 +78,7 @@ const HERO_SLIDES_3D: SlideData3D[] = [
       'Eco-friendly packaging solutions designed for herbal and organic product lines. Sustainable materials and earth-conscious designs that reflect your brand\'s commitment to nature.',
     primaryButton: { text: 'Discover Herbals', href: '#our-products-sec' },
     secondaryButton: { text: 'Get Started', href: '#contact-quote' },
-    image: '/Herbals (1).png',
+    image: '/herbals.webp',
     theme: 'amber-gold',
     trustSignals: [
       { text: 'Eco-Friendly Materials' },
@@ -101,7 +101,7 @@ const HERO_SLIDES_3D: SlideData3D[] = [
       'Temperature-resistant containers engineered for cold storage and transport. From vaccine carriers to frozen food packaging, our solutions maintain product integrity across the supply chain.',
     primaryButton: { text: 'See Cold Chain', href: '#our-products-sec' },
     secondaryButton: { text: 'Inquire Now', href: '#contact-quote' },
-    image: '/Cold Chain (1).png',
+    image: '/cold-chain.webp',
     theme: 'cyan-violet',
     trustSignals: [
       { text: 'Temperature Range: -40°C to 120°C' },
