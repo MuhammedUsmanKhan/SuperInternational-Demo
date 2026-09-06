@@ -74,6 +74,18 @@ export interface ClientPartner {
   accent?: string;
 }
 
+export interface Hotspot3D {
+  id: string;
+  x: number; // percentage from left (0 to 100)
+  y: number; // percentage from top (0 to 100)
+  title: string;
+  subtitle?: string;
+  detail: string;
+  badge?: string;
+  metric?: string;
+  icon?: string;
+}
+
 // 3D Circular Hero Banner Types
 export type ThemeColor3D = 'indigo-blue' | 'amber-gold' | 'emerald-teal' | 'cyan-violet';
 
@@ -90,4 +102,5 @@ export interface SlideData3D {
   theme: ThemeColor3D;
   trustSignals?: { text: string }[];
   metrics?: { value: string; label: string }[];
+  hotspots?: Hotspot3D[];
 }

@@ -219,7 +219,10 @@ export default function HeroCarousel3D({
               className="w-full"
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <HeroSlide3D slide={activeSlide} />
+              <HeroSlide3D
+                slide={activeSlide}
+                onOpenQuoteModal={onOpenQuoteModal}
+              />
             </motion.div>
           </AnimatePresence>
         </div>
