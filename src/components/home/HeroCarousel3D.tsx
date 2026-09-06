@@ -225,9 +225,9 @@ export default function HeroCarousel3D({
         </div>
 
         {/* Bottom Carousel Controls */}
-        <div className="absolute bottom-6 sm:bottom-8 left-0 right-0 flex flex-col items-center gap-3 z-30 pointer-events-none">
+        <div className="absolute bottom-2 sm:bottom-4 md:bottom-6 left-0 right-0 flex flex-col items-center gap-1.5 sm:gap-2.5 z-30 pointer-events-none">
           {/* Pagination Dots - Centered */}
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto transform scale-[0.78] sm:scale-90 md:scale-100 origin-bottom">
             <PaginationDots3D
               slides={slides}
               currentIndex={currentIndex}
@@ -238,7 +238,7 @@ export default function HeroCarousel3D({
           </div>
 
           {/* Controls - Centered */}
-          <div className="pointer-events-auto">
+          <div className="pointer-events-auto transform scale-[0.78] sm:scale-90 md:scale-100 origin-bottom">
             <CarouselControls3D
               onPrev={goToPrev}
               onNext={goToNext}
