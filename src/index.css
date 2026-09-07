@@ -85,6 +85,173 @@
   will-change: transform;
 }
 
+/* ==========================================================================
+   PREMIUM BUTTON HOVER ANIMATION
+   - Subtle conic border effect moving around the button's edges
+   - Dual soft white shine beams entering at 45° from both ends & meeting near center
+   - Hardware-accelerated, lightweight, silky smooth
+   ========================================================================== */
+@keyframes premium-border-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-premium-shine {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle moving border light aura around the button's edges */
+.btn-premium-shine::before {
+  content: "";
+  position: absolute;
+  inset: -150%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 60deg,
+    rgba(255, 255, 255, 0.7) 120deg,
+    transparent 180deg,
+    transparent 240deg,
+    rgba(255, 255, 255, 0.7) 300deg,
+    transparent 360deg
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.btn-premium-shine:hover::before {
+  opacity: 1;
+  animation: premium-border-spin 6.5s linear infinite;
+}
+
+/* Dual Soft White 45-Degree Converging Shine Beams (Left & Right meeting in center) */
+.btn-premium-shine .shine-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 2;
+}
+
+.btn-premium-shine .shine-beam-left,
+.btn-premium-shine .shine-beam-right {
+  position: absolute;
+  top: -50%;
+  width: 45%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.05) 25%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.05) 75%,
+    transparent 100%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+
+/* Left beam: enters from far top-left at 45deg toward center */
+.btn-premium-shine .shine-beam-left {
+  left: -80%;
+  transform: rotate(45deg) scaleX(0.9);
+}
+
+/* Right beam: enters from far bottom-right at 45deg toward center */
+.btn-premium-shine .shine-beam-right {
+  right: -80%;
+  transform: rotate(45deg) scaleX(0.9);
+}
+
+.btn-premium-shine:hover .shine-beam-left {
+  transform: translateX(120%) rotate(45deg) scaleX(1);
+  opacity: 1;
+}
+
+.btn-premium-shine:hover .shine-beam-right {
+  transform: translateX(-120%) rotate(45deg) scaleX(1);
+  opacity: 1;
+}
+
+/* ==========================================================================
+   COMPLEMENTARY PREMIUM BUTTON VARIATIONS
+   - btn-premium-primary: Liquid gold/blue gradient pulse + soft forward light beam
+   - btn-premium-secondary: Soft outward aura pulse + edge glow
+   ========================================================================== */
+.btn-premium-primary {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-premium-primary::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -110%;
+  width: 55%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transform: rotate(30deg);
+  transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-premium-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -3px rgba(35, 77, 119, 0.25), 0 4px 12px -2px rgba(35, 77, 119, 0.12);
+}
+
+.btn-premium-primary:hover::after {
+  transform: translateX(420%) rotate(30deg);
+}
+
+.btn-premium-secondary {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.45s ease, box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-premium-secondary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(208, 149, 84, 0.14), rgba(35, 77, 119, 0.08));
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.btn-premium-secondary:hover {
+  transform: translateY(-1.5px);
+  border-color: rgba(208, 149, 84, 0.55);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.btn-premium-secondary:hover::before {
+  opacity: 1;
+}
+
 /* Product diagonal sweep hover animation */
 .our-products-box-a {
   position: relative;
@@ -395,11 +562,11 @@ html {
   font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   color: #222222;
   background-color: #ffffff;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
-  overflow-x: hidden;
+  overflow-x: clip;
   margin: 0;
   padding: 0;
   background-color: #ffffff;

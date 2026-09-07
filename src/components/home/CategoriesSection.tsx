@@ -198,17 +198,17 @@ export default function CategoriesSection({
         >
           <a
             href="#our-products-section"
-            className="px-8 py-3.5 rounded-full bg-[#234d77] hover:bg-[#1a3d5e] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all inline-flex items-center gap-2"
+            className="btn-premium-primary px-8 py-3.5 rounded-full bg-[#234d77] text-white text-xs sm:text-sm font-bold shadow-md inline-flex items-center gap-2 border border-white/20"
           >
-            <span>View Complete Product Catalog</span>
-            <ArrowRight className="w-4 h-4" />
+            <span className="relative z-10">View Complete Product Catalog</span>
+            <ArrowRight className="w-4 h-4 relative z-10" />
           </a>
 
           <button
             onClick={() => onOpenQuoteModal && onOpenQuoteModal('Custom Category Packaging')}
-            className="px-8 py-3.5 rounded-full bg-[#f0f4f8] hover:bg-[#dce6f0] text-[#234d77] text-xs sm:text-sm font-bold transition-all cursor-pointer"
+            className="btn-premium-secondary px-8 py-3.5 rounded-full bg-[#f0f4f8] text-[#234d77] text-xs sm:text-sm font-bold transition-all cursor-pointer border border-[#234d77]/20"
           >
-            Request Custom Mold Inquiries
+            <span className="relative z-10">Request Custom Mold Inquiries</span>
           </button>
         </motion.div>
 

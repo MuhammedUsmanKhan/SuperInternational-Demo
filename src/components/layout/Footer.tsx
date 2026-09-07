@@ -77,10 +77,16 @@ export default function Footer({ onOpenQuoteModal }: FooterProps) {
               <div className="flex flex-wrap items-center justify-center gap-3.5 shrink-0">
                 <button
                   onClick={onOpenQuoteModal}
-                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#d09554] via-[#e2ab6f] to-[#d09554] text-[#173554] font-black text-sm uppercase tracking-wider shadow-[0_10px_25px_rgba(208,149,84,0.35)] hover:shadow-[0_14px_35px_rgba(208,149,84,0.5)] hover:brightness-110 active:scale-95 transition-all duration-300 flex items-center gap-2 cursor-pointer"
+                  className="btn-premium-shine relative px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#d09554] via-[#e2ab6f] to-[#d09554] text-[#173554] font-black text-sm uppercase tracking-wider shadow-[0_10px_25px_rgba(208,149,84,0.35)] hover:shadow-[0_14px_35px_rgba(208,149,84,0.5)] hover:brightness-105 active:scale-95 transition-all duration-300 flex items-center gap-2 cursor-pointer border border-white/30"
                 >
-                  <span>Request Bulk Quote</span>
-                  <ChevronRight className="w-4 h-4" />
+                  {/* Dual 45-degree converging soft white shine beams meeting near center */}
+                  <div className="shine-layer" aria-hidden="true">
+                    <span className="shine-beam-left" />
+                    <span className="shine-beam-right" />
+                  </div>
+
+                  <span className="relative z-10">Request Bulk Quote</span>
+                  <ChevronRight className="w-4 h-4 relative z-10" />
                 </button>
                 <a
                   href="https://wa.me/923360875171?text=Hello%20Super%20International,%20I%20would%20like%20to%20inquire%20about%20packaging%20products."

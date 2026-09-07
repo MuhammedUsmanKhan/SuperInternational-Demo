@@ -160,10 +160,10 @@ function Modern3DCard({
       <div className="p-4 sm:p-5 bg-white border-t border-slate-100 flex items-center justify-center">
         <button
           onClick={() => onSelectJar(jar)}
-          className="w-full py-3 sm:py-3.5 px-5 rounded-2xl bg-[#234d77] hover:bg-[#1a3d5e] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg active:scale-98 transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
+          className="btn-premium-primary w-full py-3 sm:py-3.5 px-5 rounded-2xl bg-[#234d77] text-white text-xs sm:text-sm font-bold shadow-md active:scale-98 transition-all flex items-center justify-center gap-2 group/btn cursor-pointer border border-white/20"
         >
-          <Maximize2 className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110" />
-          <span>View Large</span>
+          <Maximize2 className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110 relative z-10" />
+          <span className="relative z-10">View Large</span>
         </button>
       </div>
     </article>

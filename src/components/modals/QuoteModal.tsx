@@ -211,10 +211,10 @@ export default function QuoteModal({
                 </button>
                 <button
                   type="submit"
-                  className="px-6 py-2.5 rounded-full bg-[#234d77] hover:bg-[#1a3d5e] text-white font-bold text-xs shadow-sm transition-all flex items-center gap-1.5"
+                  className="btn-premium-primary px-6 py-2.5 rounded-full bg-[#234d77] text-white font-bold text-xs shadow-sm transition-all flex items-center gap-1.5 cursor-pointer border border-white/20"
                 >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Send Request</span>
+                  <Send className="w-3.5 h-3.5 relative z-10" />
+                  <span className="relative z-10">Send Request</span>
                 </button>
               </div>
             </form>

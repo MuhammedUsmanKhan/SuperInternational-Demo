@@ -3,21 +3,20 @@ import { motion, AnimatePresence } from 'motion/react';
 import type { SlideData3D } from '../../types';
 import { HeroSlide3D } from './HeroSlide3D';
 
-interface HeroCarousel3DProps {
+interface HeroFadeCarouselProps {
   slides: SlideData3D[];
   autoplayDuration?: number;
   onOpenQuoteModal?: (productName?: string) => void;
   className?: string;
 }
 
-export default function HeroCarousel3D({
+export default function HeroFadeCarousel({
   slides,
-  autoplayDuration = 5500,
+  autoplayDuration = 3200,
   onOpenQuoteModal,
   className = '',
-}: HeroCarousel3DProps) {
+}: HeroFadeCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState<number>(1);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
   const [navbarHeight, setNavbarHeight] = useState<number>(96);
@@ -58,25 +57,18 @@ export default function HeroCarousel3D({
   const touchDeltaY = useRef<number>(0);
 
   const goToNext = useCallback(() => {
-    setDirection(1);
     setCurrentIndex((prev) => (prev + 1) % slides.length);
   }, [slides.length]);
 
   const goToPrev = useCallback(() => {
-    setDirection(-1);
     setCurrentIndex((prev) => (prev - 1 + slides.length) % slides.length);
   }, [slides.length]);
 
-  const goToSlide = useCallback(
-    (targetIndex: number) => {
-      if (targetIndex === currentIndex) return;
-      setDirection(targetIndex > currentIndex ? 1 : -1);
-      setCurrentIndex(targetIndex);
-    },
-    [currentIndex]
-  );
+  const goToSlide = useCallback((targetIndex: number) => {
+    setCurrentIndex(targetIndex);
+  }, []);
 
-  // Autoplay
+  // Autoplay loop
   useEffect(() => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -157,44 +149,35 @@ export default function HeroCarousel3D({
     }
   };
 
-  // 3D Circular motion variants (exactly as modern-hero-banner)
-  const slideVariants = {
-    enter: (dir: number) => ({
-      rotateY: dir > 0 ? 55 : -55,
-      z: -280,
-      x: dir > 0 ? 160 : -160,
+  // Ultra-smooth Cross-Fade motion variants
+  const fadeVariants = {
+    enter: {
       opacity: 0,
-      scale: 0.88,
-    }),
+      scale: 1.012,
+    },
     center: {
-      rotateY: 0,
-      z: 0,
-      x: 0,
       opacity: 1,
       scale: 1,
       transition: {
-        duration: 0.7,
-        ease: [0.16, 1, 0.3, 1] as const,
+        opacity: { duration: 0.75, ease: [0.22, 1, 0.36, 1] as const },
+        scale: { duration: 0.85, ease: [0.22, 1, 0.36, 1] as const },
       },
     },
-    exit: (dir: number) => ({
-      rotateY: dir > 0 ? -55 : 55,
-      z: -280,
-      x: dir > 0 ? -160 : 160,
+    exit: {
       opacity: 0,
-      scale: 0.88,
+      scale: 0.992,
       transition: {
-        duration: 0.55,
-        ease: [0.16, 1, 0.3, 1] as const,
+        opacity: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+        scale: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
       },
-    }),
+    },
   };
 
   const activeSlide = slides[currentIndex];
 
   return (
     <section
-      id="hero-carousel-3d"
+      id="hero-fade-carousel"
       role="region"
       aria-roledescription="carousel"
       aria-label="Industry Packaging Solutions"
@@ -230,25 +213,16 @@ export default function HeroCarousel3D({
       </div>
 
       {/* Main Slide Stage Area */}
-      <div
-        className="relative w-full h-full flex-1 overflow-hidden"
-        style={{ perspective: '1200px' }}
-      >
-        {/* Slide Stage with 3D support */}
-        <div
-          className="relative w-full h-full"
-          style={{ transformStyle: 'preserve-3d' }}
-        >
-          <AnimatePresence mode="wait" custom={direction}>
+      <div className="relative w-full h-full flex-1 overflow-hidden">
+        <div className="relative w-full h-full">
+          <AnimatePresence mode="wait">
             <motion.div
               key={activeSlide.id}
-              custom={direction}
-              variants={slideVariants}
+              variants={fadeVariants}
               initial="enter"
               animate="center"
               exit="exit"
-              className="w-full h-full"
-              style={{ transformStyle: 'preserve-3d' }}
+              className="w-full h-full absolute inset-0"
             >
               <HeroSlide3D slide={activeSlide} />
             </motion.div>
@@ -292,3 +266,4 @@ export default function HeroCarousel3D({
     </section>
   );
 }
+

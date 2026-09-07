@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import TopVideoBanner from './components/home/TopVideoBanner';
+import HeroFadeCarousel from './components/home/HeroFadeCarousel';
 import HeroCarousel3D from './components/home/HeroCarousel3D';
 import HeroScrollStory from './components/home/HeroScrollStory';
 import BannerSection from './components/home/BannerSection';
@@ -141,11 +142,16 @@ export default function App() {
       <Header onOpenQuoteModal={() => handleOpenQuote()} />
 
       <main>
-        {/* 2. Scroll-Driven Sticky Hero Showcase (Apple-Grade Scrollytelling) */}
-        <HeroScrollStory
+        {/* 2. Hero Carousel with Smooth Cross-Fade and Category Pill Navigation */}
+        <HeroFadeCarousel
           slides={HERO_SLIDES_3D}
           onOpenQuoteModal={(name) => handleOpenQuote(name)}
         />
+        {/* Alternative 3D version (kept available):
+        <HeroCarousel3D
+          slides={HERO_SLIDES_3D}
+          onOpenQuoteModal={(name) => handleOpenQuote(name)}
+        /> */}
 
         {/* 3. Banner Section: Gradient Swiper */}
         {/* <BannerSection

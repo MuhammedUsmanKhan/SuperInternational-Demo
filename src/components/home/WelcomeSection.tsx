@@ -199,17 +199,17 @@ export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps
             >
               <button
                 onClick={() => onOpenQuoteModal && onOpenQuoteModal('Factory Inquiry')}
-                className="px-6 sm:px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#d09554] via-[#dc9f5e] to-[#d09554] hover:brightness-105 text-[#173554] text-xs sm:text-sm font-black uppercase tracking-wider shadow-[0_8px_20px_rgba(208,149,84,0.3)] hover:shadow-[0_10px_25px_rgba(208,149,84,0.45)] active:scale-95 transition-all flex items-center gap-2 cursor-pointer"
+                className="btn-premium-primary px-6 sm:px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#d09554] via-[#dc9f5e] to-[#d09554] text-[#173554] text-xs sm:text-sm font-black uppercase tracking-wider shadow-[0_8px_20px_rgba(208,149,84,0.3)] active:scale-95 transition-all flex items-center gap-2 cursor-pointer border border-white/25"
               >
-                <span>Inquire With Our Engineers</span>
-                <ArrowRight className="w-4 h-4" />
+                <span className="relative z-10">Inquire With Our Engineers</span>
+                <ArrowRight className="w-4 h-4 relative z-10" />
               </button>
 
               <a
                 href="#categories-section"
-                className="px-6 py-3.5 rounded-2xl bg-white hover:bg-slate-50 text-[#173554] text-xs sm:text-sm font-bold border border-slate-200 shadow-2xs hover:shadow-xs transition-all flex items-center gap-1.5"
+                className="btn-premium-secondary px-6 py-3.5 rounded-2xl bg-white text-[#173554] text-xs sm:text-sm font-bold border border-slate-200/90 shadow-2xs transition-all flex items-center gap-1.5"
               >
-                <span>View Packaging Range</span>
+                <span className="relative z-10">View Packaging Range</span>
               </a>
             </motion.div>
 
