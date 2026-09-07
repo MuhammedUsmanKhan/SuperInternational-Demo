@@ -16,10 +16,16 @@ export default function ProductSpecModal({
   if (!product) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-white rounded-3xl border border-gray-100 shadow-2xl overflow-hidden text-[#222222]">
-        
-        <div className="p-4 sm:p-6 border-b border-gray-100 flex items-center justify-between bg-[#f8fafc]">
+    <div
+      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-2xl bg-white rounded-t-3xl sm:rounded-3xl border border-gray-100 shadow-2xl overflow-hidden text-[#222222] my-auto max-h-[92vh] sm:max-h-[90vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Sticky Top Header */}
+        <div className="sticky top-0 z-20 px-5 sm:px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-white/95 sm:bg-[#f8fafc]/95 backdrop-blur-md">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-[#234d77]" />
             <span className="text-xs font-bold uppercase tracking-wider text-[#234d77]">
@@ -28,14 +34,14 @@ export default function ProductSpecModal({
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+            className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-black flex items-center justify-center transition-colors cursor-pointer shrink-0"
             aria-label="Close Modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-6 sm:p-8 space-y-6 max-h-[80vh] overflow-y-auto">
+        <div className="p-5 sm:p-8 space-y-6 overflow-y-auto overscroll-contain">
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-6 items-center">
             <div className="sm:col-span-5 relative aspect-square rounded-2xl overflow-hidden bg-[#f8fafc] border border-gray-100 p-4 flex items-center justify-center">
               <img

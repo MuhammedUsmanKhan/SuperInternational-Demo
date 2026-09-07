@@ -283,21 +283,21 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
       <AnimatePresence>
         {selectedJar && (
           <div
-            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md"
+            className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
             onClick={() => setSelectedJar(null)}
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.94, y: 20 }}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.94, y: 20 }}
-              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] border border-white/20"
+              className="relative w-full max-w-4xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row my-auto max-h-[92vh] sm:max-h-[90vh] border border-white/20"
             >
-              {/* Close Button */}
+              {/* Prominent High-Visibility Close Button */}
               <button
                 onClick={() => setSelectedJar(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-black flex items-center justify-center shadow-md transition-all cursor-pointer"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 w-10 h-10 rounded-full bg-black/70 sm:bg-white/95 hover:bg-black/90 sm:hover:bg-white text-white sm:text-gray-800 shadow-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 cursor-pointer border border-white/30"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />

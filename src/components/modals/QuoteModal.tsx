@@ -36,33 +36,39 @@ export default function QuoteModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-xl bg-white rounded-3xl border border-gray-100 shadow-2xl overflow-hidden text-[#222222]">
-        
-        <div className="p-6 border-b border-gray-100 flex items-center justify-between bg-[#f8fafc]">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#234d77]">
+    <div
+      className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/75 backdrop-blur-sm animate-in fade-in duration-200 overflow-y-auto"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full max-w-xl bg-white rounded-t-3xl sm:rounded-3xl border border-gray-100 shadow-2xl overflow-hidden text-[#222222] my-auto max-h-[92vh] sm:max-h-[90vh] flex flex-col"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Modal Header: Sticky at top so close button is always visible & accessible */}
+        <div className="sticky top-0 z-20 px-5 sm:px-6 py-4 border-b border-gray-100 flex items-center justify-between bg-white/95 sm:bg-[#f8fafc]/95 backdrop-blur-md">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-[#f0f4f8] flex items-center justify-center text-[#234d77] shrink-0">
               <Sparkles className="w-4 h-4" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#222222]">
+              <h3 className="text-sm sm:text-base font-bold text-[#222222]">
                 Request Quotation
               </h3>
-              <p className="text-xs text-[#777777]">
-                Get factory-direct pricing and mold specifications
+              <p className="text-[11px] sm:text-xs text-[#777777]">
+                Get factory-direct pricing &amp; specifications
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+            className="w-9 h-9 sm:w-8 sm:h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-black flex items-center justify-center transition-colors cursor-pointer shrink-0"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
-        <div className="p-6 sm:p-8">
+        <div className="p-5 sm:p-8 overflow-y-auto overscroll-contain">
           {submitted ? (
             <div className="py-8 text-center space-y-4 animate-in zoom-in-95 duration-200">
               <div className="w-16 h-16 rounded-full bg-[#f0f4f8] text-[#234d77] mx-auto flex items-center justify-center shadow-xs">

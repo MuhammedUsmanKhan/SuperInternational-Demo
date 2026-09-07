@@ -229,8 +229,34 @@ export default function HeroFadeCarousel({
           </AnimatePresence>
         </div>
 
-        {/* Bottom Pill Category Navigation Bar (Matching Screenshot UI) */}
-        <div className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-0 right-0 flex justify-center items-center z-30 pointer-events-none px-4">
+        {/* Mobile Minimalist Category Indicator (Shown on small screens) */}
+        <div className="absolute bottom-5 left-0 right-0 flex sm:hidden justify-center items-center z-30 pointer-events-none px-4">
+          <div className="pointer-events-auto flex items-center gap-2 bg-[#0c1e30]/90 backdrop-blur-xl border border-white/15 px-3 py-1.5 rounded-full shadow-lg">
+            {slides.map((slide, idx) => {
+              const isActive = idx === currentIndex;
+              return (
+                <button
+                  key={slide.id}
+                  type="button"
+                  onClick={() => goToSlide(idx)}
+                  aria-label={`Go to slide ${idx + 1}: ${slide.category}`}
+                  className="p-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#d09554] cursor-pointer"
+                >
+                  <span
+                    className={`block h-1.5 rounded-full transition-all duration-300 ${
+                      isActive
+                        ? 'w-6 bg-[#d09554] shadow-[0_0_8px_rgba(208,149,84,0.6)]'
+                        : 'w-1.5 bg-white/40 hover:bg-white/70'
+                    }`}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Tablet & Desktop Full Pill Category Navigation Bar (Hidden on mobile <640px) */}
+        <div className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-0 right-0 hidden sm:flex justify-center items-center z-30 pointer-events-none px-4">
           <nav
             aria-label="Category Slides"
             className="pointer-events-auto max-w-full overflow-x-auto no-scrollbar flex items-center p-1.5 sm:p-2 bg-[#0c1e30]/85 sm:bg-[#0c1e30]/90 backdrop-blur-xl border border-white/15 rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.35)]"
