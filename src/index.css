@@ -56,6 +56,35 @@
   animation: ripple 2s linear infinite;
 }
 
+/* Continuous Marquee Animations */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333333%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-33.333333%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 34s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-reverse {
+  animation: marquee-reverse 34s linear infinite;
+  will-change: transform;
+}
+
 /* Product diagonal sweep hover animation */
 .our-products-box-a {
   position: relative;

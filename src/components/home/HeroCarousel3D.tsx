@@ -22,6 +22,34 @@ export default function HeroCarousel3D({
   const [direction, setDirection] = useState<number>(1);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
+  const [navbarHeight, setNavbarHeight] = useState<number>(96);
+
+  useEffect(() => {
+    const updateNavbarHeight = () => {
+      const navbar = document.getElementById('main-header');
+      if (navbar) {
+        const height = navbar.getBoundingClientRect().height;
+        if (height > 0) {
+          setNavbarHeight(height);
+        }
+      }
+    };
+
+    updateNavbarHeight();
+    window.addEventListener('resize', updateNavbarHeight);
+
+    let observer: ResizeObserver | null = null;
+    const navbar = document.getElementById('main-header');
+    if (navbar && typeof ResizeObserver !== 'undefined') {
+      observer = new ResizeObserver(updateNavbarHeight);
+      observer.observe(navbar);
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateNavbarHeight);
+      if (observer) observer.disconnect();
+    };
+  }, []);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -148,7 +176,7 @@ export default function HeroCarousel3D({
       scale: 1,
       transition: {
         duration: 0.7,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as const,
       },
     },
     exit: (dir: number) => ({
@@ -159,7 +187,7 @@ export default function HeroCarousel3D({
       scale: 0.88,
       transition: {
         duration: 0.55,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as const,
       },
     }),
   };
@@ -179,7 +207,12 @@ export default function HeroCarousel3D({
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className={`relative w-full overflow-hidden bg-gradient-to-b ${getThemeBackground()} transition-colors duration-700 outline-none focus-visible:ring-2 focus-visible:ring-[#d09554] ${className}`}
+      style={{
+        height: `calc(100vh - ${navbarHeight}px)`,
+        minHeight: `calc(100vh - ${navbarHeight}px)`,
+        maxHeight: `calc(100vh - ${navbarHeight}px)`,
+      }}
+      className={`relative w-full overflow-hidden bg-gradient-to-b ${getThemeBackground()} transition-colors duration-700 outline-none focus-visible:ring-2 focus-visible:ring-[#d09554] flex flex-col justify-between ${className}`}
     >
       {/* Background Ambient Dot Matrix & Mesh Glow */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -200,12 +233,12 @@ export default function HeroCarousel3D({
 
       {/* Main Slide Stage Area */}
       <div
-        className="relative w-full"
+        className="relative w-full h-full flex-1 overflow-hidden"
         style={{ perspective: '1200px' }}
       >
         {/* Slide Stage with 3D support */}
         <div
-          className="relative w-full"
+          className="relative w-full h-full"
           style={{ transformStyle: 'preserve-3d' }}
         >
           <AnimatePresence mode="wait" custom={direction}>
@@ -216,7 +249,7 @@ export default function HeroCarousel3D({
               initial="enter"
               animate="center"
               exit="exit"
-              className="w-full"
+              className="w-full h-full"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <HeroSlide3D slide={activeSlide} />

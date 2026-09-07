@@ -11,6 +11,7 @@ import HeroCarousel3D from './components/home/HeroCarousel3D';
 import HeroScrollStory from './components/home/HeroScrollStory';
 import BannerSection from './components/home/BannerSection';
 import WelcomeSection from './components/home/WelcomeSection';
+import TourVideo from './components/home/TourVideo';
 import Fw3dProductSection from './components/home/Fw3dProductSection';
 import OurProductsSection from './components/home/OurProductsSection';
 import DurabilitySection from './components/home/DurabilitySection';
@@ -147,43 +148,46 @@ export default function App() {
         />
 
         {/* 3. Banner Section: Gradient Swiper */}
-        <BannerSection
+        {/* <BannerSection
           onOpenQuoteModal={(name) => handleOpenQuote(name)}
-        />
+        /> */}
 
-        {/* 4. Welcome Section: 40+ Years Badge, Story, & Plant Video Modal */}
+        {/* 4. Welcome Section: 40+ Years Badge, Story, & Machine Images Carousel */}
         <WelcomeSection onOpenQuoteModal={() => handleOpenQuote('General Inquiry')} />
 
-        {/* 5. Advanced Technology / IML & 2 Color Products + 3D Jar Product Model Slider */}
-        <Fw3dProductSection onOpenQuoteModal={(name) => handleOpenQuote(name)} />
+        {/* 5. Tour Video Section: Facility Video Showcase & Interactive Playback */}
+        <TourVideo />
 
-        {/* 6. Our Products Section: Full Packaging Catalog */}
-        <OurProductsSection
-          onSelectProduct={(product) => setSelectedProduct(product)}
-          onOpenQuoteModal={(name) => handleOpenQuote(name)}
-        />
-
-        {/* 7. Durability Section: 6 Engineering & Quality Pillars */}
-        <DurabilitySection />
-
-        {/* 8. Categories Section: Categories We Serve */}
+        {/* 6. Categories Section: 7 Core Packaging Capabilities */}
         <CategoriesSection
           onSelectCategory={handleSelectCategory}
           onOpenQuoteModal={(cat) => handleOpenQuote(cat)}
         />
 
-        {/* 9. Testimonials Section: Client Reviews */}
+        {/* 7. Featured 3D Products Section */}
+        <Fw3dProductSection onOpenQuoteModal={(name) => handleOpenQuote(name)} />
+
+        {/* 8. Our Clients & Brand Partnerships Network */}
+        <OurClientsSection />
+
+        {/* 9. Testimonials & Executive Endorsements */}
         <TestimonialsSection />
 
-        {/* 10. Reels Gallery Section: Video Showcase */}
-        <ReelsGallerySection />
+        {/* 10. Our Products Section: Full Packaging Catalog */}
+        {/* <OurProductsSection
+          onSelectProduct={(product) => setSelectedProduct(product)}
+          onOpenQuoteModal={(name) => handleOpenQuote(name)}
+        /> */}
 
-        {/* 11. Our Clients Section: Marquee Network */}
-        <OurClientsSection />
+        {/* 11. Durability Section: 6 Engineering & Quality Pillars */}
+        {/* <DurabilitySection /> */}
+
+        {/* 12. Reels Gallery Section: Video Showcase */}
+        {/* <ReelsGallerySection /> */}
       </main>
 
       {/* 11. Footer */}
-      <Footer />
+      <Footer onOpenQuoteModal={() => handleOpenQuote()} />
 
       {/* Interactive Modals */}
       <ProductSpecModal

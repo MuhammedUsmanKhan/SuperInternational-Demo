@@ -1,131 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
-import { ChevronLeft, ChevronRight, Maximize2, X, ExternalLink, ShieldCheck, Box, Sparkles, Phone } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Maximize2, X, Box, Sparkles, ExternalLink, ShieldCheck, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-// Lazy card: only renders model-viewer when near viewport
-function LazyFw3dCard({ jar, index, onOpenQuoteModal, onSelectJar }: {
-  jar: Jar3DModel;
-  index: number;
-  onOpenQuoteModal?: (productName?: string) => void;
-  onSelectJar: (jar: Jar3DModel) => void;
-}) {
-  const cardRef = useRef<HTMLElement>(null);
-  const inView = useInView(cardRef, '300px');
-
-  return (
-    <article
-      ref={cardRef}
-      className="fw3d-card group flex-none w-[320px] sm:w-[340px] flex flex-col rounded-[14px] overflow-hidden transition-all duration-300"
-      style={{
-        backgroundColor: 'var(--fw3d-card, #ededed)',
-        border: '1px solid var(--fw3d-card-border, #efefef)',
-        willChange: 'transform',
-      }}
-    >
-      {/* Media area with model-viewer (or interactive ThreeJS canvas) */}
-      <div className="relative w-full h-[280px] sm:h-[300px] bg-white overflow-hidden">
-        {inView ? (
-          /* @ts-expect-error Custom element model-viewer */
-          <model-viewer
-            src={jar.glbSrc}
-            alt={jar.name}
-            camera-controls
-            interaction-prompt="none"
-            shadow-intensity="1"
-            loading="lazy"
-            reveal="auto"
-            auto-rotate
-            rotation-per-second="20deg"
-            style={{
-              width: '100%',
-              height: '100%',
-              backgroundColor: '#ffffff',
-            }}
-          >
-            <div slot="progress-bar" className="absolute left-0 bottom-0 w-full h-[3px] bg-black/10">
-              <span className="block h-full bg-[#234d77] w-full animate-pulse" />
-            </div>
-          {/* @ts-expect-error Custom element model-viewer */}
-          </model-viewer>
-        ) : (
-          /* Static placeholder while off-screen */
-          <div className="w-full h-full bg-[#f0f4f8] flex items-center justify-center">
-            <Box className="w-12 h-12 text-[#234d77]/20" />
-          </div>
-        )}
-
-        {/* Badge */}
-        <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/90 text-[11px] font-bold text-[#234d77] shadow-2xs">
-          {jar.capacity}
-        </div>
-
-        <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-black/60 text-white text-[10px] font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-          <span>Drag to rotate</span>
-        </div>
-      </div>
-
-      {/* Card Body matching .fw3d-card-body */}
-      <div className="p-5 flex flex-col gap-2.5 flex-1 justify-between">
-        <div>
-          <h4 className="m-0 text-[17px] font-bold text-[#173554] tracking-tight group-hover:text-[#234d77] transition-colors line-clamp-1">
-            {jar.name}
-          </h4>
-          <p className="text-xs text-[#555555] mt-1 line-clamp-2">
-            {jar.description}
-          </p>
-        </div>
-
-        <div className="pt-2 flex items-center justify-between mt-auto">
-          <button
-            onClick={() => onSelectJar(jar)}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-[8.4px] text-white text-xs font-bold transition-all shadow-xs hover:brightness-110 active:scale-95"
-            style={{ backgroundColor: 'var(--fw3d-btn-bg, #234d77)' }}
-          >
-            <span>View in Large</span>
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M15 3h6v6" />
-              <path d="M10 14 21 3" />
-              <path d="M21 14v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h6" />
-            </svg>
-          </button>
-
-          <button
-            onClick={() => onOpenQuoteModal && onOpenQuoteModal(jar.name)}
-            className="text-xs font-bold text-[#234d77] hover:underline"
-          >
-            Request Quote
-          </button>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-// Lazy hook: only renders children when element is in/near viewport
-function useInView(ref: React.RefObject<HTMLElement | null>, margin = '200px') {
-  const [inView, setInView] = useState(false);
-  useEffect(() => {
-    if (!ref.current) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setInView(true); },
-      { rootMargin: margin }
-    );
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [ref, margin]);
-  return inView;
-}
-
-// Real 3D GLB Models and metadata extracted directly from noorenterprises.com.pk
 export interface Jar3DModel {
   id: string;
   name: string;
@@ -145,75 +21,154 @@ export interface Jar3DModel {
 }
 
 export const JAR_3D_MODELS: Jar3DModel[] = [
-  { 
-    id: 'jar-18g-white',
-    name: '18 GM Beauty Cream Jar',
-    url: 'https://noorenterprises.com.pk/3d-product/18-gm-beauty-cream-jar/',
-    glbSrc: '/439eefc0a91c68af97216db1583101cc.glb',
-    capacity: '18 GM / 18ml',
-    material: 'Polypropylene (PP)',
-    category: 'Beauty Jars',
+  {
+    id: 'lotion-bottle-opt',
+    name: 'Ergonomic Lotion Bottle',
+    url: '#',
+    glbSrc: '/lotion-bottle-optimized.glb',
+    capacity: '250ml / 400ml',
+    material: 'Multi-Layer HDPE / PCR',
+    category: 'Bottles & Dispensers',
     moq: '5,000 Pcs',
-    description: 'Precision molded 18 GM double-wall cosmetic jar with high-gloss finish, air-tight inner seal, and smooth threading.',
+    description: 'Precision blow-molded ergonomic lotion container with high-barrier chemical resistance, smooth pump closure threading, and comfortable grip profile.',
     specs: {
-      neckSize: '48mm',
-      height: '38mm',
-      diameter: '52mm',
-      closure: 'Screw-on Cap with Foam Liner',
+      neckSize: '28/410',
+      height: '185mm',
+      diameter: '58mm',
+      closure: 'Lotion Dispenser Pump / Disc Top',
     },
   },
   {
-    id: 'jar-30g-prestige',
-    name: '30 GM Beauty Cream Jar',
-    url: 'https://noorenterprises.com.pk/3d-product/white-prestige-beauty-cream-jar/',
-    glbSrc: '/439eefc0a91c68af97216db1583101cc.glb',
-    capacity: '30 GM / 30ml',
-    material: 'Virgin High-Impact PP',
-    category: 'Beauty Jars',
+    id: 'disinfectant-bottle-opt',
+    name: 'Disinfectant & Sanitizer Bottle',
+    url: '#',
+    glbSrc: '/disinfectant-bottle-optimized.glb',
+    capacity: '500ml / 1000ml',
+    material: 'Chemical-Resistant HDPE',
+    category: 'Pharma & Hygiene',
     moq: '5,000 Pcs',
-    description: 'Signature White Prestige cosmetic cream jar engineered for luxury skincare formulations, whitening creams, and moisture lotions.',
+    description: 'Heavy-duty industrial and medical disinfectant container engineered for leak-proof storage of sanitizers, antiseptics, and laboratory reagents.',
     specs: {
-      neckSize: '53mm',
-      height: '46mm',
-      diameter: '60mm',
-      closure: 'Dome Cap with Tamper Ring',
+      neckSize: '28mm Tamper-Evident',
+      height: '210mm',
+      diameter: '68mm',
+      closure: 'Flip-Top / Trigger Spray / Seal Cap',
     },
   },
   {
-    id: 'jar-18g-type2',
-    name: '18 GM Beauty Cream Jar (Round Lid)',
-    url: 'https://noorenterprises.com.pk/3d-product/18-gm-beauty-cream-jar-2/',
-    glbSrc: '/439eefc0a91c68af97216db1583101cc.glb',
-    capacity: '18 GM / 18ml',
-    material: 'Premium Molded PP',
-    category: 'Beauty Jars',
-    moq: '5,000 Pcs',
-    description: 'Compact 18g travel-ready cosmetic container featuring crystal-smooth wall injection and chemical-resistant interior.',
+    id: 'husk-jar-opt',
+    name: 'Husk Wide-Mouth Jar',
+    url: '#',
+    glbSrc: '/husk-jar-optimized.glb',
+    capacity: '100g / 200g / 500g',
+    material: 'Virgin Polypropylene (PP)',
+    category: 'Cosmetic & Pharma Jars',
+    moq: '3,000 Pcs',
+    description: 'Double-wall wide mouth container with airtight induction seal liner and precision ribbed screw cap for nutraceutical, herbal, and cosmetic packaging.',
     specs: {
-      neckSize: '45mm',
-      height: '36mm',
-      diameter: '50mm',
-      closure: 'Flat Top Cap with Induction Seal',
-    },
-  },
-  {
-    id: 'jar-1kg-yellow-rose',
-    name: '1 KG Beauty Cream Jar',
-    url: 'https://noorenterprises.com.pk/3d-product/1-kg-beauty-cream-jar/',
-    glbSrc: '/439eefc0a91c68af97216db1583101cc.glb',
-    capacity: '1 KG / 1000g',
-    material: 'Heavy-Duty HDPE / PP',
-    category: 'Big Jars',
-    moq: '2,000 Pcs',
-    description: 'Industrial-grade 1000g body cream, salon hair wax, and butter jar with ergonomic grip rim and ultra-durable wall construction.',
-    specs: {
-      neckSize: '95mm',
-      height: '128mm',
-      diameter: '115mm',
-      closure: 'Wide Mouth Threaded Cap with Handle Ring',
+      neckSize: '70/400',
+      height: '82mm',
+      diameter: '76mm',
+      closure: 'Wide-Mouth Ribbed Cap with Liner',
     },
   },
 ];
+
+// Lazy in-view hook
+function useInView(ref: React.RefObject<HTMLElement | null>, margin = '200px') {
+  const [inView, setInView] = useState(false);
+  useEffect(() => {
+    if (!ref.current) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setInView(true); },
+      { rootMargin: margin }
+    );
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [ref, margin]);
+  return inView;
+}
+
+// Minimal, Ultra-Modern 3D Product Card (View Large Only)
+function Modern3DCard({
+  jar,
+  onSelectJar,
+}: {
+  jar: Jar3DModel;
+  onSelectJar: (jar: Jar3DModel) => void;
+}) {
+  const cardRef = useRef<HTMLElement>(null);
+  const inView = useInView(cardRef, '300px');
+
+  return (
+    <article
+      ref={cardRef}
+      className="group flex-none w-[300px] sm:w-[330px] lg:w-[350px] flex flex-col rounded-3xl bg-gradient-to-b from-white via-[#fbfcfe] to-[#f4f7fa] border border-slate-200/90 hover:border-[#234d77]/40 shadow-sm hover:shadow-[0_24px_50px_-15px_rgba(35,77,119,0.22)] hover:-translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden cursor-pointer"
+    >
+      {/* 3D Model Viewport Area */}
+      <div className="relative w-full h-[310px] sm:h-[330px] bg-gradient-to-b from-slate-50/60 to-slate-100/50 flex items-center justify-center overflow-hidden">
+        
+        {/* Soft Ambient Radial Pedestal */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_65%,rgba(100,157,207,0.18)_0%,transparent_65%)] pointer-events-none" />
+        
+        {/* Grounding Disc Shadow */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-44 h-8 bg-black/10 rounded-full blur-md pointer-events-none group-hover:scale-110 transition-transform duration-500" />
+
+        {/* 360 Indicator Pill */}
+        <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-white/60 text-[#234d77] text-[11px] font-bold flex items-center gap-1.5 shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
+          <span>360° 3D Model</span>
+        </div>
+
+        {/* Drag Hint on Hover */}
+        <div className="absolute top-4 right-4 z-10 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+          Drag to rotate
+        </div>
+
+        {inView ? (
+          /* @ts-expect-error Custom element model-viewer */
+          <model-viewer
+            src={jar.glbSrc}
+            alt={jar.name}
+            camera-controls
+            interaction-prompt="none"
+            shadow-intensity="1.2"
+            shadow-softness="0.5"
+            loading="lazy"
+            reveal="auto"
+            auto-rotate
+            rotation-per-second="20deg"
+            style={{
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'transparent',
+            }}
+          >
+            <div slot="progress-bar" className="absolute left-0 bottom-0 w-full h-[3px] bg-black/10">
+              <span className="block h-full bg-[#234d77] w-full animate-pulse" />
+            </div>
+          {/* @ts-expect-error Custom element model-viewer */}
+          </model-viewer>
+        ) : (
+          <div className="w-full h-full bg-[#f0f4f8] flex items-center justify-center">
+            <Box className="w-12 h-12 text-[#234d77]/20" />
+          </div>
+        )}
+      </div>
+
+      {/* Card Action Footer: View Large Button Only */}
+      <div className="p-4 sm:p-5 bg-white border-t border-slate-100 flex items-center justify-center">
+        <button
+          onClick={() => onSelectJar(jar)}
+          className="w-full py-3 sm:py-3.5 px-5 rounded-2xl bg-[#234d77] hover:bg-[#1a3d5e] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg active:scale-98 transition-all flex items-center justify-center gap-2 group/btn cursor-pointer"
+        >
+          <Maximize2 className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110" />
+          <span>View Large</span>
+        </button>
+      </div>
+    </article>
+  );
+}
 
 interface Fw3dProductSectionProps {
   onOpenQuoteModal?: (productName?: string) => void;
@@ -221,15 +176,14 @@ interface Fw3dProductSectionProps {
 
 export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSectionProps) {
   const [selectedJar, setSelectedJar] = useState<Jar3DModel | null>(null);
-  const [isPaused, setIsPaused] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
 
-  // Replicate the 8 cards in track (4 unique repeated twice) just like on noorenterprises.com.pk
+  // Replicate models for smooth continuous browsing
   const sliderItems = [...JAR_3D_MODELS, ...JAR_3D_MODELS];
 
   const handleScroll = (direction: 'left' | 'right') => {
     if (trackRef.current) {
-      const scrollAmount = 360;
+      const scrollAmount = 370;
       trackRef.current.scrollBy({
         left: direction === 'left' ? -scrollAmount : scrollAmount,
         behavior: 'smooth',
@@ -238,163 +192,118 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
   };
 
   return (
-    <section id="iml-3d-section" className="py-10 bg-white relative overflow-hidden">
-      <div className="max-w-[1740px] mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="featured-products-section"
+      className="py-16 sm:py-24 bg-gradient-to-b from-[#f8fafc] via-white to-[#f8fafc] text-[#222222] relative overflow-hidden"
+    >
+      {/* Ambient background lighting */}
+      <div className="absolute top-1/3 left-10 w-96 h-96 bg-[#234d77]/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#649dcf]/10 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* ========================================================================= */}
-        {/* 1. EXACT "IML & 2 color Products" BANNER (#fw3d-banner-3429)              */}
-        {/* ========================================================================= */}
-        <div
-          id="fw3d-banner-3429"
-          className="relative rounded-[14px] p-7 sm:p-10 lg:p-14 overflow-hidden mb-12 shadow-xs"
-          style={{
-            background: 'linear-gradient(135deg, #f0f4f8, #dce6f0)',
-          }}
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
-            {/* Text column */}
-            <div className="lg:col-span-7 space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/80 border border-[#234d77]/20 text-[#234d77] text-xs font-bold tracking-wider uppercase backdrop-blur-xs">
-                <Sparkles className="w-3.5 h-3.5 text-[#649dcf]" />
-                <span>Advanced Technology</span>
-              </div>
-
-              <h2 className="text-3xl sm:text-4xl lg:text-[38px] font-black text-[#000000] tracking-tight leading-[1.15]">
-                IML &amp; 2 color Products
-              </h2>
-
-              <p className="text-[#000000] text-sm sm:text-base leading-relaxed max-w-2xl font-normal">
-                Discover our high-quality In-Mold Label (IML) products designed for superior durability, vibrant branding, and long-lasting performance. From food containers to custom packaging solutions, we deliver precision-engineered products that combine functionality with exceptional visual appeal.
-              </p>
-
-              <div className="pt-2">
-                <button
-                  onClick={() => onOpenQuoteModal && onOpenQuoteModal('IML & 2 Color Products')}
-                  className="px-7 py-3 rounded-[8.4px] text-white font-bold text-sm shadow-sm hover:brightness-110 active:scale-95 transition-all inline-flex items-center gap-2"
-                  style={{ background: '#649dcf' }}
-                >
-                  <span>Explore Products</span>
-                  <ExternalLink className="w-4 h-4" />
-                </button>
-              </div>
+          <div className="space-y-3 max-w-2xl">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#234d77] text-xs font-bold uppercase tracking-wider shadow-xs">
+              <Box className="w-3.5 h-3.5 text-[#649dcf]" />
+              <span>Interactive 3D Showroom</span>
             </div>
 
-            {/* Media column - Real IML jars image from noorenterprises.com.pk */}
-            <div className="lg:col-span-5 flex justify-center items-center">
-              <div className="relative w-full max-w-lg aspect-[4/3] flex items-center justify-center">
-                <img
-                  src="https://noorenterprises.com.pk/wp-content/uploads/2026/07/Untitled-2-3.png"
-                  alt="IML & 2 color Products"
-                  className="w-full h-full object-contain drop-shadow-xl hover:scale-105 transition-transform duration-500"
-                  loading="lazy"
-                  onError={(e) => {
-                    // Fallback to high-res showcase asset if network is offline
-                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?auto=format&fit=crop&w=800&q=85';
-                  }}
-                />
-              </div>
-            </div>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#222222] tracking-tight leading-tight">
+              Featured 3D Packaging <br className="hidden sm:inline" />
+              <span className="text-[#234d77]">Models</span>
+            </h2>
 
-          </div>
-        </div>
-
-        {/* ========================================================================= */}
-        {/* 2. EXACT "3rd Model Section of Jar Products" (.fw3d-slider)              */}
-        {/* ========================================================================= */}
-        <div className="relative">
-          
-          {/* Header row for 3D jar models slider */}
-          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
-            <div>
-              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#234d77] mb-1.5">
-                <Box className="w-4 h-4" />
-                <span>Interactive 3D Showroom</span>
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-black text-[#173554] tracking-tight">
-                3D Jar Product Models
-              </h3>
-              <p className="text-xs sm:text-sm text-[#444444] mt-1 max-w-xl">
-                Inspect our cosmetic and food containers in real-time 3D. Drag any jar to rotate 360°, inspect wall thickness, and view in full size.
-              </p>
-            </div>
-
-            {/* Manual Slider Navigation Controls */}
-            <div className="flex items-center gap-2 self-start sm:self-auto">
-              <button
-                onClick={() => handleScroll('left')}
-                className="w-9 h-9 rounded-full bg-white border border-[#efefef] text-[#173554] hover:bg-[#234d77] hover:text-white flex items-center justify-center shadow-xs transition-colors"
-                aria-label="Previous 3D Jar"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => handleScroll('right')}
-                className="w-9 h-9 rounded-full bg-white border border-[#efefef] text-[#173554] hover:bg-[#234d77] hover:text-white flex items-center justify-center shadow-xs transition-colors"
-                aria-label="Next 3D Jar"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+            <p className="text-sm sm:text-base text-[#555555] leading-relaxed font-normal">
+              Inspect our cosmetic and pharmaceutical containers in real-time 3D. Rotate 360° to view structural finishes, wall thickness, and threading details.
+            </p>
           </div>
 
-          {/* Continuous slider track matching .fw3d-slider */}
-          <div
-            className="relative overflow-hidden py-3"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-          >
-            {/* Edge fades identical to .fw3d-slider::before & ::after */}
-            <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-20 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
-
-            <div
-              ref={trackRef}
-              className="flex gap-[26px] overflow-x-auto scrollbar-none scroll-smooth pb-4 px-2"
-              style={{
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-              }}
+          {/* Navigation Controls */}
+          <div className="flex items-center gap-3 self-start md:self-auto">
+            <button
+              onClick={() => handleScroll('left')}
+              className="w-11 h-11 rounded-full bg-white border border-slate-200 text-[#173554] hover:bg-[#234d77] hover:text-white hover:border-[#234d77] flex items-center justify-center shadow-xs hover:shadow-md transition-all cursor-pointer"
+              aria-label="Previous 3D Model"
             >
-              {sliderItems.map((jar, index) => (
-                <LazyFw3dCard
-                  key={`${jar.id}-${index}`}
-                  jar={jar}
-                  index={index}
-                  onOpenQuoteModal={onOpenQuoteModal}
-                  onSelectJar={setSelectedJar}
-                />
-              ))}
-            </div>
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => handleScroll('right')}
+              className="w-11 h-11 rounded-full bg-white border border-slate-200 text-[#173554] hover:bg-[#234d77] hover:text-white hover:border-[#234d77] flex items-center justify-center shadow-xs hover:shadow-md transition-all cursor-pointer"
+              aria-label="Next 3D Model"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
+        </motion.div>
 
-        </div>
+        {/* 3D Showcase Horizontal Glide Track */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="relative"
+        >
+          {/* Edge Glow Gradients */}
+          <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+
+          <div
+            ref={trackRef}
+            className="flex gap-6 sm:gap-7 overflow-x-auto scrollbar-none scroll-smooth py-4 px-2"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+            }}
+          >
+            {sliderItems.map((jar, index) => (
+              <Modern3DCard
+                key={`${jar.id}-${index}`}
+                jar={jar}
+                onSelectJar={setSelectedJar}
+              />
+            ))}
+          </div>
+        </motion.div>
 
       </div>
 
       {/* ========================================================================= */}
-      {/* 3. "VIEW IN LARGE" 3D INSPECTION MODAL                                   */}
+      {/* "VIEW LARGE" 3D INSPECTION STUDIO MODAL                                   */}
       {/* ========================================================================= */}
       <AnimatePresence>
         {selectedJar && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/75 backdrop-blur-sm">
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md"
+            onClick={() => setSelectedJar(null)}
+          >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              initial={{ opacity: 0, scale: 0.94, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              transition={{ duration: 0.25 }}
-              className="relative w-full max-w-4xl bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]"
+              exit={{ opacity: 0, scale: 0.94, y: 20 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh] border border-white/20"
             >
               {/* Close Button */}
               <button
                 onClick={() => setSelectedJar(null)}
-                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-black flex items-center justify-center shadow-md transition-all"
+                className="absolute top-4 right-4 z-20 w-10 h-10 rounded-full bg-white/90 hover:bg-white text-gray-700 hover:text-black flex items-center justify-center shadow-md transition-all cursor-pointer"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Large 3D Viewer Area */}
+              {/* Large 3D Interactive Canvas */}
               <div className="md:w-3/5 h-[340px] md:h-auto min-h-[340px] bg-gradient-to-b from-[#f0f4f8] to-[#dce6f0] relative flex items-center justify-center">
                 {/* @ts-expect-error Custom element model-viewer */}
                 <model-viewer
@@ -419,13 +328,13 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
                 {/* @ts-expect-error Custom element model-viewer */}
                 </model-viewer>
 
-                <div className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full bg-black/70 text-white text-xs font-semibold flex items-center gap-2">
+                <div className="absolute bottom-4 left-4 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-semibold flex items-center gap-2">
                   <Box className="w-3.5 h-3.5 text-[#649dcf]" />
                   <span>360° Drag &amp; Pinch to Zoom</span>
                 </div>
               </div>
 
-              {/* Product Specifications & Details */}
+              {/* Product Specifications & Inquiry */}
               <div className="md:w-2/5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
                 <div className="space-y-4">
                   <div>
@@ -441,19 +350,19 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div className="bg-[#ededed] p-3 rounded-xl border border-[#efefef]">
+                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
                       <div className="text-[10px] uppercase font-bold text-gray-500">Capacity</div>
                       <div className="text-sm font-extrabold text-[#173554] mt-0.5">{selectedJar.capacity}</div>
                     </div>
-                    <div className="bg-[#ededed] p-3 rounded-xl border border-[#efefef]">
+                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
                       <div className="text-[10px] uppercase font-bold text-gray-500">Material</div>
                       <div className="text-sm font-extrabold text-[#173554] mt-0.5">{selectedJar.material}</div>
                     </div>
-                    <div className="bg-[#ededed] p-3 rounded-xl border border-[#efefef]">
+                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
                       <div className="text-[10px] uppercase font-bold text-gray-500">Neck Size</div>
                       <div className="text-sm font-extrabold text-[#173554] mt-0.5">{selectedJar.specs.neckSize}</div>
                     </div>
-                    <div className="bg-[#ededed] p-3 rounded-xl border border-[#efefef]">
+                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
                       <div className="text-[10px] uppercase font-bold text-gray-500">Min. Order Qty</div>
                       <div className="text-sm font-extrabold text-[#234d77] mt-0.5">{selectedJar.moq}</div>
                     </div>
@@ -461,7 +370,7 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
 
                   <div className="bg-[#f8fafc] p-3.5 rounded-xl border border-[#dce6f0] space-y-1">
                     <div className="flex items-center gap-2 text-xs font-bold text-[#234d77]">
-                      <ShieldCheck className="w-4 h-4" />
+                      <ShieldCheck className="w-4 h-4 text-[#234d77]" />
                       <span>Certified Quality Standard</span>
                     </div>
                     <p className="text-[11px] text-gray-600">
@@ -477,7 +386,7 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
                       setSelectedJar(null);
                       if (onOpenQuoteModal) onOpenQuoteModal(name);
                     }}
-                    className="w-full py-3.5 rounded-xl bg-[#234d77] hover:bg-[#1a3d5e] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl bg-[#234d77] hover:bg-[#1a3d5e] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Request Bulk Quote</span>
                     <ExternalLink className="w-4 h-4" />

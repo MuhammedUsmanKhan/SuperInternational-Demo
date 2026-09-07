@@ -12,12 +12,42 @@ interface HeroScrollStoryProps {
 export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScrollStoryProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<number>(1);
+  const [navbarHeight, setNavbarHeight] = useState<number>(96);
   const isAnimatingRef = useRef(false);
   const lastTransitionTimeRef = useRef<number>(0);
   const isWheelIdleRef = useRef<boolean>(true);
   const wheelIdleTimerRef = useRef<NodeJS.Timeout | null>(null);
   const heroRef = useRef<HTMLElement>(null);
   const touchStartY = useRef<number | null>(null);
+
+  // Dynamically calculate navbar height for pixel-perfect 100vh viewport fit on desktop
+  useEffect(() => {
+    const updateNavbarHeight = () => {
+      const navbar = document.getElementById('main-header');
+      if (navbar) {
+        const height = navbar.getBoundingClientRect().height;
+        if (height > 0) {
+          setNavbarHeight(height);
+          document.documentElement.style.setProperty('--navbar-height', `${height}px`);
+        }
+      }
+    };
+
+    updateNavbarHeight();
+    window.addEventListener('resize', updateNavbarHeight);
+
+    let observer: ResizeObserver | null = null;
+    const navbar = document.getElementById('main-header');
+    if (navbar && typeof ResizeObserver !== 'undefined') {
+      observer = new ResizeObserver(updateNavbarHeight);
+      observer.observe(navbar);
+    }
+
+    return () => {
+      window.removeEventListener('resize', updateNavbarHeight);
+      if (observer) observer.disconnect();
+    };
+  }, []);
 
   const total = slides.length;
   const ANIMATION_DURATION = 650; // ms
@@ -226,7 +256,7 @@ export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScroll
       scale: 1,
       transition: {
         duration: 0.55,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as const,
       },
     },
     exit: (dir: number) => ({
@@ -237,7 +267,7 @@ export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScroll
       scale: 0.92,
       transition: {
         duration: 0.45,
-        ease: [0.16, 1, 0.3, 1],
+        ease: [0.16, 1, 0.3, 1] as const,
       },
     }),
   };
@@ -248,7 +278,13 @@ export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScroll
     <section
       ref={heroRef}
       id="hero-scroll-story"
-      className="relative w-full overflow-hidden bg-gradient-to-b from-[#10273d] via-[#173554] to-[#0c1d2e] select-none"
+      className="relative w-full overflow-hidden select-none bg-[#0c1d2e] flex flex-col justify-between"
+      style={{
+        height: `calc(100vh - ${navbarHeight}px)`,
+        minHeight: `calc(100vh - ${navbarHeight}px)`,
+        maxHeight: `calc(100vh - ${navbarHeight}px)`,
+        touchAction: 'none',
+      }}
     >
       {/* Ambient Backdrop Glow */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -264,11 +300,11 @@ export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScroll
 
       {/* 3D Banner Stage */}
       <div
-        className="relative w-full"
+        className="relative w-full h-full flex-1 overflow-hidden"
         style={{ perspective: '1400px' }}
       >
         <div
-          className="relative w-full"
+          className="relative w-full h-full"
           style={{ transformStyle: 'preserve-3d' }}
         >
           <AnimatePresence mode="wait" custom={direction}>
@@ -279,19 +315,18 @@ export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScroll
               initial="enter"
               animate="center"
               exit="exit"
-              className="w-full"
+              className="w-full h-full"
               style={{ transformStyle: 'preserve-3d' }}
             >
               <HeroSlide3D
                 slide={activeSlide}
-                onOpenQuoteModal={onOpenQuoteModal}
               />
             </motion.div>
           </AnimatePresence>
         </div>
 
         {/* Floating Bottom Milestone Indicators - Hidden on mobile for clean full-bleed banner display */}
-        <div className="absolute bottom-3 sm:bottom-5 md:bottom-7 left-0 right-0 hidden sm:flex flex-col items-center gap-2 sm:gap-3 z-30 pointer-events-none">
+        <div className="absolute bottom-3 sm:bottom-4 md:bottom-5 left-0 right-0 hidden sm:flex flex-col items-center gap-1.5 sm:gap-2 z-30 pointer-events-none">
           
           {/* Milestone Category Buttons */}
           <div className="pointer-events-auto flex items-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full bg-[#0c1d2e]/90 backdrop-blur-2xl border border-white/20 shadow-2xl scale-95 md:scale-100">
@@ -303,7 +338,7 @@ export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScroll
                   key={slide.id}
                   type="button"
                   onClick={() => goToSlide(idx)}
-                  className={`group flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all duration-300 focus:outline-none ${
+                  className={`group flex items-center gap-2 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full transition-all duration-300 focus:outline-none cursor-pointer ${
                     isActive
                       ? 'bg-[#d09554] text-black shadow-md font-bold'
                       : 'text-white/70 hover:text-white hover:bg-white/10 font-medium'
@@ -327,7 +362,7 @@ export default function HeroScrollStory({ slides, onOpenQuoteModal }: HeroScroll
           <button
             type="button"
             onClick={scrollToNextSection}
-            className="pointer-events-auto flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-white/70 hover:text-white transition-colors uppercase tracking-widest pt-1 group"
+            className="pointer-events-auto flex items-center gap-1.5 text-xs sm:text-[13px] font-bold text-white/70 hover:text-white transition-colors uppercase tracking-widest pt-0.5 group cursor-pointer"
           >
             <span>
               {currentIndex < total - 1
