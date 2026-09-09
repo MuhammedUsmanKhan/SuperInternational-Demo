@@ -23,9 +23,11 @@ export default function HeroFadeCarousel({
 
   useEffect(() => {
     const updateNavbarHeight = () => {
-      const navbar = document.getElementById('main-header');
-      if (navbar) {
-        const height = navbar.getBoundingClientRect().height;
+      const topBar = document.getElementById('main-header');
+      if (topBar) {
+        // Measure only the top bar height so the hero fills 100vh beneath the top strip while island floats over it
+        const topStrip = topBar.querySelector('.bg-\\[\\#0e2238\\]');
+        const height = topStrip ? topStrip.getBoundingClientRect().height : 32;
         if (height > 0) {
           setNavbarHeight(height);
         }
