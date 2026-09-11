@@ -159,9 +159,11 @@ export default function CategoriesSection({
             <span>Product Sectors &amp; Capabilities</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#222222] tracking-tight leading-tight">
-            Explore Our Packaging <br className="hidden sm:inline" />
-            <span className="text-[#234d77]">Categories</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+            Explore Our Specialized <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+              Packaging Categories
+            </span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">

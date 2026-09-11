@@ -27,29 +27,6 @@ import { ProductItem, SlideData3D } from './types';
 const HERO_SLIDES_3D: SlideData3D[] = [
   {
     id: 1,
-    category: 'Cosmetics',
-    badge: { text: 'Premium Quality', icon: 'sparkles' },
-    title: 'Elevate Your Brand with Premium Cosmetic Packaging',
-    highlightText: 'Premium Cosmetic',
-    description:
-      'High-quality acrylic jars, bottles, and containers crafted for luxury beauty brands. From skincare to color cosmetics, our precision-molded packaging delivers exceptional shelf presence and product protection.',
-    primaryButton: { text: 'Explore Cosmetics', href: '#our-products-sec' },
-    secondaryButton: { text: 'Request Quote', href: '#contact-quote' },
-    image: '/Cosmetics.webp',
-    theme: 'indigo-blue',
-    trustSignals: [
-      { text: 'ISO 9001:2015 Certified' },
-      { text: 'Food-Grade Materials' },
-      { text: '40+ Years Experience' },
-    ],
-    metrics: [
-      { value: '500+', label: 'Cosmetic SKUs Manufactured' },
-      { value: '99.7%', label: 'Quality Assurance Rate' },
-      { value: '35+', label: 'Countries Exported' },
-    ],
-  },
-  {
-    id: 2,
     category: 'Pharmaceutical',
     badge: { text: 'GMP Certified', icon: 'shield' },
     title: 'Pharmaceutical Grade Containers for Healthcare',
@@ -69,6 +46,29 @@ const HERO_SLIDES_3D: SlideData3D[] = [
       { value: '200+', label: 'Pharma SKUs' },
       { value: '100%', label: 'Leak-Tested' },
       { value: '24hr', label: 'Cleanroom Production' },
+    ],
+  },
+  {
+    id: 2,
+    category: 'Cosmetics',
+    badge: { text: 'Premium Quality', icon: 'sparkles' },
+    title: 'Elevate Your Brand with Premium Cosmetic Packaging',
+    highlightText: 'Premium Cosmetic',
+    description:
+      'High-quality acrylic jars, bottles, and containers crafted for luxury beauty brands. From skincare to color cosmetics, our precision-molded packaging delivers exceptional shelf presence and product protection.',
+    primaryButton: { text: 'Explore Cosmetics', href: '#our-products-sec' },
+    secondaryButton: { text: 'Request Quote', href: '#contact-quote' },
+    image: '/Cosmetics.webp',
+    theme: 'indigo-blue',
+    trustSignals: [
+      { text: 'ISO 9001:2015 Certified' },
+      { text: 'Food-Grade Materials' },
+      { text: '40+ Years Experience' },
+    ],
+    metrics: [
+      { value: '500+', label: 'Cosmetic SKUs Manufactured' },
+      { value: '99.7%', label: 'Quality Assurance Rate' },
+      { value: '35+', label: 'Countries Exported' },
     ],
   },
   {
@@ -96,7 +96,7 @@ const HERO_SLIDES_3D: SlideData3D[] = [
   },
   {
     id: 4,
-    category: 'Cold Chain',
+    category: 'Cool Chain',
     badge: { text: 'Temperature Rated', icon: 'rocket' },
     title: 'Cold Chain Logistics Packaging Solutions',
     highlightText: 'Cold Chain',

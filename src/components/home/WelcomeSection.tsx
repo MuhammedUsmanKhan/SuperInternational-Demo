@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   CheckCircle2, 
-  ChevronLeft, 
-  ChevronRight, 
   Cpu, 
   Sparkles, 
   ShieldCheck, 
-  ArrowRight,
-  Gauge,
-  Factory
+  ArrowRight, 
+  Play, 
+  Pause, 
+  Volume2, 
+  VolumeX, 
+  Maximize,
+  Film
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import StatCards from './StatCards';
 
 interface WelcomeSectionProps {
   onOpenQuoteModal?: (prefill?: string) => void;
 }
 
-const WELCOME_MACHINES = [
+export const WELCOME_MACHINES = [
   {
     id: 1,
     title: 'Blow Moulding',
@@ -68,26 +71,92 @@ const WELCOME_MACHINES = [
 ];
 
 export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps) {
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const videoWrapperRef = useRef<HTMLDivElement>(null);
 
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isMuted, setIsMuted] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
+  const [progress, setProgress] = useState(0);
+
+  // Smooth auto-play on scroll visibility
   useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % WELCOME_MACHINES.length);
-    }, 4500);
-    return () => clearInterval(interval);
-  }, [isPaused]);
+    const video = videoRef.current;
+    if (!video) return;
 
-  const handlePrev = () => {
-    setCurrentSlide((prev) => (prev === 0 ? WELCOME_MACHINES.length - 1 : prev - 1));
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video
+              .play()
+              .then(() => setIsPlaying(true))
+              .catch(() => {
+                // Browser auto-play policy fallback
+                video.muted = true;
+                setIsMuted(true);
+                video.play().catch(() => {});
+              });
+          } else {
+            video.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    if (videoWrapperRef.current) {
+      observer.observe(videoWrapperRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
   };
 
-  const handleNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % WELCOME_MACHINES.length);
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    const nextMuted = !isMuted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
   };
 
-  const currentMachine = WELCOME_MACHINES[currentSlide];
+  const toggleFullScreen = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {});
+      } else if ((video as any).webkitRequestFullscreen) {
+        (video as any).webkitRequestFullscreen();
+      } else if ((video as any).webkitEnterFullscreen) {
+        (video as any).webkitEnterFullscreen();
+      }
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (!video || !video.duration) return;
+    setProgress((video.currentTime / video.duration) * 100);
+  };
 
   return (
     <section 
@@ -148,15 +217,16 @@ export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps
               transition={{ duration: 0.6, delay: 0.1 }}
               className="space-y-3.5"
             >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
-                Welcome to <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
-                  Super International
-                </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black tracking-tight text-[#173554] leading-[1.18]">
+                Welcome To <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">Super International</span>
               </h2>
 
-              <p className="text-sm sm:text-base text-[#4b5563] leading-relaxed font-normal">
-                Super International Pvt Ltd stands as one of Pakistan's finest plastic packaging manufacturers, setting the industry benchmark for uncompromised quality and technical innovation. Globally recognized for excellence, we deliver world-class packaging solutions that strictly comply with World Health Organization (WHO) certifications, making us a trusted partner across international markets. Every product we design is crafted with precision and engineered to meet the highest performance standards—because at Super International, our products define quality only.
+              <p className="text-base sm:text-[17px] text-[#444444] leading-relaxed font-normal">
+                Super International is a premier plastic injection and blow molding packaging manufacturing company in Karachi, Pakistan.
+              </p>
+
+              <p className="text-sm sm:text-base text-[#555555] leading-relaxed">
+                With four decades of specialized tooling and manufacturing excellence, we engineer high-precision plastic jars, pharmaceutical bottles, precision caps, closures, and custom medical trays trusted by Pakistan&apos;s leading pharmaceutical, cosmetics, and FMCG brands.
               </p>
             </motion.div>
 
@@ -173,8 +243,8 @@ export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps
                   <ShieldCheck className="w-4.5 h-4.5" />
                 </div>
                 <div>
-                  <div className="text-xs sm:text-sm font-bold text-[#173554]">Automated Cleanrooms</div>
-                  <p className="text-[11px] sm:text-xs text-[#666666] mt-0.5 leading-snug">Dust-free medical grade cosmetic &amp; pharma bottling.</p>
+                  <div className="text-xs sm:text-sm font-bold text-[#173554]">ISO 9001:2015 &amp; GMP</div>
+                  <p className="text-[11px] sm:text-xs text-[#666666] mt-0.5 leading-snug">Cleanroom medical and food-grade safety standards.</p>
                 </div>
               </div>
 
@@ -216,124 +286,132 @@ export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps
           </div>
 
           {/* ========================================================================= */}
-          {/* Right Column: Modern Interactive Machine Carousel with Exact Name Badges */}
+          {/* Right Column: Premium Company Introduction Video Card                     */}
           {/* ========================================================================= */}
           <motion.div
             initial={{ opacity: 0, x: 25 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.15 }}
-            className="lg:col-span-6 space-y-4"
+            className="lg:col-span-6"
           >
-            {/* Main Stage Frame */}
             <div
-              className="relative rounded-3xl overflow-hidden shadow-[0_20px_50px_-15px_rgba(23,53,84,0.25)] border-4 border-white bg-slate-900 aspect-[16/11] group select-none"
-              onMouseEnter={() => setIsPaused(true)}
-              onMouseLeave={() => setIsPaused(false)}
+              ref={videoWrapperRef}
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+              className="relative rounded-3xl sm:rounded-[32px] overflow-hidden shadow-[0_24px_60px_-15px_rgba(23,53,84,0.35)] border-4 border-white bg-[#0b1b2b] aspect-[16/10] sm:aspect-[16/10.5] group select-none"
             >
-              {/* Image Transition Viewport */}
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentMachine.id}
-                  initial={{ opacity: 0, scale: 1.05 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.97 }}
-                  transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] as const }}
-                  className="w-full h-full relative"
-                >
-                  <img
-                    src={currentMachine.src}
-                    alt={currentMachine.fullName}
-                    className="w-full h-full object-cover object-center"
-                    loading="lazy"
-                  />
+              {/* HTML5 High-Performance Video Element */}
+              <video
+                ref={videoRef}
+                src="/SuperInternational-introduction.mp4"
+                playsInline
+                loop
+                muted={isMuted}
+                autoPlay
+                preload="metadata"
+                onTimeUpdate={handleTimeUpdate}
+                onClick={togglePlay}
+                className="w-full h-full object-cover object-center cursor-pointer transition-transform duration-700 group-hover:scale-[1.01]"
+              />
 
-                  {/* High-End Ambient Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-black/40 pointer-events-none" />
-                </motion.div>
+              {/* Ambient Dark-Glass Vignette Overlay */}
+              <div 
+                onClick={togglePlay}
+                className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/30 pointer-events-auto cursor-pointer" 
+              />
+
+              {/* Top Floating Badge: Corporate Overview */}
+              <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
+                <div className="px-3.5 py-1.5 rounded-full bg-[#0c1e30]/80 backdrop-blur-md border border-white/20 text-white text-xs font-bold flex items-center gap-2 shadow-lg">
+                  <Film className="w-3.5 h-3.5 text-[#d09554]" />
+                  <span className="text-[#fcd34d] uppercase tracking-wider text-[11px]">Corporate Introduction</span>
+                </div>
+
+                <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-semibold shadow-md flex items-center gap-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  <span>Factory Tour</span>
+                </div>
+              </div>
+
+              {/* Central Glowing Glass Play/Pause Indicator (Fades out when playing, appears on pause/hover) */}
+              <AnimatePresence>
+                {(!isPlaying || isHovered) && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.85 }}
+                    transition={{ duration: 0.2 }}
+                    onClick={togglePlay}
+                    className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none"
+                  >
+                    <button
+                      type="button"
+                      aria-label={isPlaying ? 'Pause Video' : 'Play Video'}
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/20 backdrop-blur-xl border border-white/40 text-white flex items-center justify-center shadow-[0_12px_36px_rgba(0,0,0,0.5)] hover:scale-110 active:scale-95 transition-all duration-300 pointer-events-auto cursor-pointer group/btn"
+                    >
+                      {isPlaying ? (
+                        <Pause className="w-7 h-7 sm:w-8 sm:h-8 text-white fill-white" />
+                      ) : (
+                        <Play className="w-7 h-7 sm:w-8 sm:h-8 text-white fill-white ml-1" />
+                      )}
+                    </button>
+                  </motion.div>
+                )}
               </AnimatePresence>
 
-              {/* TOP EMBLEM: Machine Category Tag & Index Counter */}
-              <div className="absolute top-4 left-4 right-4 z-20 flex items-center justify-between pointer-events-none">
-                <div className="px-3.5 py-1.5 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-xs font-bold flex items-center gap-2 shadow-md">
-                  <Factory className="w-3.5 h-3.5 text-[#d09554]" />
-                  <span className="text-[#fcd34d] uppercase tracking-wider text-[11px]">{currentMachine.tag}</span>
-                </div>
-
-                <div className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white font-mono text-xs font-bold shadow-md">
-                  0{currentMachine.id} / 0{WELCOME_MACHINES.length}
-                </div>
-              </div>
-
-              {/* BOTTOM STRIP: Exact Machine Name & Description Overlay */}
-              <div className="absolute bottom-4 left-4 right-4 z-20 pointer-events-none">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={`desc-${currentMachine.id}`}
-                    initial={{ opacity: 0, y: 15 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.35 }}
-                    className="p-4 sm:p-5 rounded-2xl bg-[#0c1d2e]/85 backdrop-blur-xl border border-white/15 shadow-2xl space-y-1.5"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Gauge className="w-4 h-4 text-[#d09554] shrink-0" />
-                      <h3 className="text-base sm:text-lg font-black text-white tracking-tight">
-                        {currentMachine.title}
-                      </h3>
-                    </div>
-                    <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-normal">
-                      {currentMachine.description}
-                    </p>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-
-              {/* Navigation Arrows */}
-              <button
-                onClick={handlePrev}
-                className="absolute left-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
-                aria-label="Previous Machine"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-
-              <button
-                onClick={handleNext}
-                className="absolute right-3 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full bg-black/50 hover:bg-black/80 text-white backdrop-blur-md border border-white/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
-                aria-label="Next Machine"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            {/* Interactive Machine Selection Pills */}
-            <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 pt-1">
-              {WELCOME_MACHINES.map((machine, idx) => {
-                const isActive = idx === currentSlide;
-                return (
+              {/* Bottom Interactive Glass Controls Strip */}
+              <div className="absolute bottom-4 left-4 right-4 z-20 flex items-center justify-between gap-3 pointer-events-none">
+                <div className="flex items-center gap-2 pointer-events-auto">
+                  {/* Play/Pause Button */}
                   <button
-                    key={machine.id}
-                    onClick={() => setCurrentSlide(idx)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-300 flex items-center gap-1.5 cursor-pointer ${
-                      isActive
-                        ? 'bg-[#234d77] text-white shadow-md scale-102 ring-2 ring-[#d09554]'
-                        : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200/80 hover:text-slate-900'
-                    }`}
+                    onClick={togglePlay}
+                    className="w-9 h-9 rounded-full bg-black/60 hover:bg-[#d09554] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105"
+                    aria-label={isPlaying ? 'Pause' : 'Play'}
                   >
-                    <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#d09554]' : 'bg-slate-400'}`} />
-                    <span>{machine.title}</span>
+                    {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
                   </button>
-                );
-              })}
-            </div>
 
+                  {/* Sound Toggle Button */}
+                  <button
+                    onClick={toggleSound}
+                    className="w-9 h-9 rounded-full bg-black/60 hover:bg-[#d09554] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105"
+                    aria-label={isMuted ? 'Unmute Sound' : 'Mute Sound'}
+                  >
+                    {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                  </button>
+                </div>
+
+                {/* Right Fullscreen Button */}
+                <div className="pointer-events-auto">
+                  <button
+                    onClick={toggleFullScreen}
+                    className="w-9 h-9 rounded-full bg-black/60 hover:bg-[#d09554] backdrop-blur-md border border-white/20 text-white flex items-center justify-center transition-all duration-200 shadow-md cursor-pointer hover:scale-105"
+                    aria-label="Fullscreen"
+                  >
+                    <Maximize className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Bottom Video Progress Bar */}
+              <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 overflow-hidden pointer-events-none z-30">
+                <div 
+                  className="h-full bg-gradient-to-r from-[#d09554] to-[#fcd34d] transition-all duration-100 ease-linear"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
           </motion.div>
 
         </div>
+
+        {/* ========================================================================= */}
+        {/* STATS CARDS (Manufacturing Excellence, Units, Certifications, Export)    */}
+        {/* ========================================================================= */}
+        <StatCards className="mt-14 sm:mt-20 pt-10 sm:pt-14 border-t border-slate-200/80" />
 
       </div>
     </section>
   );
 }
-

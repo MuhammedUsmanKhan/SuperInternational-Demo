@@ -51,8 +51,11 @@ export default function OurProductsSection({
             <span>Manufacturing Catalog</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight">
-            Our Products
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+            Our Complete <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+              Packaging Products Catalog
+            </span>
           </h2>
 
           <p className="text-xs sm:text-sm text-[#555555] leading-relaxed max-w-2xl mx-auto">

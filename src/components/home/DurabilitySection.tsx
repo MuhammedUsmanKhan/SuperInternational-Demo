@@ -58,8 +58,8 @@ export default function DurabilitySection() {
     <section id="durability-section" className="durability-sec">
       <div className="container-fluid w-full px-4 sm:px-8 lg:px-12 xl:px-14">
         <div className="title text-center max-w-[1200px] mx-auto mb-10 md:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-black text-[#222222] tracking-tight uppercase leading-[1.22] font-sans">
-            SUPER INTERNATIONAL DURABILITY AND QUALITY IS APPRECIATED BY LEADING EXPORTERS OF PAKISTAN WHO NOW PREFER TO USE
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[44px] font-black text-[#173554] tracking-tight uppercase leading-[1.22] font-sans">
+            SUPER INTERNATIONAL <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">DURABILITY AND QUALITY</span> IS APPRECIATED BY LEADING EXPORTERS OF PAKISTAN WHO NOW PREFER TO USE
           </h2>
           <p className="text-sm text-gray-500 mt-2"></p>
         </div>

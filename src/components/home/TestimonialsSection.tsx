@@ -116,9 +116,11 @@ export default function TestimonialsSection() {
             <span>Executive Endorsements &bull; Client Trust</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#222222] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
             What Industry Leaders Say <br className="hidden sm:inline" />
-            <span className="text-[#234d77]">About Our Quality</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+              About Our Manufacturing Quality
+            </span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">

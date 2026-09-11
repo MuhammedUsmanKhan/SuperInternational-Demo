@@ -74,8 +74,11 @@ export default function ReelsGallerySection() {
             <span className="text-xs font-bold tracking-widest uppercase text-[#234d77] bg-[#f0f4f8] px-3.5 py-1.5 rounded-full">
               Behind the Scenes
             </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#222222] tracking-tight">
-              Reels Gallery Of Plastic Products
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+              Behind The Scenes <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+                Reels Gallery Of Plastic Products
+              </span>
             </h2>
             <p className="text-xs sm:text-sm text-[#555555] leading-relaxed max-w-3xl">
               Welcome to the Reels Gallery at Super International Pvt. Ltd.! Discover our wide range of high quality plastic products, including custom plastic packaging, cosmetic containers, and eco friendly solutions. Designed for durability and innovation, our products are tailored to meet your every packaging need. Explore now to experience the expertise of Pakistan&apos;s leading plastic packaging manufacturer!

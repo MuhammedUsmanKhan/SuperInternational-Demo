@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, ShieldCheck, Award, Globe2, Factory, CheckCircle2 } from 'lucide-react';
+import { Sparkles, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import { motion } from 'motion/react';
 
 interface ClientItem {
@@ -123,33 +123,6 @@ const CLIENT_ITEMS_ROW_2: ClientItem[] = [
   },
 ];
 
-const TRUST_METRICS = [
-  {
-    icon: Factory,
-    value: '40+ Years',
-    label: 'Manufacturing Excellence',
-    detail: 'Trusted contract partner since 1983',
-  },
-  {
-    icon: Award,
-    value: '180M+',
-    label: 'Annual Units Molded',
-    detail: 'High-speed automated production',
-  },
-  {
-    icon: ShieldCheck,
-    value: 'WHO & ISO',
-    label: 'Certified Standards',
-    detail: 'Cleanroom medical & food grade',
-  },
-  {
-    icon: Globe2,
-    value: '26+ Countries',
-    label: 'Global Export Footprint',
-    detail: 'Zero-defect delivery SLA',
-  },
-];
-
 function ClientCard({ client }: { client: ClientItem }) {
   const [imageError, setImageError] = useState(false);
 
@@ -209,9 +182,11 @@ export default function OurClientsSection() {
             <span>Valuable Brand Partnerships</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#222222] tracking-tight leading-tight">
-            Trusted by Pakistan's &amp; Global <br className="hidden sm:inline" />
-            <span className="text-[#234d77]">FMCG &amp; Pharma Leaders</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+            Trusted by Pakistan&apos;s &amp; Global <br className="hidden sm:inline" />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+              FMCG &amp; Pharma Leaders
+            </span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">
@@ -246,48 +221,14 @@ export default function OurClientsSection() {
         </div>
       </div>
 
-      {/* Trust Metrics & Manufacturing Proof Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 sm:mt-18">
-        <motion.div
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
-        >
-          {TRUST_METRICS.map((metric, idx) => {
-            const Icon = metric.icon;
-            return (
-              <div
-                key={idx}
-                className="p-5 sm:p-6 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md hover:border-[#234d77]/30 transition-all duration-300 flex items-start gap-4"
-              >
-                <div className="w-11 h-11 rounded-xl bg-[#f0f4f8] text-[#234d77] flex items-center justify-center shrink-0">
-                  <Icon className="w-5 h-5" />
-                </div>
-                <div className="space-y-0.5">
-                  <div className="text-xl sm:text-2xl font-black text-[#173554] tracking-tight">
-                    {metric.value}
-                  </div>
-                  <div className="text-xs font-bold text-[#222222]">
-                    {metric.label}
-                  </div>
-                  <div className="text-[11px] text-[#666666]">
-                    {metric.detail}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </motion.div>
-
-        {/* Bottom Assurance Badges */}
+      {/* Bottom Assurance Badges */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="mt-10 pt-6 border-t border-slate-200/80 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-[#555555] font-medium"
+          transition={{ duration: 0.5, delay: 0.2 }}
+          className="pt-6 border-t border-slate-200/80 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs text-[#555555] font-medium"
         >
           <div className="flex items-center gap-2">
             <CheckCircle2 className="w-4 h-4 text-[#234d77]" />
