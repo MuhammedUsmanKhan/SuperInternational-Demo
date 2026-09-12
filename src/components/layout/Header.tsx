@@ -222,6 +222,13 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
               </a>
 
               <a
+                href="#team-section"
+                className="text-[13px] lg:text-[14px] font-medium text-white/80 hover:text-[#d09554] px-3.5 py-1.5 rounded-full hover:bg-white/10 transition-all duration-200"
+              >
+                Team
+              </a>
+
+              <a
                 href="#clients-section"
                 className="text-[13px] lg:text-[14px] font-medium text-white/80 hover:text-[#d09554] px-3.5 py-1.5 rounded-full hover:bg-white/10 transition-all duration-200"
               >
@@ -316,6 +323,15 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
                   className="px-4 py-2.5 rounded-2xl hover:bg-white/5 text-white/90 font-medium text-sm flex items-center justify-between transition-colors"
                 >
                   <span>Quality &amp; Standards</span>
+                  <ChevronRight className="w-4 h-4 text-white/40" />
+                </a>
+
+                <a
+                  href="#team-section"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="px-4 py-2.5 rounded-2xl hover:bg-white/5 text-white/90 font-medium text-sm flex items-center justify-between transition-colors"
+                >
+                  <span>Our Team</span>
                   <ChevronRight className="w-4 h-4 text-white/40" />
                 </a>
 

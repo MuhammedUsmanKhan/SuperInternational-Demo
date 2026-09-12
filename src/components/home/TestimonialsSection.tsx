@@ -1,109 +1,244 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Quote, Star, ChevronLeft, ChevronRight, Sparkles, Building2, CheckCircle } from 'lucide-react';
+import {
+  Play,
+  Pause,
+  Volume2,
+  VolumeX,
+  Maximize2,
+  Sparkles,
+  CheckCircle,
+  ChevronLeft,
+  ChevronRight,
+  ShieldCheck,
+  Star,
+  Award,
+  Clock,
+  ArrowUpRight,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-interface ExecutiveTestimonial {
+export interface VideoTestimonial {
   id: number;
   clientName: string;
   designation: string;
   company: string;
+  industry: string;
   brandLogo: string;
+  avatar: string;
+  videoSrc: string;
+  duration: string;
   rating: number;
   highlight: string;
-  quote: string;
-  industry: string;
+  takeaway: string;
+  metrics: { label: string; value: string }[];
+  contractType: string;
 }
 
-const TESTIMONIALS_DATA: ExecutiveTestimonial[] = [
+const CLIENT_VIDEO_TESTIMONIALS: VideoTestimonial[] = [
   {
     id: 1,
     clientName: 'Mustafa Hemani',
     designation: 'Chief Executive Officer',
     company: 'Hemani Herbal & Beauty Group',
+    industry: 'Cosmetics & Luxury Skincare',
     brandLogo: 'https://noorenterprises.com.pk/wp-content/uploads/2023/08/logo-1.png',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80',
+    videoSrc: '/SuperInternational-introduction.mp4',
+    duration: '2:40 Min',
     rating: 5,
     highlight: 'Flawless Luxury Gold Hot-Stamping & Hermetic Integrity',
-    quote:
-      'Working with Super International Pvt Ltd has been an extraordinary milestone for our worldwide cosmetic range. Their commitment to micron-level tolerance, leak-proof acoustic seals, and flawless luxury gold hot-stamping sets them apart as the preeminent packaging manufacturer in the region.',
-    industry: 'Cosmetics & Wellness',
+    takeaway:
+      'Super International engineered our double-wall cosmetic jars with micron-level acoustic seals and precision hot-stamping. Their packaging consistency across millions of units has been fundamental to our brand’s export expansion into 35+ countries.',
+    metrics: [
+      { label: 'Partnership', value: '12+ Years' },
+      { label: 'Quality Pass Rate', value: '99.8%' },
+      { label: 'Export Markets', value: '35+ Countries' },
+    ],
+    contractType: 'Enterprise Contract &bull; Custom Molds',
   },
   {
     id: 2,
     clientName: 'Tariq Al-Mansoor',
     designation: 'VP of Global Supply Chain',
     company: 'Unilever FMCG Division',
+    industry: 'Global FMCG & Personal Care',
     brandLogo: 'https://noorenterprises.com.pk/wp-content/uploads/2023/07/unilever-vector-logo.png',
+    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80',
+    videoSrc: '/SUPER INTERNATIONAL 3P 25 EXPO.mp4',
+    duration: '3:15 Min',
     rating: 5,
-    highlight: '98% Reduction in Automated Filling Line Downtime',
-    quote:
-      'In high-speed personal care manufacturing, bottle deformities and wall thickness inconsistencies can halt our automated filling lines. Super International’s precision blow-molding reduced our filling-line downtime by 98% across 14 million units shipped annually.',
-    industry: 'Global FMCG Leader',
+    highlight: '98% Reduction in Automated High-Speed Filling Downtime',
+    takeaway:
+      'In high-speed robotic bottling, bottle neck tolerances make or break production efficiency. Super International’s automated blow-molding eliminated variance and reduced filling-line stoppage by 98% across 14 million bottles shipped annually.',
+    metrics: [
+      { label: 'Annual Throughput', value: '14M+ Units' },
+      { label: 'Downtime Reduced', value: '98%' },
+      { label: 'On-Time Delivery', value: '99.9%' },
+    ],
+    contractType: 'High-Volume Production &bull; Certified HDPE',
   },
   {
     id: 3,
     clientName: 'Ayesha Tariq',
     designation: 'Head of Brand Aesthetics',
     company: 'Olivia Cosmetics International',
+    industry: 'Beauty & Skincare Formulations',
     brandLogo: 'https://noorenterprises.com.pk/wp-content/uploads/2023/07/21-removebg-preview.png',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
+    videoSrc: '/SuperInternational-introduction.mp4',
+    duration: '2:10 Min',
     rating: 5,
-    highlight: 'Prestige Editorial Heft & Luxury Acrylic Finish',
-    quote:
-      'The bespoke double-wall acrylic jars crafted by Super International gave our prestige skincare line the exact editorial elegance and tactile heft of high-end European packaging houses at a significantly more agile production schedule.',
-    industry: 'Skincare & Cosmetics',
+    highlight: 'Prestige Editorial Heft & Bespoke Double-Wall Acrylic Jars',
+    takeaway:
+      'The bespoke luxury jars crafted by Super International gave our premium skincare collection the exact tactile heft and pristine clarity of European packaging houses at a remarkably fast local development cycle.',
+    metrics: [
+      { label: 'Custom SKUs', value: '50+ Molds' },
+      { label: 'Leakage Rate', value: '0.00%' },
+      { label: 'Finish', value: 'Silk Gold Foil' },
+    ],
+    contractType: 'Exclusive Tooling &bull; Luxury Line',
   },
   {
     id: 4,
     clientName: 'Dr. Farhan Roomi',
     designation: 'Director of Quality Assurance',
     company: 'Roomi Group Pharmaceuticals',
+    industry: 'Pharmaceuticals & Healthcare',
     brandLogo: 'https://noorenterprises.com.pk/wp-content/uploads/2023/08/roomi-logo-1.png',
+    avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=400&q=80',
+    videoSrc: '/SUPER INTERNATIONAL 3P 25 EXPO.mp4',
+    duration: '3:00 Min',
     rating: 5,
-    highlight: 'Strict WHO Compliance & Zero-Contamination Cleanrooms',
-    quote:
-      'Super International strictly complies with WHO and ISO standards. Their cleanroom blow-molding and certified virgin polymers give our medical syrups and tablet containers the chemical inertness and tamper evidence our healthcare products demand.',
-    industry: 'Pharmaceuticals & Health',
+    highlight: 'Strict WHO GMP Cleanroom Compliance & Certified Virgin Polymers',
+    takeaway:
+      'Super International strictly satisfies WHO GMP standards. Their ISO-certified cleanroom injection lines and 100% virgin medical-grade polymers provide the chemical inertness and tamper evidence critical for our syrup and tablet lines.',
+    metrics: [
+      { label: 'Cleanroom Standard', value: 'Class 100k' },
+      { label: 'Leak Tested', value: '100% Batch' },
+      { label: 'Compliance', value: 'WHO / ISO' },
+    ],
+    contractType: 'Medical-Grade Compliance &bull; Tamper Seals',
   },
 ];
 
 export default function TestimonialsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [progress, setProgress] = useState(0);
 
-  const total = TESTIMONIALS_DATA.length;
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoWrapperRef = useRef<HTMLDivElement | null>(null);
+
+  const activeTestimonial = CLIENT_VIDEO_TESTIMONIALS[activeIndex];
+  const total = CLIENT_VIDEO_TESTIMONIALS.length;
+
+  // Auto-play when scrolled into view (with audio muted for browser policy)
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            video
+              .play()
+              .then(() => setIsPlaying(true))
+              .catch(() => {
+                video.muted = true;
+                setIsMuted(true);
+                video.play().catch(() => {});
+              });
+          } else {
+            video.pause();
+            setIsPlaying(false);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (videoWrapperRef.current) {
+      observer.observe(videoWrapperRef.current);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [activeIndex]);
+
+  const handleSelectClient = (index: number) => {
+    if (index === activeIndex) return;
+    setActiveIndex(index);
+    setProgress(0);
+  };
 
   const handleNext = () => {
     setActiveIndex((prev) => (prev + 1) % total);
+    setProgress(0);
   };
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
+    setProgress(0);
   };
 
-  useEffect(() => {
-    if (isPaused) return;
-    timerRef.current = setInterval(() => {
-      handleNext();
-    }, 6000);
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, [isPaused, activeIndex]);
+  const togglePlay = () => {
+    const video = videoRef.current;
+    if (!video) return;
 
-  const activeTestimonial = TESTIMONIALS_DATA[activeIndex];
+    if (video.paused) {
+      video.play().then(() => setIsPlaying(true)).catch(() => {});
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
+  const toggleSound = () => {
+    const video = videoRef.current;
+    if (!video) return;
+    const nextMuted = !isMuted;
+    video.muted = nextMuted;
+    setIsMuted(nextMuted);
+  };
+
+  const toggleFullScreen = () => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen().catch(() => {});
+    } else {
+      if (video.requestFullscreen) {
+        video.requestFullscreen().catch(() => {});
+      } else if ((video as any).webkitRequestFullscreen) {
+        (video as any).webkitRequestFullscreen();
+      }
+    }
+  };
+
+  const handleTimeUpdate = () => {
+    const video = videoRef.current;
+    if (!video || !video.duration) return;
+    setProgress((video.currentTime / video.duration) * 100);
+  };
 
   return (
     <section
       id="testimonials-section"
-      className="py-16 sm:py-24 bg-gradient-to-b from-[#f8fafc] via-white to-[#f4f7fa] text-[#222222] relative overflow-hidden"
+      className="py-18 sm:py-26 bg-gradient-to-b from-[#f8fafc] via-white to-[#f4f7fa] text-[#222222] relative overflow-hidden"
     >
-      {/* Ambient background lighting */}
-      <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-[#234d77]/5 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-1/4 w-[600px] h-[600px] bg-[#d09554]/6 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Ambient background lighting effects */}
+      <div className="absolute top-1/3 left-1/4 w-[750px] h-[500px] bg-[#234d77]/6 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-1/4 w-[750px] h-[500px] bg-[#d09554]/8 rounded-full blur-3xl pointer-events-none -z-10" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header */}
+        {/* ========================================================================= */}
+        {/* 1. SECTION HEADER (Matching Exact Metallic Gradient & Pill Badge)         */}
+        {/* ========================================================================= */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -111,9 +246,9 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3.5"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#234d77] text-xs font-bold uppercase tracking-wider shadow-xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#173554] text-xs font-bold uppercase tracking-wider shadow-2xs">
             <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
-            <span>Executive Endorsements &bull; Client Trust</span>
+            <span>Authentic Client Experiences &bull; Video Endorsements</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
@@ -124,126 +259,277 @@ export default function TestimonialsSection() {
           </h2>
 
           <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">
-            From multinational FMCG giants to premier pharmaceutical brands, discover why leading enterprises trust Super International as their primary packaging manufacturer.
+            Hear directly from CEOs, supply chain directors, and quality heads about how Super International’s zero-defect tooling and cleanroom packaging power their global supply chains.
           </p>
         </motion.div>
 
-        {/* Featured Interactive Testimonial Card */}
-        <div
-          className="max-w-5xl mx-auto"
-          onMouseEnter={() => setIsPaused(true)}
-          onMouseLeave={() => setIsPaused(false)}
-        >
-          <div className="relative rounded-3xl bg-white border border-slate-200/90 shadow-[0_20px_50px_-15px_rgba(35,77,119,0.14)] p-6 sm:p-10 md:p-14 overflow-hidden">
-            
-            {/* Ambient Watermark Quote Icon */}
-            <div className="absolute top-6 right-8 sm:top-10 sm:right-12 pointer-events-none text-[#234d77]/8 select-none">
-              <Quote className="w-28 h-28 sm:w-36 sm:h-36" />
-            </div>
-
-            {/* Top Rating & Highlight Strip */}
-            <div className="flex flex-wrap items-center justify-between gap-4 mb-6 sm:mb-8 relative z-10">
-              <div className="flex items-center gap-1.5 bg-[#fef8ee] border border-[#faecd8] px-3.5 py-1.5 rounded-full">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#d09554] text-[#d09554]" />
-                ))}
-                <span className="text-xs font-bold text-[#b8833f] ml-1">5.0 Verified Client</span>
-              </div>
-
-              <div className="hidden sm:inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#f0f4f8] text-[#234d77] text-xs font-bold">
-                <CheckCircle className="w-3.5 h-3.5 text-[#234d77]" />
-                <span>{activeTestimonial.industry}</span>
-              </div>
-            </div>
-
-            {/* Testimonial Highlight Title & Quote Body */}
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTestimonial.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-4 sm:space-y-6 relative z-10"
+        {/* ========================================================================= */}
+        {/* 2. MAIN FEATURED CLIENT VIDEO STAGE (Two-Column Masterpiece)              */}
+        {/* ========================================================================= */}
+        <div className="max-w-6xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="rounded-3xl bg-white border border-slate-200/90 shadow-[0_25px_60px_-15px_rgba(23,53,84,0.16)] overflow-hidden"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+              
+              {/* Left Column: High-End Video Player */}
+              <div
+                ref={videoWrapperRef}
+                className="lg:col-span-7 relative bg-[#091522] min-h-[320px] sm:min-h-[420px] lg:min-h-[490px] flex items-center justify-center overflow-hidden group"
               >
-                <div className="text-lg sm:text-xl md:text-2xl font-bold text-[#173554] leading-snug tracking-tight">
-                  &ldquo;{activeTestimonial.highlight}&rdquo;
-                </div>
+                <video
+                  ref={videoRef}
+                  key={activeTestimonial.videoSrc}
+                  src={activeTestimonial.videoSrc}
+                  loop
+                  playsInline
+                  muted={isMuted}
+                  onTimeUpdate={handleTimeUpdate}
+                  className="w-full h-full object-cover object-center"
+                />
 
-                <p className="text-sm sm:text-base md:text-lg text-[#4b5563] leading-relaxed font-normal">
-                  {activeTestimonial.quote}
-                </p>
-
-                {/* Author & Brand Details */}
-                <div className="pt-6 sm:pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                  <div className="flex items-center gap-4">
-                    {/* Brand Logo Avatar */}
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-white border border-slate-200/90 shadow-xs flex items-center justify-center p-2.5 shrink-0">
-                      <img
-                        src={activeTestimonial.brandLogo}
-                        alt={activeTestimonial.company}
-                        className="w-full h-full object-contain"
-                        onError={(e) => {
-                          (e.target as HTMLElement).style.display = 'none';
-                        }}
-                      />
-                    </div>
-
-                    <div className="space-y-0.5">
-                      <div className="text-base sm:text-lg font-bold text-[#1f2937]">
-                        {activeTestimonial.clientName}
-                      </div>
-                      <div className="text-xs sm:text-sm text-[#234d77] font-semibold">
-                        {activeTestimonial.designation} &bull; <span className="text-[#6b7280]">{activeTestimonial.company}</span>
-                      </div>
-                    </div>
+                {/* Top Video Status Overlay */}
+                <div className="absolute top-4 inset-x-4 flex items-center justify-between z-20 pointer-events-none">
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold shadow-xs">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Client Video Testimonial</span>
                   </div>
 
-                  {/* Slide Indicators */}
-                  <div className="flex items-center gap-2 self-end sm:self-auto">
-                    {TESTIMONIALS_DATA.map((_, idx) => (
+                  <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md border border-white/20 text-white/90 text-[11px] font-medium shadow-xs">
+                    <Clock className="w-3 h-3 text-[#d09554]" />
+                    <span>{activeTestimonial.duration}</span>
+                  </div>
+                </div>
+
+                {/* Center Big Glassmorphism Play Button on Hover/Paused */}
+                <button
+                  onClick={togglePlay}
+                  className={`absolute z-20 w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-md border border-white/40 flex items-center justify-center text-white shadow-2xl transition-all duration-300 transform cursor-pointer ${
+                    isPlaying ? 'opacity-0 group-hover:opacity-100 scale-90 group-hover:scale-100' : 'opacity-100 scale-100'
+                  }`}
+                  aria-label={isPlaying ? 'Pause Testimonial Video' : 'Play Testimonial Video'}
+                >
+                  {isPlaying ? (
+                    <Pause className="w-7 h-7 sm:w-8 sm:h-8 fill-current text-white" />
+                  ) : (
+                    <Play className="w-7 h-7 sm:w-8 sm:h-8 fill-current text-[#d09554] ml-1" />
+                  )}
+                </button>
+
+                {/* Bottom Video Controls Bar */}
+                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent p-4 sm:p-5 flex flex-col gap-2 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {/* Progress Line */}
+                  <div className="w-full h-1 bg-white/20 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-[#234d77] to-[#d09554] transition-all duration-150"
+                      style={{ width: `${progress}%` }}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between text-white text-xs pt-1">
+                    <div className="flex items-center gap-3">
                       <button
-                        key={idx}
-                        onClick={() => setActiveIndex(idx)}
-                        className={`h-2.5 rounded-full transition-all duration-400 cursor-pointer ${
-                          idx === activeIndex
-                            ? 'w-8 bg-[#234d77]'
-                            : 'w-2.5 bg-[#234d77]/25 hover:bg-[#234d77]/50'
-                        }`}
-                        aria-label={`Go to slide ${idx + 1}`}
-                      />
-                    ))}
+                        onClick={togglePlay}
+                        className="hover:text-[#d09554] transition-colors cursor-pointer"
+                        aria-label="Toggle Play"
+                      >
+                        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+                      </button>
+                      <button
+                        onClick={toggleSound}
+                        className="hover:text-[#d09554] transition-colors flex items-center gap-1.5 cursor-pointer"
+                        aria-label="Toggle Sound"
+                      >
+                        {isMuted ? <VolumeX className="w-4 h-4 text-rose-400" /> : <Volume2 className="w-4 h-4 text-emerald-400" />}
+                        <span className="text-[11px]">{isMuted ? 'Unmute' : 'Muted'}</span>
+                      </button>
+                    </div>
+
+                    <button
+                      onClick={toggleFullScreen}
+                      className="hover:text-[#d09554] transition-colors cursor-pointer"
+                      aria-label="Fullscreen"
+                    >
+                      <Maximize2 className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
-              </motion.div>
-            </AnimatePresence>
+              </div>
 
+              {/* Right Column: Executive Partner Dossier */}
+              <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-white">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTestimonial.id}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.4 }}
+                    className="space-y-5"
+                  >
+                    {/* Top Ratings & Verified Tag */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+                      <div className="flex items-center gap-1.5 bg-[#fef8ee] border border-[#faecd8] px-3 py-1 rounded-full">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-[#d09554] text-[#d09554]" />
+                        ))}
+                        <span className="text-[11px] font-bold text-[#b8833f] ml-1">5.0 Verified Video Case</span>
+                      </div>
+
+                      <div className="inline-flex items-center gap-1 text-[11px] font-bold text-[#234d77] bg-[#f0f4f8] px-2.5 py-1 rounded-full">
+                        <CheckCircle className="w-3 h-3 text-[#234d77]" />
+                        <span>{activeTestimonial.industry}</span>
+                      </div>
+                    </div>
+
+                    {/* Partner Header with Logo & Avatar */}
+                    <div className="flex items-center gap-4">
+                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-xs shrink-0">
+                        <img
+                          src={activeTestimonial.avatar}
+                          alt={activeTestimonial.clientName}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+
+                      <div className="space-y-0.5">
+                        <h3 className="text-lg sm:text-xl font-black text-[#173554] tracking-tight">
+                          {activeTestimonial.clientName}
+                        </h3>
+                        <div className="text-xs font-bold text-[#d09554] uppercase tracking-wider">
+                          {activeTestimonial.designation}
+                        </div>
+                        <div className="text-xs font-medium text-[#555555]">
+                          {activeTestimonial.company}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Headline Highlight */}
+                    <div className="text-base sm:text-lg font-black text-[#173554] leading-snug tracking-tight">
+                      &ldquo;{activeTestimonial.highlight}&rdquo;
+                    </div>
+
+                    {/* Video Takeaway Summary */}
+                    <p className="text-xs sm:text-sm text-[#444444] leading-relaxed font-normal">
+                      {activeTestimonial.takeaway}
+                    </p>
+
+                    {/* Key Verification Metrics */}
+                    <div className="grid grid-cols-3 gap-2 pt-2">
+                      {activeTestimonial.metrics.map((metric, idx) => (
+                        <div
+                          key={idx}
+                          className="p-2.5 rounded-xl bg-[#f8fafc] border border-slate-200/80 text-center"
+                        >
+                          <div className="text-xs sm:text-sm font-black text-[#173554]">
+                            {metric.value}
+                          </div>
+                          <div className="text-[10px] text-[#666666] font-semibold mt-0.5 leading-tight">
+                            {metric.label}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Bottom Navigator & Slide Switcher */}
+                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+                  <div className="text-xs font-bold text-[#666666] uppercase tracking-wider">
+                    <span>0{activeIndex + 1}</span>
+                    <span className="text-slate-300 mx-1.5">/</span>
+                    <span>0{total}</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={handlePrev}
+                      className="w-10 h-10 rounded-full bg-[#f0f4f8] hover:bg-[#173554] text-[#173554] hover:text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                      aria-label="Previous Video Case"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={handleNext}
+                      className="w-10 h-10 rounded-full bg-[#f0f4f8] hover:bg-[#173554] text-[#173554] hover:text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                      aria-label="Next Video Case"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </motion.div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* 3. INTERACTIVE CLIENT VIDEO SELECTOR REELS                                 */}
+        {/* ========================================================================= */}
+        <div className="mt-8 sm:mt-12 max-w-6xl mx-auto">
+          <div className="text-xs font-bold text-[#173554] uppercase tracking-wider mb-4 flex items-center gap-2">
+            <Award className="w-4 h-4 text-[#d09554]" />
+            <span>Select Enterprise Video Case:</span>
           </div>
 
-          {/* Navigation Controls Bar */}
-          <div className="mt-8 flex items-center justify-between px-2">
-            <div className="text-xs font-bold text-[#6b7280] uppercase tracking-wider">
-              <span>0{activeIndex + 1}</span>
-              <span className="text-slate-300 mx-1.5">/</span>
-              <span>0{total}</span>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {CLIENT_VIDEO_TESTIMONIALS.map((client, idx) => {
+              const isActive = idx === activeIndex;
+              return (
+                <div
+                  key={client.id}
+                  onClick={() => handleSelectClient(idx)}
+                  className={`relative p-4 rounded-2xl transition-all duration-300 cursor-pointer border flex items-center gap-3.5 ${
+                    isActive
+                      ? 'bg-[#173554] text-white border-[#d09554] shadow-lg shadow-[#173554]/20 scale-102'
+                      : 'bg-white hover:bg-[#f8fafc] text-[#222222] border-slate-200/90 shadow-2xs hover:border-[#234d77]/40'
+                  }`}
+                >
+                  {/* Thumbnail Avatar with Play Icon Overlay */}
+                  <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-white/20">
+                    <img
+                      src={client.avatar}
+                      alt={client.clientName}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                      <Play
+                        className={`w-4 h-4 fill-current ${
+                          isActive ? 'text-[#d09554]' : 'text-white'
+                        }`}
+                      />
+                    </div>
+                  </div>
 
-            <div className="flex items-center gap-3">
-              <button
-                onClick={handlePrev}
-                className="w-11 h-11 rounded-full bg-white border border-slate-200 text-[#173554] hover:bg-[#234d77] hover:text-white hover:border-[#234d77] flex items-center justify-center shadow-xs hover:shadow-md transition-all cursor-pointer"
-                aria-label="Previous Testimonial"
-              >
-                <ChevronLeft className="w-5 h-5" />
-              </button>
-              <button
-                onClick={handleNext}
-                className="w-11 h-11 rounded-full bg-white border border-slate-200 text-[#173554] hover:bg-[#234d77] hover:text-white hover:border-[#234d77] flex items-center justify-center shadow-xs hover:shadow-md transition-all cursor-pointer"
-                aria-label="Next Testimonial"
-              >
-                <ChevronRight className="w-5 h-5" />
-              </button>
-            </div>
+                  <div className="overflow-hidden min-w-0 flex-1">
+                    <div className="text-xs font-black truncate tracking-tight">
+                      {client.clientName}
+                    </div>
+                    <div
+                      className={`text-[11px] truncate ${
+                        isActive ? 'text-[#d09554]' : 'text-[#666666]'
+                      }`}
+                    >
+                      {client.company}
+                    </div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">
+                      {client.duration}
+                    </div>
+                  </div>
+
+                  {isActive && (
+                    <span className="w-2 h-2 rounded-full bg-[#d09554] shadow-[0_0_8px_#d09554] shrink-0" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 

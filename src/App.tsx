@@ -13,6 +13,7 @@ import HeroScrollStory from './components/home/HeroScrollStory';
 import BannerSection from './components/home/BannerSection';
 import WelcomeSection from './components/home/WelcomeSection';
 import TourVideo from './components/home/TourVideo';
+import TeamSection from './components/home/TeamSection';
 import Fw3dProductSection from './components/home/Fw3dProductSection';
 import OurProductsSection from './components/home/OurProductsSection';
 import DurabilitySection from './components/home/DurabilitySection';
@@ -164,7 +165,10 @@ export default function App() {
         {/* 5. Tour Video Section: Facility Video Showcase & Interactive Playback */}
         <TourVideo />
 
-        {/* 6. Categories Section: 7 Core Packaging Capabilities */}
+        {/* 6. Our Team Section: Executive Leadership & Engineering Mastery */}
+        <TeamSection onOpenQuoteModal={(sub) => handleOpenQuote(sub)} />
+
+        {/* 7. Categories Section: 7 Core Packaging Capabilities */}
         <CategoriesSection
           onSelectCategory={handleSelectCategory}
           onOpenQuoteModal={(cat) => handleOpenQuote(cat)}
