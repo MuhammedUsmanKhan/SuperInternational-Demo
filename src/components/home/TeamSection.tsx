@@ -133,13 +133,22 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
   return (
     <section
       id="team-section"
-      className="py-18 sm:py-26 bg-gradient-to-b from-white via-[#f6f9fc] to-white text-[#222222] relative overflow-hidden"
+      className="py-12 sm:py-16 bg-gradient-to-b from-[#f4f7fa] via-[#ebf2f8] to-[#f4f7fa] text-[#222222] relative overflow-hidden"
     >
+      {/* Precision Technical Blueprint Texture */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-40 -z-10" 
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(35, 77, 119, 0.08) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
+
       {/* Ambient Lighting Accents */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[950px] h-[450px] bg-gradient-to-r from-[#234d77]/6 via-[#d09554]/8 to-[#649dcf]/10 blur-3xl rounded-full pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#d09554]/5 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ========================================================================= */}
         {/* 1. SECTION HEADER (Matching Exact Brand Badge + Metallic Gradient Title)  */}
@@ -149,7 +158,7 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3.5"
+          className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3"
         >
           {/* Top Pill Badge */}
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#173554] text-xs font-bold uppercase tracking-wider shadow-2xs">

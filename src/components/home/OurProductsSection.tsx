@@ -37,7 +37,7 @@ export default function OurProductsSection({
 
   return (
     <section id="our-products-sec" className="our-products-sec py-16 sm:py-24 bg-white text-[#222222] relative overflow-hidden">
-      <div className="max-w-[1740px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         <motion.div
           initial={{ opacity: 0, y: 20 }}

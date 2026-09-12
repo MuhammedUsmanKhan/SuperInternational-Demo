@@ -181,12 +181,21 @@ export default function TourVideo() {
     <section
       id="tour-video-section"
       ref={containerRef}
-      className="py-18 sm:py-26 bg-gradient-to-b from-white via-[#f4f7fb] to-white text-[#222222] relative overflow-hidden"
+      className="py-12 sm:py-16 bg-gradient-to-b from-[#081422] via-[#0e233a] to-[#081422] text-white relative overflow-hidden border-y border-white/10"
     >
-      {/* Subtle ambient lighting effect */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-gradient-to-r from-[#234d77]/10 via-[#d09554]/10 to-[#649dcf]/15 blur-3xl rounded-full pointer-events-none -z-10" />
+      {/* Precision Technical Blueprint Texture */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-25 -z-10" 
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(208, 149, 84, 0.15) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Subtle ambient lighting effect */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-gradient-to-r from-[#234d77]/25 via-[#d09554]/20 to-[#649dcf]/20 blur-3xl rounded-full pointer-events-none -z-10" />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ========================================================================= */}
         {/* 1. SECTION HEADER: HIGHLIGHTING INDUSTRY EXPOS & EVENTS                  */}
@@ -196,23 +205,23 @@ export default function TourVideo() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-10 sm:mb-14 space-y-3.5"
+          className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3"
         >
           {/* Top Event Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#173554] text-xs font-bold uppercase tracking-wider shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#f5d5a8] text-xs font-bold uppercase tracking-wider shadow-2xs backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
             <span>Industry Expos &bull; Corporate Events Showcase</span>
           </div>
 
           {/* Section Main Heading */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
             Pioneering Pakistan&apos;s <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]">
               Packaging Innovation Across Global Expos
             </span>
           </h2>
 
-          <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
             Watch Super International live at premier industrial exhibitions, international trade expos, and specialized technical conferences across Pakistan and global markets.
           </p>
         </motion.div>
@@ -234,7 +243,7 @@ export default function TourVideo() {
             }
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="relative w-full max-w-6xl xl:max-w-7xl rounded-2xl sm:rounded-[32px] overflow-hidden bg-[#0a1827] shadow-[0_24px_60px_rgba(0,0,0,0.3)] border-2 sm:border-4 border-white aspect-video group select-none"
+            className="relative w-full rounded-2xl sm:rounded-[32px] overflow-hidden bg-[#0a1827] shadow-[0_24px_60px_rgba(0,0,0,0.3)] border-2 sm:border-4 border-white aspect-video group select-none"
           >
             {/* HTML5 Video Element */}
             <video
@@ -380,11 +389,11 @@ export default function TourVideo() {
         {/* ========================================================================= */}
         {/* 3. INTERACTIVE MULTI-EVENT SELECTOR SLIDER CARDS                         */}
         {/* ========================================================================= */}
-        <div className="mt-8 sm:mt-12">
+        <div className="mt-8 sm:mt-10">
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-2">
               <Tv className="w-4 h-4 text-[#d09554]" />
-              <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#173554]">
+              <span className="text-xs sm:text-sm font-extrabold uppercase tracking-wider text-[#f5d5a8]">
                 Select Event Video To Watch ({EXPO_EVENTS.length} Available)
               </span>
             </div>
@@ -393,14 +402,14 @@ export default function TourVideo() {
             <div className="flex items-center gap-2">
               <button
                 onClick={() => scrollSlider('left')}
-                className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-white flex items-center justify-center shadow-xs transition-colors cursor-pointer"
                 aria-label="Previous Events"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
                 onClick={() => scrollSlider('right')}
-                className="w-8 h-8 rounded-full bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+                className="w-8 h-8 rounded-full bg-white/10 border border-white/20 hover:bg-white/20 text-white flex items-center justify-center shadow-xs transition-colors cursor-pointer"
                 aria-label="Next Events"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -423,14 +432,14 @@ export default function TourVideo() {
                   onClick={() => handleSelectEvent(idx)}
                   className={`min-w-[280px] sm:min-w-[340px] max-w-[360px] p-4 sm:p-5 rounded-2xl sm:rounded-3xl transition-all duration-300 cursor-pointer flex flex-col justify-between select-none relative ${
                     isActive
-                      ? 'bg-gradient-to-br from-[#173554] to-[#0c1e30] text-white shadow-[0_12px_32px_rgba(23,53,84,0.28)] border-2 border-[#d09554] ring-4 ring-[#d09554]/20'
-                      : 'bg-white text-[#222222] border border-slate-200/90 shadow-2xs hover:shadow-md hover:border-[#234d77]/40'
+                      ? 'bg-gradient-to-br from-[#173554] to-[#0c1e30] text-white shadow-[0_12px_32px_rgba(208,149,84,0.3)] border-2 border-[#d09554] ring-4 ring-[#d09554]/25'
+                      : 'bg-white/[0.06] hover:bg-white/[0.12] text-white border border-white/15 shadow-sm hover:border-[#d09554]/70'
                   }`}
                 >
                   {/* Top Bar: Event Badge & Active Pill */}
                   <div className="flex items-center justify-between gap-2 mb-3">
                     <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${
-                      isActive ? 'bg-[#d09554] text-black' : 'bg-[#f0f4f8] text-[#234d77]'
+                      isActive ? 'bg-[#d09554] text-black' : 'bg-white/15 text-[#f5d5a8]'
                     }`}>
                       {event.eventTag}
                     </span>
@@ -441,7 +450,7 @@ export default function TourVideo() {
                         Now Playing
                       </span>
                     ) : (
-                      <span className="text-[11px] font-medium text-slate-400">
+                      <span className="text-[11px] font-medium text-slate-300">
                         {event.year}
                       </span>
                     )}
@@ -449,19 +458,17 @@ export default function TourVideo() {
 
                   {/* Title & Subtitle */}
                   <div className="space-y-1 mb-3">
-                    <h3 className={`text-base sm:text-lg font-black tracking-tight leading-snug ${
-                      isActive ? 'text-white' : 'text-[#173554]'
-                    }`}>
+                    <h3 className="text-base sm:text-lg font-black tracking-tight leading-snug text-white">
                       {event.title}
                     </h3>
-                    <p className={`text-xs ${isActive ? 'text-gray-300' : 'text-slate-500'}`}>
+                    <p className={`text-xs ${isActive ? 'text-gray-200' : 'text-slate-300'}`}>
                       {event.subtitle}
                     </p>
                   </div>
 
                   {/* Bottom Location and Play Indicator */}
                   <div className={`pt-3 border-t flex items-center justify-between text-xs ${
-                    isActive ? 'border-white/15 text-gray-300' : 'border-slate-100 text-slate-500'
+                    isActive ? 'border-white/20 text-gray-200' : 'border-white/10 text-slate-300'
                   }`}>
                     <div className="flex items-center gap-1.5 truncate">
                       <MapPin className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#d09554]' : 'text-slate-400'}`} />
@@ -469,7 +476,7 @@ export default function TourVideo() {
                     </div>
 
                     <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ml-2 transition-transform duration-200 ${
-                      isActive ? 'bg-[#d09554] text-black scale-105' : 'bg-slate-100 text-slate-600'
+                      isActive ? 'bg-[#d09554] text-black scale-105' : 'bg-white/15 text-white'
                     }`}>
                       <Play className="w-3.5 h-3.5 fill-current ml-0.5" />
                     </div>
@@ -479,10 +486,10 @@ export default function TourVideo() {
             })}
 
             {/* Upcoming Event Teaser Card */}
-            <div className="min-w-[260px] sm:min-w-[290px] p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-slate-50/80 border border-dashed border-slate-300 flex flex-col justify-center items-center text-center p-6 space-y-2 text-slate-500 shrink-0">
-              <Calendar className="w-8 h-8 text-[#d09554]/70" />
-              <div className="text-sm font-bold text-[#173554]">More Expos Coming Soon</div>
-              <p className="text-xs text-slate-500 max-w-[200px]">
+            <div className="min-w-[260px] sm:min-w-[290px] p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/[0.04] border border-dashed border-white/20 flex flex-col justify-center items-center text-center p-6 space-y-2 text-slate-300 shrink-0">
+              <Calendar className="w-8 h-8 text-[#d09554]" />
+              <div className="text-sm font-bold text-white">More Expos Coming Soon</div>
+              <p className="text-xs text-slate-400 max-w-[200px]">
                 New footage from upcoming international packaging trade fairs will be added here.
               </p>
             </div>

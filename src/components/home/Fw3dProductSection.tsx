@@ -194,13 +194,22 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
   return (
     <section
       id="featured-products-section"
-      className="py-16 sm:py-24 bg-gradient-to-b from-[#f8fafc] via-white to-[#f8fafc] text-[#222222] relative overflow-hidden"
+      className="py-12 sm:py-16 bg-gradient-to-b from-[#f8fafc] via-[#edf3f8] to-[#f8fafc] text-[#222222] relative overflow-hidden"
     >
+      {/* Precision Blueprint Texture */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-40 -z-10" 
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(35, 77, 119, 0.08) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
+
       {/* Ambient background lighting */}
-      <div className="absolute top-1/3 left-10 w-96 h-96 bg-[#234d77]/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute top-1/3 left-10 w-96 h-96 bg-[#234d77]/6 rounded-full blur-3xl pointer-events-none -z-10" />
       <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#649dcf]/10 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <motion.div
@@ -208,7 +217,7 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14"
+          className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10"
         >
           <div className="space-y-3 max-w-2xl">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#234d77] text-xs font-bold uppercase tracking-wider shadow-xs">

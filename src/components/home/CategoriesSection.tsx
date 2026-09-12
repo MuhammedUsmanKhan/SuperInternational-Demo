@@ -104,10 +104,10 @@ export default function CategoriesSection({
       key={cat.slug}
       variants={cardVariants}
       onClick={() => handleCategoryClick(cat.name)}
-      className="group relative rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 hover:border-[#d09554]/60 shadow-sm hover:shadow-[0_22px_44px_-14px_rgba(208,149,84,0.25)] hover:-translate-y-1.5 transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden flex flex-col justify-between cursor-pointer"
+      className="group relative rounded-2xl sm:rounded-3xl bg-[#0d1f33] border border-white/15 hover:border-[#d09554]/80 shadow-md hover:shadow-[0_22px_44px_-14px_rgba(208,149,84,0.3)] hover:-translate-y-1.5 transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden flex flex-col justify-between cursor-pointer"
     >
       {/* Top Image Showcase */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-100">
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
         <img
           src={cat.image}
           alt={cat.name}
@@ -116,11 +116,11 @@ export default function CategoriesSection({
         />
 
         {/* Ambient Subtle Image Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-20 group-hover:opacity-35 transition-opacity duration-600 ease-out" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f33] via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-600 ease-out" />
       </div>
 
       {/* Bottom Content Area with Signature Diagonal Gold Hover Effect */}
-      <div className="relative p-5 sm:p-6 bg-white overflow-hidden flex items-center justify-between gap-4 border-t border-slate-100">
+      <div className="relative p-5 sm:p-6 bg-[#0c1c2e] overflow-hidden flex items-center justify-between gap-4 border-t border-white/10">
         
         {/* The Diagonal Gold Hover Ribbon / Fill */}
         <div
@@ -128,12 +128,12 @@ export default function CategoriesSection({
         />
 
         {/* Category Name */}
-        <h3 className="relative z-10 text-base sm:text-lg lg:text-xl font-bold text-[#1f2937] group-hover:text-white transition-colors duration-500 tracking-tight drop-shadow-xs">
+        <h3 className="relative z-10 text-base sm:text-lg lg:text-xl font-bold text-white group-hover:text-black transition-colors duration-500 tracking-tight drop-shadow-xs">
           {cat.name}
         </h3>
 
         {/* Navigation Action Button */}
-        <div className="relative z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#f0f4f8] text-[#234d77] group-hover:bg-[#1a3d5e] group-hover:text-white flex items-center justify-center transition-all duration-500 shadow-xs group-hover:shadow-md shrink-0 group-hover:translate-x-1">
+        <div className="relative z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 text-white group-hover:bg-black group-hover:text-white flex items-center justify-center transition-all duration-500 shadow-xs group-hover:shadow-md shrink-0 group-hover:translate-x-1">
           <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-500 group-hover:scale-110" />
         </div>
 
@@ -144,13 +144,22 @@ export default function CategoriesSection({
   return (
     <section
       id="categories-section"
-      className="py-16 sm:py-24 bg-gradient-to-b from-[#f8fafc] via-white to-[#f8fafc] text-[#222222] relative overflow-hidden"
+      className="py-12 sm:py-16 bg-gradient-to-b from-[#091726] via-[#0d2136] to-[#091726] text-white relative overflow-hidden border-y border-white/10"
     >
-      {/* Decorative ambient lighting */}
-      <div className="absolute top-1/4 right-10 w-96 h-96 bg-[#234d77]/5 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#d09554]/8 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Technical Blueprint Dot Texture */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-25 -z-10" 
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(208, 149, 84, 0.15) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Decorative ambient lighting */}
+      <div className="absolute top-1/4 right-10 w-96 h-96 bg-[#234d77]/25 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#d09554]/15 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <motion.div
@@ -158,21 +167,21 @@ export default function CategoriesSection({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3.5"
+          className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#234d77] text-xs font-bold uppercase tracking-wider shadow-xs">
-            <Layers className="w-3.5 h-3.5 text-[#649dcf]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#f5d5a8] text-xs font-bold uppercase tracking-wider shadow-xs backdrop-blur-md">
+            <Layers className="w-3.5 h-3.5 text-[#d09554]" />
             <span>Product Sectors &amp; Capabilities</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
             Explore Our Specialized <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]">
               Packaging Categories
             </span>
           </h2>
 
-          <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
             Precision-engineered containers, dispensing systems, and cold-chain carriers crafted to international quality standards.
           </p>
         </motion.div>

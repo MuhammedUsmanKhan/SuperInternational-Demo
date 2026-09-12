@@ -228,13 +228,22 @@ export default function TestimonialsSection() {
   return (
     <section
       id="testimonials-section"
-      className="py-18 sm:py-26 bg-gradient-to-b from-[#f8fafc] via-white to-[#f4f7fa] text-[#222222] relative overflow-hidden"
+      className="py-12 sm:py-16 bg-gradient-to-b from-[#081422] via-[#0d2136] to-[#081422] text-white relative overflow-hidden border-y border-white/10"
     >
-      {/* Ambient background lighting effects */}
-      <div className="absolute top-1/3 left-1/4 w-[750px] h-[500px] bg-[#234d77]/6 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-1/4 w-[750px] h-[500px] bg-[#d09554]/8 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Technical Blueprint Dot Texture */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-25 -z-10" 
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(208, 149, 84, 0.15) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Ambient background lighting effects */}
+      <div className="absolute top-1/3 left-1/4 w-[750px] h-[500px] bg-[#234d77]/25 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-1/4 w-[750px] h-[500px] bg-[#d09554]/15 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ========================================================================= */}
         {/* 1. SECTION HEADER (Matching Exact Metallic Gradient & Pill Badge)         */}
@@ -244,21 +253,21 @@ export default function TestimonialsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-12 sm:mb-16 space-y-3.5"
+          className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#173554] text-xs font-bold uppercase tracking-wider shadow-2xs">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#f5d5a8] text-xs font-bold uppercase tracking-wider shadow-2xs backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
             <span>Authentic Client Experiences &bull; Video Endorsements</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
             What Industry Leaders Say <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]">
               About Our Manufacturing Quality
             </span>
           </h2>
 
-          <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
             Hear directly from CEOs, supply chain directors, and quality heads about how Super International’s zero-defect tooling and cleanroom packaging power their global supply chains.
           </p>
         </motion.div>
@@ -266,13 +275,13 @@ export default function TestimonialsSection() {
         {/* ========================================================================= */}
         {/* 2. MAIN FEATURED CLIENT VIDEO STAGE (Two-Column Masterpiece)              */}
         {/* ========================================================================= */}
-        <div className="max-w-6xl mx-auto">
+        <div className="w-full">
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-3xl bg-white border border-slate-200/90 shadow-[0_25px_60px_-15px_rgba(23,53,84,0.16)] overflow-hidden"
+            className="rounded-3xl bg-[#0c1c2e] border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
               
@@ -361,7 +370,7 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Right Column: Executive Partner Dossier */}
-              <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-white">
+              <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-[#0c1c2e] text-white border-t lg:border-t-0 lg:border-l border-white/10">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeTestimonial.id}
@@ -372,23 +381,23 @@ export default function TestimonialsSection() {
                     className="space-y-5"
                   >
                     {/* Top Ratings & Verified Tag */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
-                      <div className="flex items-center gap-1.5 bg-[#fef8ee] border border-[#faecd8] px-3 py-1 rounded-full">
+                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
+                      <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 px-3 py-1 rounded-full">
                         {[...Array(5)].map((_, i) => (
                           <Star key={i} className="w-3.5 h-3.5 fill-[#d09554] text-[#d09554]" />
                         ))}
-                        <span className="text-[11px] font-bold text-[#b8833f] ml-1">5.0 Verified Video Case</span>
+                        <span className="text-[11px] font-bold text-[#f5d5a8] ml-1">5.0 Verified Video Case</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1 text-[11px] font-bold text-[#234d77] bg-[#f0f4f8] px-2.5 py-1 rounded-full">
-                        <CheckCircle className="w-3 h-3 text-[#234d77]" />
+                      <div className="inline-flex items-center gap-1 text-[11px] font-bold text-white bg-white/10 px-2.5 py-1 rounded-full">
+                        <CheckCircle className="w-3 h-3 text-[#d09554]" />
                         <span>{activeTestimonial.industry}</span>
                       </div>
                     </div>
 
                     {/* Partner Header with Logo & Avatar */}
                     <div className="flex items-center gap-4">
-                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-xs shrink-0">
+                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-white border border-white/20 shadow-xs shrink-0">
                         <img
                           src={activeTestimonial.avatar}
                           alt={activeTestimonial.clientName}
@@ -397,25 +406,25 @@ export default function TestimonialsSection() {
                       </div>
 
                       <div className="space-y-0.5">
-                        <h3 className="text-lg sm:text-xl font-black text-[#173554] tracking-tight">
+                        <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
                           {activeTestimonial.clientName}
                         </h3>
                         <div className="text-xs font-bold text-[#d09554] uppercase tracking-wider">
                           {activeTestimonial.designation}
                         </div>
-                        <div className="text-xs font-medium text-[#555555]">
+                        <div className="text-xs font-medium text-slate-300">
                           {activeTestimonial.company}
                         </div>
                       </div>
                     </div>
 
                     {/* Headline Highlight */}
-                    <div className="text-base sm:text-lg font-black text-[#173554] leading-snug tracking-tight">
+                    <div className="text-base sm:text-lg font-black text-white leading-snug tracking-tight">
                       &ldquo;{activeTestimonial.highlight}&rdquo;
                     </div>
 
                     {/* Video Takeaway Summary */}
-                    <p className="text-xs sm:text-sm text-[#444444] leading-relaxed font-normal">
+                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
                       {activeTestimonial.takeaway}
                     </p>
 
@@ -424,12 +433,12 @@ export default function TestimonialsSection() {
                       {activeTestimonial.metrics.map((metric, idx) => (
                         <div
                           key={idx}
-                          className="p-2.5 rounded-xl bg-[#f8fafc] border border-slate-200/80 text-center"
+                          className="p-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-center"
                         >
-                          <div className="text-xs sm:text-sm font-black text-[#173554]">
+                          <div className="text-xs sm:text-sm font-black text-[#d09554]">
                             {metric.value}
                           </div>
-                          <div className="text-[10px] text-[#666666] font-semibold mt-0.5 leading-tight">
+                          <div className="text-[10px] text-slate-300 font-semibold mt-0.5 leading-tight">
                             {metric.label}
                           </div>
                         </div>
@@ -439,24 +448,24 @@ export default function TestimonialsSection() {
                 </AnimatePresence>
 
                 {/* Bottom Navigator & Slide Switcher */}
-                <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-                  <div className="text-xs font-bold text-[#666666] uppercase tracking-wider">
+                <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
+                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                     <span>0{activeIndex + 1}</span>
-                    <span className="text-slate-300 mx-1.5">/</span>
+                    <span className="text-white/30 mx-1.5">/</span>
                     <span>0{total}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handlePrev}
-                      className="w-10 h-10 rounded-full bg-[#f0f4f8] hover:bg-[#173554] text-[#173554] hover:text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#d09554] hover:text-black text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
                       aria-label="Previous Video Case"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
                     <button
                       onClick={handleNext}
-                      className="w-10 h-10 rounded-full bg-[#f0f4f8] hover:bg-[#173554] text-[#173554] hover:text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#d09554] hover:text-black text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
                       aria-label="Next Video Case"
                     >
                       <ChevronRight className="w-4 h-4" />
@@ -473,8 +482,8 @@ export default function TestimonialsSection() {
         {/* ========================================================================= */}
         {/* 3. INTERACTIVE CLIENT VIDEO SELECTOR REELS                                 */}
         {/* ========================================================================= */}
-        <div className="mt-8 sm:mt-12 max-w-6xl mx-auto">
-          <div className="text-xs font-bold text-[#173554] uppercase tracking-wider mb-4 flex items-center gap-2">
+        <div className="mt-8 sm:mt-10 w-full">
+          <div className="text-xs font-bold text-[#f5d5a8] uppercase tracking-wider mb-4 flex items-center gap-2">
             <Award className="w-4 h-4 text-[#d09554]" />
             <span>Select Enterprise Video Case:</span>
           </div>
@@ -488,8 +497,8 @@ export default function TestimonialsSection() {
                   onClick={() => handleSelectClient(idx)}
                   className={`relative p-4 rounded-2xl transition-all duration-300 cursor-pointer border flex items-center gap-3.5 ${
                     isActive
-                      ? 'bg-[#173554] text-white border-[#d09554] shadow-lg shadow-[#173554]/20 scale-102'
-                      : 'bg-white hover:bg-[#f8fafc] text-[#222222] border-slate-200/90 shadow-2xs hover:border-[#234d77]/40'
+                      ? 'bg-gradient-to-br from-[#173554] to-[#0c1e30] text-white border-[#d09554] shadow-lg shadow-[#d09554]/25 scale-102 ring-2 ring-[#d09554]/30'
+                      : 'bg-white/[0.06] hover:bg-white/[0.12] text-white border-white/15 shadow-2xs hover:border-[#d09554]/60'
                   }`}
                 >
                   {/* Thumbnail Avatar with Play Icon Overlay */}
@@ -509,12 +518,12 @@ export default function TestimonialsSection() {
                   </div>
 
                   <div className="overflow-hidden min-w-0 flex-1">
-                    <div className="text-xs font-black truncate tracking-tight">
+                    <div className="text-xs font-black truncate tracking-tight text-white">
                       {client.clientName}
                     </div>
                     <div
                       className={`text-[11px] truncate ${
-                        isActive ? 'text-[#d09554]' : 'text-[#666666]'
+                        isActive ? 'text-[#d09554]' : 'text-slate-300'
                       }`}
                     >
                       {client.company}

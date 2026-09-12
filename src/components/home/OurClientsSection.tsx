@@ -162,12 +162,21 @@ export default function OurClientsSection() {
   return (
     <section
       id="clients-section"
-      className="py-16 sm:py-24 bg-gradient-to-b from-white via-[#f8fafc] to-white text-[#222222] relative overflow-hidden border-y border-slate-200/60"
+      className="py-10 sm:py-14 bg-gradient-to-b from-white via-[#f4f7fb] to-white text-[#222222] relative overflow-hidden border-y border-slate-200/60"
     >
+      {/* Precision Blueprint Texture */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-30 -z-10" 
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(35, 77, 119, 0.08) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
+
       {/* Decorative ambient background */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[400px] bg-gradient-to-r from-[#234d77]/5 via-[#649dcf]/8 to-[#d09554]/5 rounded-full blur-3xl pointer-events-none -z-10" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 sm:mb-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-10">
         
         {/* Section Header */}
         <motion.div
@@ -175,7 +184,7 @@ export default function OurClientsSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto space-y-3.5"
+          className="text-center max-w-3xl mx-auto space-y-3"
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#234d77] text-xs font-bold uppercase tracking-wider shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
@@ -222,7 +231,7 @@ export default function OurClientsSection() {
       </div>
 
       {/* Bottom Assurance Badges */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           whileInView={{ opacity: 1, y: 0 }}

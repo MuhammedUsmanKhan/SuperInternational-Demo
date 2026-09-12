@@ -161,15 +161,24 @@ export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps
   return (
     <section 
       id="welcome-section" 
-      className="py-18 sm:py-24 bg-gradient-to-b from-white via-[#fbfcfe] to-[#f4f7fa] text-[#222222] relative overflow-hidden"
+      className="py-12 sm:py-16 bg-gradient-to-b from-[#fbfcfe] via-[#f4f7fa] to-[#edf3f8] text-[#222222] relative overflow-hidden"
     >
-      {/* Ambient background glow accents */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-[#d09554]/5 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#234d77]/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Precision Blueprint Dot Matrix Texture */}
+      <div 
+        className="absolute inset-0 pointer-events-none opacity-40 -z-10" 
+        style={{
+          backgroundImage: 'radial-gradient(circle, rgba(35, 77, 119, 0.08) 1px, transparent 1px)',
+          backgroundSize: '24px 24px',
+        }}
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Ambient background glow accents */}
+      <div className="absolute top-10 left-10 w-96 h-96 bg-[#d09554]/6 rounded-full blur-3xl pointer-events-none -z-10" />
+      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#234d77]/6 rounded-full blur-3xl pointer-events-none -z-10" />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           
           {/* ========================================================================= */}
           {/* Left Column: 40+ Experience, Heading, Story, Highlights                   */}
@@ -409,7 +418,7 @@ export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps
         {/* ========================================================================= */}
         {/* STATS CARDS (Manufacturing Excellence, Units, Certifications, Export)    */}
         {/* ========================================================================= */}
-        <StatCards className="mt-14 sm:mt-20 pt-10 sm:pt-14 border-t border-slate-200/80" />
+        <StatCards className="mt-10 sm:mt-14 pt-8 sm:pt-10 border-t border-slate-200/80" />
 
       </div>
     </section>

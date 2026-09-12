@@ -77,7 +77,7 @@ export default function BannerSection({ onOpenQuoteModal }: BannerSectionProps) 
 
   return (
     <section className="banner-sec py-4 sm:py-6 bg-white overflow-hidden">
-      <div className="max-w-[1740px] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
         <div
           className="main-banner-box relative rounded-[20px] sm:rounded-[28px] p-6 sm:p-10 lg:p-14 overflow-hidden border border-[#dce6f0]"
