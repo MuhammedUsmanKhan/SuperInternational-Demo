@@ -37,18 +37,24 @@ const CATEGORIES_ROW_1 = [
 const CATEGORIES_ROW_2 = [
   {
     id: 5,
+    name: 'Measuring Cups & Spoons',
+    slug: 'measuring-cups-and-spoons',
+    image: '/measuring-cups-and-spoons.jpeg',
+  },
+  {
+    id: 6,
     name: 'Vaccine Carriers',
     slug: 'vaccine-carriers',
     image: '/vaccine-carriers.jpeg',
   },
   {
-    id: 6,
+    id: 7,
     name: 'Ice Packs',
     slug: 'ice-packs',
     image: '/ice-packs.jpeg',
   },
   {
-    id: 7,
+    id: 8,
     name: 'Others',
     slug: 'others',
     image: '/others.jpeg',
@@ -171,7 +177,7 @@ export default function CategoriesSection({
           </p>
         </motion.div>
 
-        {/* 4 + 3 Layout with Perfectly Centered Second Row */}
+        {/* 4 + 4 Layout Across 2 Balanced Rows */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -184,8 +190,8 @@ export default function CategoriesSection({
             {CATEGORIES_ROW_1.map((cat) => renderCard(cat))}
           </div>
 
-          {/* Row 2: 3 Categories Perfectly Centered */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:w-3/4 mx-auto">
+          {/* Row 2: 4 Categories */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {CATEGORIES_ROW_2.map((cat) => renderCard(cat))}
           </div>
         </motion.div>
