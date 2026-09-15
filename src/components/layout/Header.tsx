@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight, Phone, Mail, MapPin, ShieldCheck, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import ThemeToggle from '../common/ThemeToggle';
+import { useTheme } from '../../context/ThemeContext';
 
 interface HeaderProps {
   onOpenQuoteModal?: () => void;
@@ -26,6 +28,7 @@ const TICKER_ITEMS = [
 ];
 
 export default function Header({ onOpenQuoteModal }: HeaderProps) {
+  const { isLight } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [tickerIndex, setTickerIndex] = useState(0);
 
@@ -45,7 +48,11 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
       {/* ========================================================================= */}
       {/* 1. TOP ULTRA-MODERN UTILITY STRIP                                         */}
       {/* ========================================================================= */}
-      <div className="bg-gradient-to-r from-[#06121d] via-[#0e2238] to-[#081523] border-b border-white/[0.08] text-white text-[11px] sm:text-[12px] py-1.5 px-4 sm:px-6 lg:px-8 relative z-50 shadow-[0_4px_20px_rgba(0,0,0,0.35)] backdrop-blur-md">
+      <div className={`${
+        isLight
+          ? 'bg-gradient-to-r from-[#faf6f0] via-[#ffffff] to-[#f4ebe0] border-b border-[#d09554]/25 text-slate-800 shadow-[0_2px_12px_rgba(208,149,84,0.08)]'
+          : 'bg-gradient-to-r from-[#06121d] via-[#0e2238] to-[#081523] border-b border-white/[0.08] text-white shadow-[0_4px_20px_rgba(0,0,0,0.35)]'
+      } text-[11px] sm:text-[12px] py-1.5 px-4 sm:px-6 lg:px-8 relative z-50 backdrop-blur-md transition-colors duration-300`}>
         {/* Subtle Ambient Gold Bottom Shimmer Line */}
         <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-[#d09554]/50 to-transparent pointer-events-none" />
 
@@ -56,10 +63,14 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
             {/* Phone */}
             <a
               href="tel:+923360875171"
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-[#d09554]/60 transition-all duration-200 text-white group shrink-0 shadow-xs"
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
+                isLight
+                  ? 'bg-white hover:bg-[#faf5ec] border border-[#d09554]/25 hover:border-[#d09554] text-[#173554] shadow-2xs'
+                  : 'bg-white/[0.05] hover:bg-white/[0.1] border border-white/10 hover:border-[#d09554]/60 text-white shadow-xs'
+              } transition-all duration-200 group shrink-0`}
             >
-              <span className="w-4 h-4 rounded-full bg-[#d09554]/20 flex items-center justify-center group-hover:bg-[#d09554] transition-colors duration-200">
-                <Phone className="w-2.5 h-2.5 text-[#d09554] group-hover:text-[#0e2238] transition-colors" />
+              <span className={`w-4 h-4 rounded-full ${isLight ? 'bg-[#d09554]/15' : 'bg-[#d09554]/20'} flex items-center justify-center group-hover:bg-[#d09554] transition-colors duration-200`}>
+                <Phone className={`w-2.5 h-2.5 text-[#d09554] ${isLight ? 'group-hover:text-white' : 'group-hover:text-[#0e2238]'} transition-colors`} />
               </span>
               <span className="font-semibold tracking-tight text-[11px] sm:text-[12px] group-hover:text-[#d09554] transition-colors">
                 +92 336 0875171
@@ -69,7 +80,11 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
             {/* Email (hidden on smaller screens) */}
             <a
               href="mailto:info@superinternational.pk"
-              className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#d09554]/40 transition-all duration-200 text-white/80 hover:text-white shrink-0"
+              className={`hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full ${
+                isLight
+                  ? 'bg-white hover:bg-[#faf5ec] border border-[#d09554]/20 hover:border-[#d09554] text-slate-700 hover:text-[#173554] shadow-2xs'
+                  : 'bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#d09554]/40 text-white/80 hover:text-white'
+              } transition-all duration-200 shrink-0`}
             >
               <Mail className="w-3.5 h-3.5 text-[#d09554]" />
               <span className="text-[11px] sm:text-[12px]">info@superinternational.pk</span>
@@ -85,12 +100,14 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.35, ease: 'easeOut' }}
-                className="flex items-center gap-2 text-center text-xs font-medium text-white/90 truncate cursor-default"
+                className={`flex items-center gap-2 text-center text-xs font-medium ${isLight ? 'text-slate-800' : 'text-white/90'} truncate cursor-default`}
               >
-                <span className="px-2 py-0.5 rounded-full bg-[#d09554]/15 border border-[#d09554]/30 text-[#d09554] text-[10px] font-bold uppercase tracking-wider shrink-0">
+                <span className={`px-2 py-0.5 rounded-full ${
+                  isLight ? 'bg-[#d09554]/15 border border-[#d09554]/40 text-[#8d561d]' : 'bg-[#d09554]/15 border border-[#d09554]/30 text-[#d09554]'
+                } text-[10px] font-bold uppercase tracking-wider shrink-0`}>
                   {TICKER_ITEMS[tickerIndex].badge}
                 </span>
-                <span className="truncate text-white/80 hover:text-white transition-colors">
+                <span className={`truncate ${isLight ? 'text-slate-600 hover:text-slate-900' : 'text-white/80 hover:text-white'} transition-colors`}>
                   {TICKER_ITEMS[tickerIndex].text}
                 </span>
               </motion.div>
@@ -99,7 +116,7 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
 
           {/* Right Sleek Translucent Social Media Pills with Vibrant Brand Colors */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            <span className="hidden sm:inline-block text-[11px] font-extrabold text-white/70 uppercase tracking-wider mr-0.5">
+            <span className={`hidden sm:inline-block text-[11px] font-extrabold ${isLight ? 'text-slate-600' : 'text-white/70'} uppercase tracking-wider mr-0.5`}>
               Connect:
             </span>
 
@@ -190,7 +207,11 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
           {/* ----------------------------------------------------------------------- */}
           <nav
             aria-label="Primary Navigation Capsule"
-            className="flex items-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full bg-[#0a192c]/85 hover:bg-[#0a192c]/95 backdrop-blur-2xl border border-white/15 shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition-all duration-300"
+            className={`flex items-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-full backdrop-blur-2xl border transition-all duration-300 ${
+              isLight
+                ? 'bg-white/90 hover:bg-white/95 border-[#d09554]/30 shadow-[0_14px_35px_rgba(208,149,84,0.12)]'
+                : 'bg-[#0a192c]/85 hover:bg-[#0a192c]/95 border-white/15 shadow-[0_14px_35px_rgba(0,0,0,0.3)]'
+            }`}
           >
             {/* Brand Logo Pill - High Contrast, Crisp & Prominent */}
             <a
@@ -209,42 +230,54 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
             <div className="hidden md:flex items-center gap-1 sm:gap-1.5">
               <a
                 href="#"
-                className="text-[13px] lg:text-[14px] font-semibold text-white px-3.5 py-1.5 rounded-full hover:bg-white/10 hover:text-[#d09554] transition-all duration-200"
+                className={`text-[13px] lg:text-[14px] font-semibold px-3.5 py-1.5 rounded-full hover:text-[#d09554] transition-all duration-200 ${
+                  isLight ? 'text-[#173554] hover:bg-[#d09554]/10' : 'text-white hover:bg-white/10'
+                }`}
               >
                 Home
               </a>
 
               <a
                 href="#our-products-section"
-                className="text-[13px] lg:text-[14px] font-medium text-white/80 hover:text-[#d09554] px-3.5 py-1.5 rounded-full hover:bg-white/10 transition-all duration-200"
+                className={`text-[13px] lg:text-[14px] font-medium px-3.5 py-1.5 rounded-full hover:text-[#d09554] transition-all duration-200 ${
+                  isLight ? 'text-[#173554]/80 hover:bg-[#d09554]/10' : 'text-white/80 hover:bg-white/10'
+                }`}
               >
                 Products
               </a>
 
               <a
                 href="#welcome-section"
-                className="text-[13px] lg:text-[14px] font-medium text-white/80 hover:text-[#d09554] px-3.5 py-1.5 rounded-full hover:bg-white/10 transition-all duration-200"
+                className={`text-[13px] lg:text-[14px] font-medium px-3.5 py-1.5 rounded-full hover:text-[#d09554] transition-all duration-200 ${
+                  isLight ? 'text-[#173554]/80 hover:bg-[#d09554]/10' : 'text-white/80 hover:bg-white/10'
+                }`}
               >
                 About Us
               </a>
 
               <a
                 href="#durability-sec"
-                className="text-[13px] lg:text-[14px] font-medium text-white/80 hover:text-[#d09554] px-3.5 py-1.5 rounded-full hover:bg-white/10 transition-all duration-200"
+                className={`text-[13px] lg:text-[14px] font-medium px-3.5 py-1.5 rounded-full hover:text-[#d09554] transition-all duration-200 ${
+                  isLight ? 'text-[#173554]/80 hover:bg-[#d09554]/10' : 'text-white/80 hover:bg-white/10'
+                }`}
               >
                 Quality &amp; Standards
               </a>
 
               <a
                 href="#team-section"
-                className="text-[13px] lg:text-[14px] font-medium text-white/80 hover:text-[#d09554] px-3.5 py-1.5 rounded-full hover:bg-white/10 transition-all duration-200"
+                className={`text-[13px] lg:text-[14px] font-medium px-3.5 py-1.5 rounded-full hover:text-[#d09554] transition-all duration-200 ${
+                  isLight ? 'text-[#173554]/80 hover:bg-[#d09554]/10' : 'text-white/80 hover:bg-white/10'
+                }`}
               >
                 Team
               </a>
 
               <a
                 href="#clients-section"
-                className="text-[13px] lg:text-[14px] font-medium text-white/80 hover:text-[#d09554] px-3.5 py-1.5 rounded-full hover:bg-white/10 transition-all duration-200"
+                className={`text-[13px] lg:text-[14px] font-medium px-3.5 py-1.5 rounded-full hover:text-[#d09554] transition-all duration-200 ${
+                  isLight ? 'text-[#173554]/80 hover:bg-[#d09554]/10' : 'text-white/80 hover:bg-white/10'
+                }`}
               >
                 Clients
               </a>
@@ -252,10 +285,18 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
           </nav>
 
           {/* ----------------------------------------------------------------------- */}
-          {/* RIGHT CAPSULE: Standalone Contact / Request Quote Capsule + Mobile Nav  */}
+          {/* RIGHT CAPSULE: Theme Toggle + Contact / Request Quote + Mobile Nav       */}
           {/* ----------------------------------------------------------------------- */}
-          <div className="flex items-center gap-2 px-1.5 py-1.5 sm:px-2 sm:py-2 rounded-full bg-[#0a192c]/85 hover:bg-[#0a192c]/95 backdrop-blur-2xl border border-white/15 shadow-[0_14px_35px_rgba(0,0,0,0.3)] transition-all duration-300 shrink-0">
-            
+          <div
+            className={`flex items-center gap-2 px-1.5 py-1.5 sm:px-2 sm:py-2 rounded-full backdrop-blur-2xl border transition-all duration-300 shrink-0 ${
+              isLight
+                ? 'bg-white/90 hover:bg-white/95 border-[#d09554]/30 shadow-[0_14px_35px_rgba(208,149,84,0.12)]'
+                : 'bg-[#0a192c]/85 hover:bg-[#0a192c]/95 border-white/15 shadow-[0_14px_35px_rgba(0,0,0,0.3)]'
+            }`}
+          >
+            {/* Desktop Theme Toggle Pill */}
+            <ThemeToggle />
+
             {/* Desktop & Mobile Request Quote Action Button with Dual-Beam Shine & Circular Arrow */}
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -282,12 +323,17 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
             <button
               id="mobile-menu-toggle"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-full text-white/80 hover:text-white bg-white/10 hover:bg-white/20 transition-colors cursor-pointer"
+              className={`md:hidden p-2 rounded-full transition-colors cursor-pointer ${
+                isLight
+                  ? 'text-[#173554] hover:text-[#d09554] bg-[#d09554]/10 hover:bg-[#d09554]/20'
+                  : 'text-white/80 hover:text-white bg-white/10 hover:bg-white/20'
+              }`}
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="w-4.5 h-4.5" /> : <Menu className="w-4.5 h-4.5" />}
             </button>
           </div>
+
 
         </div>
 
@@ -301,13 +347,25 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -12, scale: 0.98 }}
               transition={{ duration: 0.22, ease: 'easeOut' }}
-              className="mt-2.5 w-full max-w-lg mx-auto bg-[#0a192c]/95 backdrop-blur-2xl border border-white/15 rounded-3xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] text-white overflow-hidden pointer-events-auto"
+              className={`mt-2.5 w-full max-w-lg mx-auto backdrop-blur-2xl border rounded-3xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden pointer-events-auto ${
+                isLight ? 'bg-white/95 border-[#d09554]/30 text-[#173554]' : 'bg-[#0a192c]/95 border-white/15 text-white'
+              }`}
             >
+              {/* Appearance Mode Switcher in Mobile Drawer */}
+              <div className={`flex items-center justify-between pb-3 mb-2 border-b ${isLight ? 'border-[#d09554]/20' : 'border-white/10'}`}>
+                <span className={`text-xs font-bold uppercase tracking-wider ${isLight ? 'text-[#173554]' : 'text-white/70'}`}>
+                  Theme Mode
+                </span>
+                <ThemeToggle showLabel />
+              </div>
+
               <div className="flex flex-col space-y-2">
                 <a
                   href="#"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-2xl bg-white/10 text-[#d09554] font-bold text-sm flex items-center justify-between"
+                  className={`px-4 py-2.5 rounded-2xl font-bold text-sm flex items-center justify-between ${
+                    isLight ? 'bg-[#d09554]/15 text-[#d09554]' : 'bg-white/10 text-[#d09554]'
+                  }`}
                 >
                   <span>Home</span>
                   <ChevronRight className="w-4 h-4 text-[#d09554]" />
@@ -316,51 +374,61 @@ export default function Header({ onOpenQuoteModal }: HeaderProps) {
                 <a
                   href="#our-products-section"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-2xl hover:bg-white/5 text-white/90 font-medium text-sm flex items-center justify-between transition-colors"
+                  className={`px-4 py-2.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-colors ${
+                    isLight ? 'hover:bg-[#d09554]/10 text-[#173554]' : 'hover:bg-white/5 text-white/90'
+                  }`}
                 >
                   <span>Products</span>
-                  <ChevronRight className="w-4 h-4 text-white/40" />
+                  <ChevronRight className={`w-4 h-4 ${isLight ? 'text-[#173554]/40' : 'text-white/40'}`} />
                 </a>
 
                 <a
                   href="#welcome-section"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-2xl hover:bg-white/5 text-white/90 font-medium text-sm flex items-center justify-between transition-colors"
+                  className={`px-4 py-2.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-colors ${
+                    isLight ? 'hover:bg-[#d09554]/10 text-[#173554]' : 'hover:bg-white/5 text-white/90'
+                  }`}
                 >
                   <span>About Us</span>
-                  <ChevronRight className="w-4 h-4 text-white/40" />
+                  <ChevronRight className={`w-4 h-4 ${isLight ? 'text-[#173554]/40' : 'text-white/40'}`} />
                 </a>
 
                 <a
                   href="#durability-sec"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-2xl hover:bg-white/5 text-white/90 font-medium text-sm flex items-center justify-between transition-colors"
+                  className={`px-4 py-2.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-colors ${
+                    isLight ? 'hover:bg-[#d09554]/10 text-[#173554]' : 'hover:bg-white/5 text-white/90'
+                  }`}
                 >
                   <span>Quality &amp; Standards</span>
-                  <ChevronRight className="w-4 h-4 text-white/40" />
+                  <ChevronRight className={`w-4 h-4 ${isLight ? 'text-[#173554]/40' : 'text-white/40'}`} />
                 </a>
 
                 <a
                   href="#team-section"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-2xl hover:bg-white/5 text-white/90 font-medium text-sm flex items-center justify-between transition-colors"
+                  className={`px-4 py-2.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-colors ${
+                    isLight ? 'hover:bg-[#d09554]/10 text-[#173554]' : 'hover:bg-white/5 text-white/90'
+                  }`}
                 >
                   <span>Our Team</span>
-                  <ChevronRight className="w-4 h-4 text-white/40" />
+                  <ChevronRight className={`w-4 h-4 ${isLight ? 'text-[#173554]/40' : 'text-white/40'}`} />
                 </a>
 
                 <a
                   href="#clients-section"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="px-4 py-2.5 rounded-2xl hover:bg-white/5 text-white/90 font-medium text-sm flex items-center justify-between transition-colors"
+                  className={`px-4 py-2.5 rounded-2xl font-medium text-sm flex items-center justify-between transition-colors ${
+                    isLight ? 'hover:bg-[#d09554]/10 text-[#173554]' : 'hover:bg-white/5 text-white/90'
+                  }`}
                 >
                   <span>Clients</span>
-                  <ChevronRight className="w-4 h-4 text-white/40" />
+                  <ChevronRight className={`w-4 h-4 ${isLight ? 'text-[#173554]/40' : 'text-white/40'}`} />
                 </a>
               </div>
 
               {/* Direct Instant Quote Button */}
-              <div className="mt-4 pt-3 border-t border-white/10">
+              <div className={`mt-4 pt-3 border-t ${isLight ? 'border-[#d09554]/20' : 'border-white/10'}`}>
                 <button
                   onClick={() => {
                     setMobileMenuOpen(false);

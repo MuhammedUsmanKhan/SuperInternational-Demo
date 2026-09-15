@@ -16,6 +16,7 @@ import {
   ArrowUpRight,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface VideoTestimonial {
   id: number;
@@ -122,6 +123,7 @@ const CLIENT_VIDEO_TESTIMONIALS: VideoTestimonial[] = [
 ];
 
 export default function TestimonialsSection() {
+  const { isLight } = useTheme();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
@@ -215,6 +217,8 @@ export default function TestimonialsSection() {
         video.requestFullscreen().catch(() => {});
       } else if ((video as any).webkitRequestFullscreen) {
         (video as any).webkitRequestFullscreen();
+      } else if ((video as any).webkitEnterFullscreen) {
+        (video as any).webkitEnterFullscreen();
       }
     }
   };
@@ -228,20 +232,28 @@ export default function TestimonialsSection() {
   return (
     <section
       id="testimonials-section"
-      className="py-12 sm:py-16 bg-gradient-to-b from-[#081422] via-[#0d2136] to-[#081422] text-white relative overflow-hidden border-y border-white/10"
+      className={`py-12 sm:py-16 ${
+        isLight
+          ? 'bg-gradient-to-br from-[#faf5ec] via-[#f3ede1] to-[#e8ddcc] text-slate-800 border-y border-[#d09554]/25'
+          : 'bg-gradient-to-br from-[#06121d] via-[#0b1f35] to-[#071524] text-white border-y border-white/10'
+      } relative overflow-hidden transition-colors duration-500`}
     >
-      {/* Technical Blueprint Dot Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-25 -z-10" 
-        style={{
-          backgroundImage: 'radial-gradient(circle, rgba(208, 149, 84, 0.15) 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
-        }}
-      />
+      {/* Top Shimmer Hairline Divider */}
+      <div className="absolute top-0 left-0 right-0 shimmer-hairline pointer-events-none" />
 
-      {/* Ambient background lighting effects */}
-      <div className="absolute top-1/3 left-1/4 w-[750px] h-[500px] bg-[#234d77]/25 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-1/4 w-[750px] h-[500px] bg-[#d09554]/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Architectural CAD Technical Blueprint Grid & Micro-Dot Matrix */}
+      <div className={`absolute inset-0 pointer-events-none -z-10 ${isLight ? 'bg-blueprint-atelier-light opacity-85' : 'bg-cad-grid-dark opacity-75'}`} />
+
+      {/* Atmospheric Diagonal Studio Auroras (Active exclusively in Light Mode) */}
+      {isLight && (
+        <>
+          <div className="absolute -top-28 -left-28 w-[620px] h-[620px] bg-[#d09554]/16 rounded-full blur-3xl pointer-events-none -z-10" />
+          <div className="absolute -bottom-28 -right-28 w-[680px] h-[680px] bg-[#e8c493]/24 rounded-full blur-3xl pointer-events-none -z-10" />
+        </>
+      )}
+
+      {/* Bottom Shimmer Hairline Divider */}
+      <div className="absolute bottom-0 left-0 right-0 shimmer-hairline pointer-events-none" />
 
       <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
@@ -255,25 +267,29 @@ export default function TestimonialsSection() {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#f5d5a8] text-xs font-bold uppercase tracking-wider shadow-2xs backdrop-blur-md">
+          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${
+            isLight
+              ? 'bg-[#d09554]/12 border border-[#d09554]/30 text-[#8d561d]'
+              : 'bg-white/10 border border-white/20 text-[#f5d5a8]'
+          } text-xs font-bold uppercase tracking-wider shadow-xs backdrop-blur-md`}>
             <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
             <span>Authentic Client Experiences &bull; Video Endorsements</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-black ${isLight ? 'text-[#173554]' : 'text-white'} tracking-tight leading-tight`}>
             What Industry Leaders Say <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]">
+            <span className={isLight ? "text-transparent bg-clip-text bg-gradient-to-r from-[#173554] via-[#b87c3a] to-[#d09554]" : "text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]"}>
               About Our Manufacturing Quality
             </span>
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className={`text-sm sm:text-base ${isLight ? 'text-slate-600' : 'text-slate-300'} leading-relaxed max-w-2xl mx-auto font-normal`}>
             Hear directly from CEOs, supply chain directors, and quality heads about how Super International’s zero-defect tooling and cleanroom packaging power their global supply chains.
           </p>
         </motion.div>
 
         {/* ========================================================================= */}
-        {/* 2. MAIN FEATURED CLIENT VIDEO STAGE (Two-Column Masterpiece)              */}
+        {/* 2. MAIN FEATURED CLIENT VIDEO STAGE (Two-Column Floating Glass Panel)      */}
         {/* ========================================================================= */}
         <div className="w-full">
           <motion.div
@@ -281,14 +297,18 @@ export default function TestimonialsSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="rounded-3xl bg-[#0c1c2e] border border-white/15 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.5)] overflow-hidden"
+            className={`rounded-3xl ${
+              isLight
+                ? 'bg-white/95 backdrop-blur-xl border-t-2 border-t-[#d09554] border-x border-b border-[#d09554]/30 shadow-[0_30px_70px_rgba(208,149,84,0.18)]'
+                : 'bg-white/[0.06] backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)]'
+            } overflow-hidden`}
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
               
               {/* Left Column: High-End Video Player */}
               <div
                 ref={videoWrapperRef}
-                className="lg:col-span-7 relative bg-[#091522] min-h-[320px] sm:min-h-[420px] lg:min-h-[490px] flex items-center justify-center overflow-hidden group"
+                className="lg:col-span-7 relative bg-[#071320] min-h-[320px] sm:min-h-[420px] lg:min-h-[490px] flex items-center justify-center overflow-hidden group"
               >
                 <video
                   ref={videoRef}
@@ -370,7 +390,11 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Right Column: Executive Partner Dossier */}
-              <div className="lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between bg-[#0c1c2e] text-white border-t lg:border-t-0 lg:border-l border-white/10">
+              <div className={`lg:col-span-5 p-6 sm:p-8 lg:p-10 flex flex-col justify-between backdrop-blur-md ${
+                isLight
+                  ? 'bg-white/95 text-slate-800 border-t lg:border-t-0 lg:border-l border-[#d09554]/20 shadow-[0_4px_24px_rgba(208,149,84,0.06)]'
+                  : 'bg-[#0a1b2d]/90 text-white border-t lg:border-t-0 lg:border-l border-white/15'
+              }`}>
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={activeTestimonial.id}
@@ -381,15 +405,15 @@ export default function TestimonialsSection() {
                     className="space-y-5"
                   >
                     {/* Top Ratings & Verified Tag */}
-                    <div className="flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-4">
-                      <div className="flex items-center gap-1.5 bg-white/10 border border-white/15 px-3 py-1 rounded-full">
+                    <div className={`flex flex-wrap items-center justify-between gap-3 border-b ${isLight ? 'border-[#d09554]/15' : 'border-white/10'} pb-4`}>
+                      <div className={`flex items-center gap-1.5 px-3 py-1 rounded-full shadow-xs ${isLight ? 'bg-[#faf5ec] border border-[#d09554]/30' : 'bg-white/10 border border-white/15'}`}>
                         {[...Array(5)].map((_, i) => (
                           <Star key={i} className="w-3.5 h-3.5 fill-[#d09554] text-[#d09554]" />
                         ))}
-                        <span className="text-[11px] font-bold text-[#f5d5a8] ml-1">5.0 Verified Video Case</span>
+                        <span className={`text-[11px] font-bold ml-1 ${isLight ? 'text-[#8d561d]' : 'text-[#f5d5a8]'}`}>5.0 Verified Video Case</span>
                       </div>
 
-                      <div className="inline-flex items-center gap-1 text-[11px] font-bold text-white bg-white/10 px-2.5 py-1 rounded-full">
+                      <div className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full ${isLight ? 'text-slate-700 bg-[#faf5ec] border border-[#d09554]/30' : 'text-slate-200 bg-white/10 border border-white/15'}`}>
                         <CheckCircle className="w-3 h-3 text-[#d09554]" />
                         <span>{activeTestimonial.industry}</span>
                       </div>
@@ -397,7 +421,7 @@ export default function TestimonialsSection() {
 
                     {/* Partner Header with Logo & Avatar */}
                     <div className="flex items-center gap-4">
-                      <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-white border border-white/20 shadow-xs shrink-0">
+                      <div className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden shrink-0 ${isLight ? 'bg-[#faf5ec] border border-[#d09554]/30 shadow-sm' : 'bg-black/40 border border-white/20 shadow-xs'}`}>
                         <img
                           src={activeTestimonial.avatar}
                           alt={activeTestimonial.clientName}
@@ -406,25 +430,25 @@ export default function TestimonialsSection() {
                       </div>
 
                       <div className="space-y-0.5">
-                        <h3 className="text-lg sm:text-xl font-black text-white tracking-tight">
+                        <h3 className={`text-lg sm:text-xl font-black tracking-tight ${isLight ? 'text-[#173554]' : 'text-white'}`}>
                           {activeTestimonial.clientName}
                         </h3>
                         <div className="text-xs font-bold text-[#d09554] uppercase tracking-wider">
                           {activeTestimonial.designation}
                         </div>
-                        <div className="text-xs font-medium text-slate-300">
+                        <div className={`text-xs font-medium ${isLight ? 'text-slate-500' : 'text-slate-300'}`}>
                           {activeTestimonial.company}
                         </div>
                       </div>
                     </div>
 
                     {/* Headline Highlight */}
-                    <div className="text-base sm:text-lg font-black text-white leading-snug tracking-tight">
+                    <div className={`text-base sm:text-lg font-black leading-snug tracking-tight ${isLight ? 'text-[#173554]' : 'text-white'}`}>
                       &ldquo;{activeTestimonial.highlight}&rdquo;
                     </div>
 
                     {/* Video Takeaway Summary */}
-                    <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-normal">
+                    <p className={`text-xs sm:text-sm leading-relaxed font-normal ${isLight ? 'text-slate-600' : 'text-slate-300'}`}>
                       {activeTestimonial.takeaway}
                     </p>
 
@@ -433,12 +457,12 @@ export default function TestimonialsSection() {
                       {activeTestimonial.metrics.map((metric, idx) => (
                         <div
                           key={idx}
-                          className="p-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-center"
+                          className={`p-2.5 rounded-xl text-center shadow-2xs ${isLight ? 'bg-[#faf5ec] border border-[#d09554]/20' : 'bg-white/[0.05] border border-white/10'}`}
                         >
-                          <div className="text-xs sm:text-sm font-black text-[#d09554]">
+                          <div className={`text-xs sm:text-sm font-black ${isLight ? 'text-[#173554]' : 'text-white'}`}>
                             {metric.value}
                           </div>
-                          <div className="text-[10px] text-slate-300 font-semibold mt-0.5 leading-tight">
+                          <div className={`text-[10px] font-semibold mt-0.5 leading-tight ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
                             {metric.label}
                           </div>
                         </div>
@@ -448,24 +472,32 @@ export default function TestimonialsSection() {
                 </AnimatePresence>
 
                 {/* Bottom Navigator & Slide Switcher */}
-                <div className="pt-6 mt-6 border-t border-white/10 flex items-center justify-between">
-                  <div className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <div className={`pt-6 mt-6 border-t ${isLight ? 'border-[#d09554]/15' : 'border-white/10'} flex items-center justify-between`}>
+                  <div className={`text-xs font-bold uppercase tracking-wider ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
                     <span>0{activeIndex + 1}</span>
-                    <span className="text-white/30 mx-1.5">/</span>
+                    <span className={`${isLight ? 'text-slate-400' : 'text-slate-500'} mx-1.5`}>/</span>
                     <span>0{total}</span>
                   </div>
 
                   <div className="flex items-center gap-2">
                     <button
                       onClick={handlePrev}
-                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#d09554] hover:text-black text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                        isLight
+                          ? 'bg-white text-[#173554] border border-[#d09554]/30 hover:bg-[#d09554] hover:text-white shadow-xs'
+                          : 'bg-white/10 hover:bg-[#d09554] hover:text-[#06121d] border border-white/20 text-white shadow-xs'
+                      }`}
                       aria-label="Previous Video Case"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
                     <button
                       onClick={handleNext}
-                      className="w-10 h-10 rounded-full bg-white/10 hover:bg-[#d09554] hover:text-black text-white flex items-center justify-center shadow-2xs transition-all cursor-pointer"
+                      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all cursor-pointer ${
+                        isLight
+                          ? 'bg-white text-[#173554] border border-[#d09554]/30 hover:bg-[#d09554] hover:text-white shadow-xs'
+                          : 'bg-white/10 hover:bg-[#d09554] hover:text-[#06121d] border border-white/20 text-white shadow-xs'
+                      }`}
                       aria-label="Next Video Case"
                     >
                       <ChevronRight className="w-4 h-4" />
@@ -483,7 +515,7 @@ export default function TestimonialsSection() {
         {/* 3. INTERACTIVE CLIENT VIDEO SELECTOR REELS                                 */}
         {/* ========================================================================= */}
         <div className="mt-8 sm:mt-10 w-full">
-          <div className="text-xs font-bold text-[#f5d5a8] uppercase tracking-wider mb-4 flex items-center gap-2">
+          <div className={`text-xs font-bold uppercase tracking-wider mb-4 flex items-center gap-2 ${isLight ? 'text-[#173554]' : 'text-[#f5d5a8]'}`}>
             <Award className="w-4 h-4 text-[#d09554]" />
             <span>Select Enterprise Video Case:</span>
           </div>
@@ -495,14 +527,19 @@ export default function TestimonialsSection() {
                 <div
                   key={client.id}
                   onClick={() => handleSelectClient(idx)}
-                  className={`relative p-4 rounded-2xl transition-all duration-300 cursor-pointer border flex items-center gap-3.5 ${
+                  className={`relative p-4 rounded-2xl transition-all duration-300 cursor-pointer border flex items-center gap-3.5 select-none ${
                     isActive
-                      ? 'bg-gradient-to-br from-[#173554] to-[#0c1e30] text-white border-[#d09554] shadow-lg shadow-[#d09554]/25 scale-102 ring-2 ring-[#d09554]/30'
-                      : 'bg-white/[0.06] hover:bg-white/[0.12] text-white border-white/15 shadow-2xs hover:border-[#d09554]/60'
+                      ? isLight
+                        ? 'bg-white text-slate-800 border-2 border-[#d09554] shadow-lg shadow-[#d09554]/15 scale-102 ring-2 ring-[#d09554]/25'
+                        : 'bg-gradient-to-br from-[#12273e] to-[#0d1d2e] text-white border-2 border-[#d09554] shadow-lg shadow-[#d09554]/20 scale-102 ring-2 ring-[#d09554]/30'
+                      : (isLight
+                          ? 'bg-white/95 hover:bg-white text-slate-800 border-t-2 border-t-[#d09554] border-x border-b border-[#d09554]/25 shadow-[0_6px_20px_rgba(208,149,84,0.08)] hover:border-t-[#e8c493] hover:shadow-[0_16px_36px_rgba(208,149,84,0.18)]'
+                          : 'bg-white/[0.05] hover:bg-white/[0.1] backdrop-blur-md text-white border border-white/15 shadow-sm hover:border-[#d09554]/50'
+                        )
                   }`}
                 >
                   {/* Thumbnail Avatar with Play Icon Overlay */}
-                  <div className="relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border border-white/20">
+                  <div className={`relative w-12 h-12 rounded-xl overflow-hidden shrink-0 border ${isLight ? 'border-[#d09554]/30' : 'border-white/20'} shadow-2xs`}>
                     <img
                       src={client.avatar}
                       alt={client.clientName}
@@ -518,17 +555,23 @@ export default function TestimonialsSection() {
                   </div>
 
                   <div className="overflow-hidden min-w-0 flex-1">
-                    <div className="text-xs font-black truncate tracking-tight text-white">
+                    <div className={`text-xs font-black truncate tracking-tight ${
+                      isActive 
+                        ? isLight ? 'text-[#173554]' : 'text-white'
+                        : (isLight ? 'text-[#173554]' : 'text-white')
+                    }`}>
                       {client.clientName}
                     </div>
                     <div
                       className={`text-[11px] truncate ${
-                        isActive ? 'text-[#d09554]' : 'text-slate-300'
+                        isActive 
+                          ? isLight ? 'text-[#b87c3a] font-bold' : 'text-[#f5d5a8] font-bold'
+                          : (isLight ? 'text-slate-500' : 'text-slate-400')
                       }`}
                     >
                       {client.company}
                     </div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">
+                    <div className={`text-[10px] ${isActive ? (isLight ? 'text-slate-500' : 'text-slate-300') : (isLight ? 'text-slate-400' : 'text-slate-400')} mt-0.5`}>
                       {client.duration}
                     </div>
                   </div>

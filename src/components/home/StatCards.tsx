@@ -1,6 +1,7 @@
 import React from 'react';
 import { Factory, Award, ShieldCheck, Globe2 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface StatMetric {
   icon: React.ComponentType<{ className?: string }>;
@@ -45,6 +46,8 @@ export default function StatCards({
   metrics = DEFAULT_STAT_METRICS,
   className = '',
 }: StatCardsProps) {
+  const { isLight } = useTheme();
+
   return (
     <div className={`w-full ${className}`}>
       <motion.div
@@ -61,25 +64,33 @@ export default function StatCards({
               key={idx}
               whileHover={{ y: -3 }}
               transition={{ duration: 0.2 }}
-              className="group relative p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_16px_36px_rgba(35,77,119,0.12)] hover:border-[#d09554]/50 transition-all duration-300 flex items-start gap-4 select-none"
+              className={`group relative p-5 sm:p-6 rounded-2xl sm:rounded-3xl ${
+                isLight
+                  ? 'bg-white/95 hover:bg-white backdrop-blur-xl border-t-2 border-t-[#d09554] border-x border-b border-[#d09554]/25 shadow-[0_10px_30px_rgba(208,149,84,0.1)] hover:shadow-[0_20px_45px_rgba(208,149,84,0.2)] hover:border-t-[#e8c493]'
+                  : 'bg-white/[0.05] hover:bg-white/[0.09] backdrop-blur-xl border border-white/15 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.5)] hover:border-[#d09554]/50'
+              } transition-all duration-300 flex items-start gap-4 select-none`}
             >
               {/* Subtle top gold shimmer line on hover */}
-              <div className="absolute -top-px left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#d09554]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              <div className="absolute -top-px left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#d09554]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
               {/* Icon Container inside soft rounded square */}
-              <div className="w-12 h-12 rounded-2xl bg-[#f0f4f8] group-hover:bg-[#eaf0f7] text-[#173554] flex items-center justify-center shrink-0 transition-colors duration-300 shadow-2xs">
-                <Icon className="w-5.5 h-5.5 text-[#173554] group-hover:scale-110 transition-transform duration-300" />
+              <div className={`w-12 h-12 rounded-2xl ${
+                isLight
+                  ? 'bg-[#faf5ec] group-hover:bg-[#d09554]/20 text-[#b87c3a] border border-[#d09554]/20'
+                  : 'bg-white/10 group-hover:bg-[#d09554]/20 text-[#f5d5a8]'
+              } flex items-center justify-center shrink-0 transition-colors duration-300 shadow-2xs`}>
+                <Icon className="w-5.5 h-5.5 text-[#d09554] group-hover:scale-110 transition-transform duration-300" />
               </div>
 
               {/* Stat Typography */}
               <div className="space-y-1">
-                <div className="text-2xl sm:text-3xl font-black text-[#173554] tracking-tight leading-tight">
+                <div className={`text-2xl sm:text-3xl font-black ${isLight ? 'text-[#173554]' : 'text-white'} tracking-tight leading-tight`}>
                   {metric.value}
                 </div>
-                <div className="text-xs sm:text-sm font-bold text-[#1f2937] leading-tight">
+                <div className={`text-xs sm:text-sm font-bold ${isLight ? 'text-slate-800' : 'text-slate-200'} leading-tight`}>
                   {metric.label}
                 </div>
-                <div className="text-[11px] sm:text-xs text-[#64748b] leading-relaxed">
+                <div className={`text-[11px] sm:text-xs ${isLight ? 'text-slate-500' : 'text-slate-400'} leading-relaxed`}>
                   {metric.detail}
                 </div>
               </div>

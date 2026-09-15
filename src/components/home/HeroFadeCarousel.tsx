@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import type { SlideData3D } from '../../types';
 import { HeroSlide3D } from './HeroSlide3D';
+import { useTheme } from '../../context/ThemeContext';
 
 interface HeroFadeCarouselProps {
   slides: SlideData3D[];
@@ -16,6 +17,7 @@ export default function HeroFadeCarousel({
   onOpenQuoteModal,
   className = '',
 }: HeroFadeCarouselProps) {
+  const { isLight } = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isHovered, setIsHovered] = useState(false);
@@ -136,16 +138,29 @@ export default function HeroFadeCarousel({
   // Theme background gradient
   const getThemeBackground = () => {
     const activeSlide = slides[currentIndex];
-    switch (activeSlide.theme) {
+    if (isLight) {
+      switch (activeSlide?.theme) {
+        case 'amber-gold':
+          return 'from-[#ffffff] via-[#fbf7f0] to-[#f5ece0]';
+        case 'emerald-teal':
+          return 'from-[#ffffff] via-[#f8fbf9] to-[#edf7f2]';
+        case 'cyan-violet':
+          return 'from-[#ffffff] via-[#f8fafe] to-[#edf3fd]';
+        case 'indigo-blue':
+        default:
+          return 'from-[#ffffff] via-[#faf5ec] to-[#f5ede0]';
+      }
+    }
+    switch (activeSlide?.theme) {
       case 'amber-gold':
-        return 'from-[#d09554]/8 via-[#f0f4f8] to-[#f8fafc]';
+        return 'from-[#06121d] via-[#0d1f33] to-[#081523]';
       case 'emerald-teal':
-        return 'from-[#234d77]/8 via-[#f0f4f8] to-[#f8fafc]';
+        return 'from-[#06121d] via-[#091a2e] to-[#071422]';
       case 'cyan-violet':
-        return 'from-[#649dcf]/8 via-[#f0f4f8] to-[#f8fafc]';
+        return 'from-[#06121d] via-[#0b1f38] to-[#081729]';
       case 'indigo-blue':
       default:
-        return 'from-[#234d77]/8 via-[#f0f4f8] to-[#f8fafc]';
+        return 'from-[#06121d] via-[#0a192c] to-[#06121d]';
     }
   };
 
@@ -193,7 +208,7 @@ export default function HeroFadeCarousel({
         minHeight: `calc(100vh - ${navbarHeight}px)`,
         maxHeight: `calc(100vh - ${navbarHeight}px)`,
       }}
-      className={`relative w-full overflow-hidden bg-gradient-to-b ${getThemeBackground()} transition-colors duration-700 outline-none focus-visible:ring-2 focus-visible:ring-[#d09554] flex flex-col justify-between ${className}`}
+      className={`relative w-full overflow-hidden bg-gradient-to-b ${getThemeBackground()} outline-none focus-visible:ring-2 focus-visible:ring-[#d09554] flex flex-col justify-between ${className}`}
     >
       {/* Background Ambient Dot Matrix & Mesh Glow */}
       <div aria-hidden="true" className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -231,7 +246,11 @@ export default function HeroFadeCarousel({
 
         {/* Mobile Minimalist Category Indicator (Shown on small screens) */}
         <div className="absolute bottom-5 left-0 right-0 flex sm:hidden justify-center items-center z-30 pointer-events-none px-4">
-          <div className="pointer-events-auto flex items-center gap-2 bg-[#0c1e30]/90 backdrop-blur-xl border border-white/15 px-3 py-1.5 rounded-full shadow-lg">
+          <div
+            className={`pointer-events-auto flex items-center gap-2 backdrop-blur-xl border px-3 py-1.5 rounded-full shadow-lg ${
+              isLight ? 'bg-white/90 border-[#d09554]/30' : 'bg-[#0c1e30]/90 border-white/15'
+            }`}
+          >
             {slides.map((slide, idx) => {
               const isActive = idx === currentIndex;
               return (
@@ -246,6 +265,8 @@ export default function HeroFadeCarousel({
                     className={`block h-1.5 rounded-full transition-all duration-300 ${
                       isActive
                         ? 'w-6 bg-[#d09554] shadow-[0_0_8px_rgba(208,149,84,0.6)]'
+                        : isLight
+                        ? 'w-1.5 bg-black/20 hover:bg-black/40'
                         : 'w-1.5 bg-white/40 hover:bg-white/70'
                     }`}
                   />
@@ -259,7 +280,11 @@ export default function HeroFadeCarousel({
         <div className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-0 right-0 hidden sm:flex justify-center items-center z-30 pointer-events-none px-4">
           <nav
             aria-label="Category Slides"
-            className="pointer-events-auto max-w-full overflow-x-auto no-scrollbar flex items-center p-1.5 sm:p-2 bg-[#0c1e30]/85 sm:bg-[#0c1e30]/90 backdrop-blur-xl border border-white/15 rounded-full shadow-[0_12px_32px_rgba(0,0,0,0.35)]"
+            className={`pointer-events-auto max-w-full overflow-x-auto no-scrollbar flex items-center p-1.5 sm:p-2 backdrop-blur-xl border rounded-full transition-all duration-300 ${
+              isLight
+                ? 'bg-white/90 border-[#d09554]/30 shadow-[0_12px_32px_rgba(208,149,84,0.15)]'
+                : 'bg-[#0c1e30]/85 sm:bg-[#0c1e30]/90 border-white/15 shadow-[0_12px_32px_rgba(0,0,0,0.35)]'
+            }`}
           >
             <div className="flex items-center gap-1 sm:gap-2">
               {slides.map((slide, idx) => {
@@ -271,14 +296,16 @@ export default function HeroFadeCarousel({
                     onClick={() => goToSlide(idx)}
                     className={`relative flex items-center gap-2 px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-full text-[11px] sm:text-[13px] font-bold tracking-wider uppercase transition-all duration-300 whitespace-nowrap focus:outline-none focus-visible:ring-2 focus-visible:ring-[#d09554] cursor-pointer ${
                       isActive
-                        ? 'bg-[#d09554] text-[#0c1e30] shadow-[0_2px_12px_rgba(208,149,84,0.4)] scale-[1.02]'
+                        ? 'bg-[#d09554] text-white shadow-[0_2px_12px_rgba(208,149,84,0.4)] scale-[1.02]'
+                        : isLight
+                        ? 'text-[#173554]/80 hover:text-[#173554] hover:bg-[#d09554]/10'
                         : 'text-white/70 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {/* Active/Inactive Dot Indicator */}
                     <span
                       className={`w-2 h-2 rounded-full shrink-0 transition-colors ${
-                        isActive ? 'bg-[#0c1e30]' : 'bg-white/40'
+                        isActive ? 'bg-white' : isLight ? 'bg-[#173554]/30' : 'bg-white/40'
                       }`}
                     />
                     <span>{slide.category}</span>

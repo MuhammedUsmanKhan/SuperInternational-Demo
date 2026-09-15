@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Sparkles, Linkedin, Mail, ArrowUpRight, Award, ShieldCheck, Cpu, Briefcase } from 'lucide-react';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface TeamMember {
   id: number;
@@ -108,6 +109,7 @@ interface TeamSectionProps {
 }
 
 export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
+  const { isLight } = useTheme();
   const [selectedFilter, setSelectedFilter] = useState<string>('ALL');
 
   const filteredMembers = TEAM_MEMBERS.filter((member) => {
@@ -133,22 +135,30 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
   return (
     <section
       id="team-section"
-      className="py-12 sm:py-16 bg-gradient-to-b from-[#f4f7fa] via-[#ebf2f8] to-[#f4f7fa] text-[#222222] relative overflow-hidden"
+      className={`py-12 sm:py-16 ${
+        isLight
+          ? 'bg-gradient-to-br from-[#f8f3ea] via-[#faf5ec] to-[#e6dac6] text-slate-800 border-t border-[#d09554]/25 shadow-sm'
+          : 'bg-[#06121d] text-white border-t border-white/10 shadow-inner'
+      } relative isolate overflow-hidden transition-colors duration-500`}
     >
-      {/* Precision Technical Blueprint Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-40 -z-10" 
-        style={{
-          backgroundImage: 'radial-gradient(circle, rgba(35, 77, 119, 0.08) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
+      {/* Top Shimmer Hairline Divider */}
+      <div className="absolute top-0 left-0 right-0 shimmer-hairline pointer-events-none z-20" />
 
-      {/* Ambient Lighting Accents */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[950px] h-[450px] bg-gradient-to-r from-[#234d77]/6 via-[#d09554]/8 to-[#649dcf]/10 blur-3xl rounded-full pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-10 w-80 h-80 bg-[#d09554]/5 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Architectural CAD Technical Grid */}
+      <div className={`absolute inset-0 pointer-events-none z-0 ${isLight ? 'bg-cad-grid-light opacity-50' : 'bg-cad-grid-dark opacity-75'}`} />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Atmospheric Diagonal Studio Auroras (Active exclusively in Light Mode) */}
+      {isLight && (
+        <>
+          <div className="absolute -top-28 -left-28 w-[620px] h-[620px] bg-[#d09554]/16 rounded-full blur-3xl pointer-events-none z-0" />
+          <div className="absolute -bottom-28 -right-28 w-[680px] h-[680px] bg-[#e8c493]/24 rounded-full blur-3xl pointer-events-none z-0" />
+        </>
+      )}
+
+      {/* Bottom Shimmer Hairline Divider */}
+      <div className="absolute bottom-0 left-0 right-0 shimmer-hairline pointer-events-none" />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* ========================================================================= */}
         {/* 1. SECTION HEADER (Matching Exact Brand Badge + Metallic Gradient Title)  */}
@@ -161,21 +171,25 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
           className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3"
         >
           {/* Top Pill Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#173554] text-xs font-bold uppercase tracking-wider shadow-2xs">
+          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${
+            isLight
+              ? 'bg-[#d09554]/12 border border-[#d09554]/30 text-[#8d561d]'
+              : 'bg-white/10 border border-white/20 text-[#f5d5a8]'
+          } text-xs font-bold uppercase tracking-wider shadow-2xs backdrop-blur-md`}>
             <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
             <span>Executive Leadership &bull; Packaging Mastery</span>
           </div>
 
           {/* Main Metallic Gradient Heading */}
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-black ${isLight ? 'text-[#173554]' : 'text-white'} tracking-tight leading-tight`}>
             Visionary Minds Powering <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+            <span className={isLight ? "text-transparent bg-clip-text bg-gradient-to-r from-[#173554] via-[#b87c3a] to-[#d09554]" : "text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]"}>
               Four Decades of Packaging Excellence
             </span>
           </h2>
 
           {/* Subtitle Description */}
-          <p className="text-sm sm:text-base text-[#555555] leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className={`text-sm sm:text-base ${isLight ? 'text-slate-600' : 'text-slate-300'} leading-relaxed max-w-2xl mx-auto font-normal`}>
             Meet the seasoned directors, precision engineers, and quality specialists driving advanced cleanroom production, European mold tooling, and dependable global fulfillment.
           </p>
 
@@ -187,8 +201,10 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
                 onClick={() => setSelectedFilter(tab.value)}
                 className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all duration-300 cursor-pointer ${
                   selectedFilter === tab.value
-                    ? 'bg-[#173554] text-white shadow-md scale-102'
-                    : 'bg-white text-[#555555] hover:text-[#173554] hover:bg-[#f0f4f8] border border-slate-200/80 shadow-2xs'
+                    ? 'bg-[#d09554] text-[#081523] shadow-md scale-102 font-extrabold'
+                    : isLight
+                    ? 'bg-white text-slate-700 hover:text-[#173554] hover:bg-[#faf5ec] border border-[#d09554]/25 shadow-2xs'
+                    : 'bg-white/[0.06] text-slate-300 hover:text-white hover:bg-white/10 border border-white/15 shadow-2xs'
                 }`}
               >
                 {tab.label}
@@ -217,7 +233,11 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
                 initial="hidden"
                 animate="visible"
                 exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.25 } }}
-                className="group relative rounded-3xl overflow-hidden bg-[#0c1b2c] border border-slate-200/90 hover:border-[#d09554]/80 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.08)] hover:shadow-[0_25px_50px_-12px_rgba(208,149,84,0.25)] transition-all duration-500 hover:-translate-y-2 flex flex-col justify-end min-h-[440px] sm:min-h-[470px] cursor-pointer"
+                className={`group relative rounded-3xl overflow-hidden ${
+                  isLight
+                    ? 'bg-[#0f243b] border-2 border-[#d09554]/35 hover:border-[#d09554] shadow-[0_14px_35px_rgba(208,149,84,0.18)] hover:shadow-[0_25px_50px_-12px_rgba(208,149,84,0.35)]'
+                    : 'bg-[#0c1b2c] border border-white/15 hover:border-[#d09554]/80 shadow-[0_10px_30px_rgba(0,0,0,0.5)] hover:shadow-[0_25px_50px_-12px_rgba(208,149,84,0.3)]'
+                } transition-all duration-500 hover:-translate-y-2 flex flex-col justify-end min-h-[440px] sm:min-h-[470px] cursor-pointer`}
               >
                 {/* 1. Background Image with Dynamic Zoom on Hover */}
                 <div className="absolute inset-0 overflow-hidden">
@@ -333,17 +353,25 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-14 sm:mt-18 rounded-2xl bg-gradient-to-r from-[#f0f4f8] via-white to-[#f0f4f8] border border-[#dce6f0] p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-2xs"
+          className={`mt-14 sm:mt-18 rounded-2xl ${
+            isLight
+              ? 'bg-white/90 backdrop-blur-xl border border-[#d09554]/30 shadow-[0_12px_32px_rgba(208,149,84,0.1)]'
+              : 'bg-white/[0.05] backdrop-blur-xl border border-white/15 shadow-xl'
+          } p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6`}
         >
           <div className="flex items-center gap-4 text-center md:text-left">
-            <div className="w-12 h-12 rounded-2xl bg-[#173554] text-[#d09554] flex items-center justify-center shrink-0 shadow-sm hidden sm:flex">
+            <div className={`w-12 h-12 rounded-2xl ${
+              isLight
+                ? 'bg-[#faf5ec] text-[#b87c3a] border border-[#d09554]/25'
+                : 'bg-white/10 text-[#d09554]'
+            } flex items-center justify-center shrink-0 shadow-sm hidden sm:flex`}>
               <ShieldCheck className="w-6 h-6" />
             </div>
             <div>
-              <h4 className="text-base sm:text-lg font-black text-[#173554] tracking-tight">
+              <h4 className={`text-base sm:text-lg font-black ${isLight ? 'text-[#173554]' : 'text-white'} tracking-tight`}>
                 Want to collaborate directly with our engineering &amp; tooling leadership?
               </h4>
-              <p className="text-xs sm:text-sm text-[#555555] mt-0.5">
+              <p className={`text-xs sm:text-sm ${isLight ? 'text-slate-600' : 'text-slate-300'} mt-0.5`}>
                 Schedule a technical consultation for custom molds, OEM bottle design, or cleanroom volume contracts.
               </p>
             </div>
@@ -351,10 +379,10 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
 
           <button
             onClick={() => onOpenQuoteModal && onOpenQuoteModal('Executive Tooling Consultation')}
-            className="px-6 py-3 rounded-full bg-[#173554] hover:bg-[#234d77] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 flex items-center gap-2 shrink-0 cursor-pointer"
+            className="px-6 py-3 rounded-full bg-gradient-to-r from-[#d09554] via-[#dc9f5e] to-[#d09554] text-[#081523] text-xs sm:text-sm font-black shadow-lg hover:brightness-110 active:scale-95 transition-all duration-300 flex items-center gap-2 shrink-0 cursor-pointer"
           >
             <span>Consult Leadership Team</span>
-            <ArrowUpRight className="w-4 h-4 text-[#d09554]" />
+            <ArrowUpRight className="w-4 h-4 text-[#081523]" />
           </button>
         </motion.div>
 

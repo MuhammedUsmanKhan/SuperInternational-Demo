@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Layers, Sparkles } from 'lucide-react';
 import { motion } from 'motion/react';
+import { useTheme } from '../../context/ThemeContext';
 
 interface CategoriesSectionProps {
   onSelectCategory?: (category: string) => void;
@@ -89,6 +90,8 @@ export default function CategoriesSection({
   onSelectCategory,
   onOpenQuoteModal,
 }: CategoriesSectionProps) {
+  const { isLight } = useTheme();
+
   const handleCategoryClick = (categoryName: string) => {
     if (onSelectCategory) {
       onSelectCategory(categoryName);
@@ -104,23 +107,33 @@ export default function CategoriesSection({
       key={cat.slug}
       variants={cardVariants}
       onClick={() => handleCategoryClick(cat.name)}
-      className="group relative rounded-2xl sm:rounded-3xl bg-[#0d1f33] border border-white/15 hover:border-[#d09554]/80 shadow-md hover:shadow-[0_22px_44px_-14px_rgba(208,149,84,0.3)] hover:-translate-y-1.5 transition-all duration-600 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden flex flex-col justify-between cursor-pointer"
+      className={`group relative rounded-2xl sm:rounded-3xl ${
+        isLight
+          ? 'bg-white/95 border-t-2 border-t-[#d09554] border-x border-b border-[#d09554]/25 hover:border-t-[#e8c493] shadow-[0_10px_28px_rgba(208,149,84,0.1)] hover:shadow-[0_24px_48px_-12px_rgba(208,149,84,0.25)]'
+          : 'bg-[#0d1f33] border border-white/15 hover:border-[#d09554]/80 shadow-md hover:shadow-[0_22px_44px_-14px_rgba(208,149,84,0.3)]'
+      } hover:-translate-y-1.5 hover:scale-102 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden flex flex-col h-full cursor-pointer`}
     >
       {/* Top Image Showcase */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-slate-900">
+      <div className={`relative aspect-[4/3] w-full shrink-0 overflow-hidden ${isLight ? 'bg-[#f5ede2]' : 'bg-[#0a1827]'}`}>
         <img
           src={cat.image}
           alt={cat.name}
-          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
+          className="w-full h-full object-cover object-center group-hover:scale-108 transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)]"
           loading="lazy"
         />
 
         {/* Ambient Subtle Image Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0d1f33] via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-600 ease-out" />
+        <div className={`absolute inset-0 ${
+          isLight
+            ? 'bg-gradient-to-t from-white/30 via-transparent to-transparent opacity-60 group-hover:opacity-30'
+            : 'bg-gradient-to-t from-[#0d1f33] via-black/20 to-transparent opacity-60 group-hover:opacity-40'
+        } transition-opacity duration-500 ease-out`} />
       </div>
 
       {/* Bottom Content Area with Signature Diagonal Gold Hover Effect */}
-      <div className="relative p-5 sm:p-6 bg-[#0c1c2e] overflow-hidden flex items-center justify-between gap-4 border-t border-white/10">
+      <div className={`relative flex-1 p-5 sm:p-6 ${
+        isLight ? 'bg-white border-t border-[#d09554]/20' : 'bg-[#0c1c2e] border-t border-white/10'
+      } overflow-hidden flex items-center justify-between gap-4`}>
         
         {/* The Diagonal Gold Hover Ribbon / Fill */}
         <div
@@ -128,12 +141,16 @@ export default function CategoriesSection({
         />
 
         {/* Category Name */}
-        <h3 className="relative z-10 text-base sm:text-lg lg:text-xl font-bold text-white group-hover:text-black transition-colors duration-500 tracking-tight drop-shadow-xs">
+        <h3 className={`relative z-10 text-base sm:text-lg lg:text-xl font-bold ${
+          isLight ? 'text-[#173554]' : 'text-white'
+        } group-hover:text-black transition-colors duration-500 tracking-tight drop-shadow-xs`}>
           {cat.name}
         </h3>
 
         {/* Navigation Action Button */}
-        <div className="relative z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/10 text-white group-hover:bg-black group-hover:text-white flex items-center justify-center transition-all duration-500 shadow-xs group-hover:shadow-md shrink-0 group-hover:translate-x-1">
+        <div className={`relative z-10 w-9 h-9 sm:w-10 sm:h-10 rounded-full ${
+          isLight ? 'bg-[#faf5ec] text-[#173554] border border-[#d09554]/30' : 'bg-white/10 text-white'
+        } group-hover:bg-black group-hover:text-white flex items-center justify-center transition-all duration-500 shadow-xs group-hover:shadow-md shrink-0 group-hover:translate-x-1`}>
           <ArrowRight className="w-4 h-4 sm:w-4.5 sm:h-4.5 transition-transform duration-500 group-hover:scale-110" />
         </div>
 
@@ -144,22 +161,33 @@ export default function CategoriesSection({
   return (
     <section
       id="categories-section"
-      className="py-12 sm:py-16 bg-gradient-to-b from-[#091726] via-[#0d2136] to-[#091726] text-white relative overflow-hidden border-y border-white/10"
+      className={`py-12 sm:py-16 ${
+        isLight
+          ? 'bg-gradient-to-br from-[#faf5ec] via-[#f1eae0] to-[#e6dac6] text-slate-800 border-y border-[#d09554]/25'
+          : 'bg-[#06121d] text-white border-y border-white/10'
+      } relative isolate overflow-hidden transition-colors duration-500`}
     >
-      {/* Technical Blueprint Dot Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-25 -z-10" 
-        style={{
-          backgroundImage: 'radial-gradient(circle, rgba(208, 149, 84, 0.15) 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
-        }}
-      />
+      {/* Top Shimmer Hairline Divider */}
+      <div className="absolute top-0 left-0 right-0 shimmer-hairline pointer-events-none z-20" />
 
-      {/* Decorative ambient lighting */}
-      <div className="absolute top-1/4 right-10 w-96 h-96 bg-[#234d77]/25 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#d09554]/15 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Architectural CAD Technical Blueprint Grid & Micro-Dot Matrix */}
+      <div className={`absolute inset-0 pointer-events-none z-0 ${isLight ? 'bg-blueprint-atelier-light opacity-85' : 'bg-cad-grid-dark opacity-80'}`} />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Atmospheric Diagonal Studio Auroras (Active exclusively in Light Mode) */}
+      {isLight && (
+        <>
+          <div className="absolute -top-28 -left-28 w-[620px] h-[620px] bg-[#d09554]/16 rounded-full blur-3xl pointer-events-none z-0" />
+          <div className="absolute -bottom-28 -right-28 w-[680px] h-[680px] bg-[#e8c493]/24 rounded-full blur-3xl pointer-events-none z-0" />
+        </>
+      )}
+
+
+
+
+      {/* Bottom Shimmer Hairline Divider */}
+      <div className="absolute bottom-0 left-0 right-0 shimmer-hairline pointer-events-none" />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <motion.div
@@ -169,19 +197,23 @@ export default function CategoriesSection({
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-8 sm:mb-12 space-y-3"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-[#f5d5a8] text-xs font-bold uppercase tracking-wider shadow-xs backdrop-blur-md">
+          <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${
+            isLight
+              ? 'bg-[#d09554]/12 border border-[#d09554]/30 text-[#8d561d]'
+              : 'bg-white/10 border border-white/20 text-[#f5d5a8]'
+          } text-xs font-bold uppercase tracking-wider shadow-xs backdrop-blur-md`}>
             <Layers className="w-3.5 h-3.5 text-[#d09554]" />
             <span>Product Sectors &amp; Capabilities</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-white tracking-tight leading-tight">
+          <h2 className={`text-3xl sm:text-4xl md:text-5xl font-black ${isLight ? 'text-[#173554]' : 'text-white'} tracking-tight leading-tight`}>
             Explore Our Specialized <br className="hidden sm:inline" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]">
+            <span className={isLight ? "text-transparent bg-clip-text bg-gradient-to-r from-[#173554] via-[#b87c3a] to-[#d09554]" : "text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]"}>
               Packaging Categories
             </span>
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-2xl mx-auto font-normal">
+          <p className={`text-sm sm:text-base ${isLight ? 'text-slate-600' : 'text-slate-300'} leading-relaxed max-w-2xl mx-auto font-normal`}>
             Precision-engineered containers, dispensing systems, and cold-chain carriers crafted to international quality standards.
           </p>
         </motion.div>
@@ -223,7 +255,11 @@ export default function CategoriesSection({
 
           <button
             onClick={() => onOpenQuoteModal && onOpenQuoteModal('Custom Category Packaging')}
-            className="btn-premium-secondary px-8 py-3.5 rounded-full bg-[#f0f4f8] text-[#234d77] text-xs sm:text-sm font-bold transition-all cursor-pointer border border-[#234d77]/20"
+            className={`px-8 py-3.5 rounded-full ${
+              isLight
+                ? 'bg-white hover:bg-[#faf5ec] text-[#173554] border border-[#d09554]/30 shadow-xs'
+                : 'bg-white/10 hover:bg-white/15 text-white hover:text-[#f5d5a8] border border-white/20 hover:border-[#d09554]/50 backdrop-blur-md shadow-xs'
+            } text-xs sm:text-sm font-bold transition-all cursor-pointer`}
           >
             <span className="relative z-10">Request Custom Mold Inquiries</span>
           </button>

@@ -1,15 +1,22 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import type { SlideData3D } from '../../types';
+import { useTheme } from '../../context/ThemeContext';
 
 interface HeroSlide3DProps {
   slide: SlideData3D;
 }
 
 export const HeroSlide3D: React.FC<HeroSlide3DProps> = ({ slide }) => {
+  const { isLight } = useTheme();
+
   return (
     <div
-      className="w-full h-full relative overflow-hidden flex items-center justify-center mx-auto select-none bg-gradient-to-b from-[#0e2238] via-[#122b46] to-[#0a192c]"
+      className={`w-full h-full relative overflow-hidden flex items-center justify-center mx-auto select-none transition-colors duration-500 ${
+        isLight
+          ? 'bg-gradient-to-b from-[#ffffff] via-[#faf5ec] to-[#f5ede0]'
+          : 'bg-gradient-to-b from-[#0e2238] via-[#122b46] to-[#0a192c]'
+      }`}
     >
       <motion.div
         initial={{ opacity: 0, scale: 0.99 }}

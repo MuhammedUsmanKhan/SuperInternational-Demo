@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Maximize2, X, Box, Sparkles, ExternalLink, ShieldCheck, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useTheme } from '../../context/ThemeContext';
 
 export interface Jar3DModel {
   id: string;
@@ -97,31 +98,54 @@ function Modern3DCard({
   jar: Jar3DModel;
   onSelectJar: (jar: Jar3DModel) => void;
 }) {
+  const { isLight } = useTheme();
   const cardRef = useRef<HTMLElement>(null);
   const inView = useInView(cardRef, '300px');
 
   return (
     <article
       ref={cardRef}
-      className="group flex-none w-[300px] sm:w-[330px] lg:w-[350px] flex flex-col rounded-3xl bg-gradient-to-b from-white via-[#fbfcfe] to-[#f4f7fa] border border-slate-200/90 hover:border-[#234d77]/40 shadow-sm hover:shadow-[0_24px_50px_-15px_rgba(35,77,119,0.22)] hover:-translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden cursor-pointer"
+      className={`group flex-none w-[300px] sm:w-[330px] lg:w-[350px] flex flex-col rounded-3xl ${
+        isLight
+          ? 'bg-white border border-[#d09554]/30 hover:border-[#d09554] shadow-md hover:shadow-[0_24px_50px_-15px_rgba(208,149,84,0.25)]'
+          : 'bg-gradient-to-b from-[#0c1e30] via-[#0f243b] to-[#0a1828] border border-white/15 hover:border-[#d09554]/70 shadow-md hover:shadow-[0_24px_50px_-15px_rgba(0,0,0,0.6)]'
+      } hover:-translate-y-2 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] overflow-hidden cursor-pointer`}
     >
       {/* 3D Model Viewport Area */}
-      <div className="relative w-full h-[310px] sm:h-[330px] bg-gradient-to-b from-slate-50/60 to-slate-100/50 flex items-center justify-center overflow-hidden">
+      <div className={`relative w-full h-[310px] sm:h-[330px] ${
+        isLight
+          ? 'bg-gradient-to-b from-[#faf5ec] via-[#f7efe3] to-[#f4ebe0]'
+          : 'bg-gradient-to-b from-[#081523] to-[#0c1e30]'
+      } flex items-center justify-center overflow-hidden`}>
         
         {/* Soft Ambient Radial Pedestal */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_65%,rgba(100,157,207,0.18)_0%,transparent_65%)] pointer-events-none" />
+        <div className={`absolute inset-0 ${
+          isLight
+            ? 'bg-[radial-gradient(circle_at_50%_65%,rgba(208,149,84,0.22)_0%,transparent_65%)]'
+            : 'bg-[radial-gradient(circle_at_50%_65%,rgba(208,149,84,0.15)_0%,transparent_65%)]'
+        } pointer-events-none`} />
         
         {/* Grounding Disc Shadow */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-44 h-8 bg-black/10 rounded-full blur-md pointer-events-none group-hover:scale-110 transition-transform duration-500" />
+        <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 w-44 h-8 ${
+          isLight ? 'bg-[#d09554]/20' : 'bg-black/40'
+        } rounded-full blur-md pointer-events-none group-hover:scale-110 transition-transform duration-500`} />
 
         {/* 360 Indicator Pill */}
-        <div className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md border border-white/60 text-[#234d77] text-[11px] font-bold flex items-center gap-1.5 shadow-xs">
+        <div className={`absolute top-4 left-4 z-10 px-3 py-1 rounded-full ${
+          isLight
+            ? 'bg-white/90 text-[#8d561d] border border-[#d09554]/30'
+            : 'bg-black/60 text-[#f5d5a8] border border-white/20'
+        } backdrop-blur-md text-[11px] font-bold flex items-center gap-1.5 shadow-xs`}>
           <Sparkles className="w-3.5 h-3.5 text-[#d09554]" />
           <span>360° 3D Model</span>
         </div>
 
         {/* Drag Hint on Hover */}
-        <div className="absolute top-4 right-4 z-10 px-2.5 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+        <div className={`absolute top-4 right-4 z-10 px-2.5 py-1 rounded-full ${
+          isLight
+            ? 'bg-white/90 text-[#173554] border border-[#d09554]/30'
+            : 'bg-black/70 text-white'
+        } backdrop-blur-md text-[10px] font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none`}>
           Drag to rotate
         </div>
 
@@ -144,23 +168,23 @@ function Modern3DCard({
               backgroundColor: 'transparent',
             }}
           >
-            <div slot="progress-bar" className="absolute left-0 bottom-0 w-full h-[3px] bg-black/10">
-              <span className="block h-full bg-[#234d77] w-full animate-pulse" />
+            <div slot="progress-bar" className="absolute left-0 bottom-0 w-full h-[3px] bg-black/40">
+              <span className="block h-full bg-[#d09554] w-full animate-pulse" />
             </div>
           {/* @ts-expect-error Custom element model-viewer */}
           </model-viewer>
         ) : (
-          <div className="w-full h-full bg-[#f0f4f8] flex items-center justify-center">
-            <Box className="w-12 h-12 text-[#234d77]/20" />
+          <div className={`w-full h-full ${isLight ? 'bg-[#faf5ec]' : 'bg-[#081523]'} flex items-center justify-center`}>
+            <Box className={`w-12 h-12 ${isLight ? 'text-[#d09554]/40' : 'text-white/20'}`} />
           </div>
         )}
       </div>
 
       {/* Card Action Footer: View Large Button Only */}
-      <div className="p-4 sm:p-5 bg-white border-t border-slate-100 flex items-center justify-center">
+      <div className={`p-4 sm:p-5 ${isLight ? 'bg-[#faf5ec] border-t border-[#d09554]/20' : 'bg-[#0a1828] border-t border-white/10'} flex items-center justify-center`}>
         <button
           onClick={() => onSelectJar(jar)}
-          className="btn-premium-primary w-full py-3 sm:py-3.5 px-5 rounded-2xl bg-[#234d77] text-white text-xs sm:text-sm font-bold shadow-md active:scale-98 transition-all flex items-center justify-center gap-2 group/btn cursor-pointer border border-white/20"
+          className="btn-premium-primary w-full py-3 sm:py-3.5 px-5 rounded-2xl bg-gradient-to-r from-[#234d77] to-[#173554] hover:from-[#d09554] hover:to-[#b8833f] text-white text-xs sm:text-sm font-bold shadow-md active:scale-98 transition-all flex items-center justify-center gap-2 group/btn cursor-pointer border border-white/20"
         >
           <Maximize2 className="w-4 h-4 transition-transform duration-300 group-hover/btn:scale-110 relative z-10" />
           <span className="relative z-10">View Large</span>
@@ -175,6 +199,7 @@ interface Fw3dProductSectionProps {
 }
 
 export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSectionProps) {
+  const { isLight } = useTheme();
   const [selectedJar, setSelectedJar] = useState<Jar3DModel | null>(null);
   const trackRef = useRef<HTMLDivElement>(null);
 
@@ -194,22 +219,33 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
   return (
     <section
       id="featured-products-section"
-      className="py-12 sm:py-16 bg-gradient-to-b from-[#f8fafc] via-[#edf3f8] to-[#f8fafc] text-[#222222] relative overflow-hidden"
+      className={`py-12 sm:py-16 ${
+        isLight
+          ? 'bg-gradient-to-br from-[#ffffff] via-[#faf5ec] to-[#ebdcc8] text-slate-800'
+          : 'bg-[#06121d] text-white'
+      } relative isolate overflow-hidden transition-colors duration-500`}
     >
-      {/* Precision Blueprint Texture */}
-      <div 
-        className="absolute inset-0 pointer-events-none opacity-40 -z-10" 
-        style={{
-          backgroundImage: 'radial-gradient(circle, rgba(35, 77, 119, 0.08) 1px, transparent 1px)',
-          backgroundSize: '24px 24px',
-        }}
-      />
+      {/* Top Shimmer Hairline Divider */}
+      <div className="absolute top-0 left-0 right-0 shimmer-hairline pointer-events-none z-20" />
 
-      {/* Ambient background lighting */}
-      <div className="absolute top-1/3 left-10 w-96 h-96 bg-[#234d77]/6 rounded-full blur-3xl pointer-events-none -z-10" />
-      <div className="absolute bottom-10 right-10 w-96 h-96 bg-[#649dcf]/10 rounded-full blur-3xl pointer-events-none -z-10" />
+      {/* Architectural CAD Technical Grid */}
+      <div className={`absolute inset-0 pointer-events-none z-0 ${isLight ? 'bg-cad-grid-light opacity-50' : 'bg-cad-grid-dark opacity-75'}`} />
 
-      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Atmospheric Diagonal Studio Auroras (Active exclusively in Light Mode) */}
+      {isLight && (
+        <>
+          <div className="absolute -top-28 -left-28 w-[620px] h-[620px] bg-[#d09554]/16 rounded-full blur-3xl pointer-events-none z-0" />
+          <div className="absolute -bottom-28 -right-28 w-[680px] h-[680px] bg-[#e8c493]/24 rounded-full blur-3xl pointer-events-none z-0" />
+        </>
+      )}
+
+
+
+
+      {/* Bottom Shimmer Hairline Divider */}
+      <div className="absolute bottom-0 left-0 right-0 shimmer-hairline pointer-events-none" />
+
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <motion.div
@@ -220,19 +256,23 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
           className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10"
         >
           <div className="space-y-3 max-w-2xl">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f0f4f8] border border-[#dce6f0] text-[#234d77] text-xs font-bold uppercase tracking-wider shadow-xs">
-              <Box className="w-3.5 h-3.5 text-[#649dcf]" />
+            <div className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full ${
+              isLight
+                ? 'bg-[#d09554]/12 border border-[#d09554]/30 text-[#8d561d]'
+                : 'bg-white/10 border border-white/20 text-[#f5d5a8]'
+            } text-xs font-bold uppercase tracking-wider shadow-xs backdrop-blur-md`}>
+              <Box className="w-3.5 h-3.5 text-[#d09554]" />
               <span>Interactive 3D Showroom</span>
             </div>
 
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-[#173554] tracking-tight leading-tight">
+            <h2 className={`text-3xl sm:text-4xl md:text-5xl font-black ${isLight ? 'text-[#173554]' : 'text-white'} tracking-tight leading-tight`}>
               Featured 3D Packaging <br className="hidden sm:inline" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#234d77] via-[#173554] to-[#d09554]">
+              <span className={isLight ? "text-transparent bg-clip-text bg-gradient-to-r from-[#173554] via-[#b87c3a] to-[#d09554]" : "text-transparent bg-clip-text bg-gradient-to-r from-white via-[#f6d8b0] to-[#d09554]"}>
                 Models &amp; Virtual Showroom
               </span>
             </h2>
 
-            <p className="text-sm sm:text-base text-[#555555] leading-relaxed font-normal">
+            <p className={`text-sm sm:text-base ${isLight ? 'text-slate-600' : 'text-slate-300'} leading-relaxed font-normal`}>
               Inspect our cosmetic and pharmaceutical containers in real-time 3D. Rotate 360° to view structural finishes, wall thickness, and threading details.
             </p>
           </div>
@@ -241,14 +281,22 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
           <div className="flex items-center gap-3 self-start md:self-auto">
             <button
               onClick={() => handleScroll('left')}
-              className="w-11 h-11 rounded-full bg-white border border-slate-200 text-[#173554] hover:bg-[#234d77] hover:text-white hover:border-[#234d77] flex items-center justify-center shadow-xs hover:shadow-md transition-all cursor-pointer"
+              className={`w-11 h-11 rounded-full ${
+                isLight
+                  ? 'bg-white text-[#173554] border border-[#d09554]/30 hover:bg-[#d09554] hover:text-white shadow-xs'
+                  : 'bg-white/10 border border-white/20 text-white hover:bg-[#d09554] hover:text-[#071422] hover:border-[#d09554]'
+              } flex items-center justify-center transition-all cursor-pointer`}
               aria-label="Previous 3D Model"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={() => handleScroll('right')}
-              className="w-11 h-11 rounded-full bg-white border border-slate-200 text-[#173554] hover:bg-[#234d77] hover:text-white hover:border-[#234d77] flex items-center justify-center shadow-xs hover:shadow-md transition-all cursor-pointer"
+              className={`w-11 h-11 rounded-full ${
+                isLight
+                  ? 'bg-white text-[#173554] border border-[#d09554]/30 hover:bg-[#d09554] hover:text-white shadow-xs'
+                  : 'bg-white/10 border border-white/20 text-white hover:bg-[#d09554] hover:text-[#071422] hover:border-[#d09554]'
+              } flex items-center justify-center transition-all cursor-pointer`}
               aria-label="Next 3D Model"
             >
               <ChevronRight className="w-5 h-5" />
@@ -265,8 +313,8 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
           className="relative"
         >
           {/* Edge Glow Gradients */}
-          <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
-          <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+          <div className={`absolute left-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-r ${isLight ? 'from-[#ffffff]' : 'from-[#071422]'} to-transparent z-10 pointer-events-none`} />
+          <div className={`absolute right-0 top-0 bottom-0 w-8 sm:w-16 bg-gradient-to-l ${isLight ? 'from-[#ffffff]' : 'from-[#071422]'} to-transparent z-10 pointer-events-none`} />
 
           <div
             ref={trackRef}
@@ -294,7 +342,7 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
       <AnimatePresence>
         {selectedJar && (
           <div
-            className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/80 backdrop-blur-md overflow-y-auto"
+            className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center p-0 sm:p-4 md:p-6 bg-black/85 backdrop-blur-md overflow-y-auto"
             onClick={() => setSelectedJar(null)}
           >
             <motion.div
@@ -303,19 +351,19 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
               onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-4xl bg-white rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row my-auto max-h-[92vh] sm:max-h-[90vh] border border-white/20"
+              className="relative w-full max-w-4xl bg-[#0b1c2e] rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row my-auto max-h-[92vh] sm:max-h-[90vh] border border-white/20 text-white"
             >
               {/* Prominent High-Visibility Close Button */}
               <button
                 onClick={() => setSelectedJar(null)}
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 w-10 h-10 rounded-full bg-black/70 sm:bg-white/95 hover:bg-black/90 sm:hover:bg-white text-white sm:text-gray-800 shadow-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 cursor-pointer border border-white/30"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-50 w-10 h-10 rounded-full bg-black/70 hover:bg-black text-white shadow-xl flex items-center justify-center transition-transform hover:scale-110 active:scale-95 cursor-pointer border border-white/30"
                 aria-label="Close modal"
               >
                 <X className="w-5 h-5" />
               </button>
 
               {/* Large 3D Interactive Canvas */}
-              <div className="md:w-3/5 h-[340px] md:h-auto min-h-[340px] bg-gradient-to-b from-[#f0f4f8] to-[#dce6f0] relative flex items-center justify-center">
+              <div className="md:w-3/5 h-[340px] md:h-auto min-h-[340px] bg-gradient-to-b from-[#071320] to-[#0b1928] relative flex items-center justify-center">
                 {/* @ts-expect-error Custom element model-viewer */}
                 <model-viewer
                   src={selectedJar.glbSrc}
@@ -333,71 +381,71 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
                     minHeight: '340px',
                   }}
                 >
-                  <div slot="progress-bar" className="absolute left-0 bottom-0 w-full h-[4px] bg-black/10">
-                    <span className="block h-full bg-[#234d77] w-full animate-pulse" />
+                  <div slot="progress-bar" className="absolute left-0 bottom-0 w-full h-[4px] bg-black/40">
+                    <span className="block h-full bg-[#d09554] w-full animate-pulse" />
                   </div>
                 {/* @ts-expect-error Custom element model-viewer */}
                 </model-viewer>
 
-                <div className="absolute bottom-4 left-4 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-semibold flex items-center gap-2">
-                  <Box className="w-3.5 h-3.5 text-[#649dcf]" />
+                <div className="absolute bottom-4 left-4 px-3.5 py-1.5 rounded-full bg-black/70 backdrop-blur-md text-white text-xs font-semibold flex items-center gap-2 border border-white/15">
+                  <Box className="w-3.5 h-3.5 text-[#d09554]" />
                   <span>360° Drag &amp; Pinch to Zoom</span>
                 </div>
               </div>
 
               {/* Product Specifications & Inquiry */}
-              <div className="md:w-2/5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto">
+              <div className="md:w-2/5 p-6 sm:p-8 flex flex-col justify-between overflow-y-auto bg-[#0b1c2e]">
                 <div className="space-y-4">
                   <div>
-                    <span className="inline-block px-3 py-1 rounded-full bg-[#f0f4f8] text-[#234d77] text-xs font-bold uppercase tracking-wider mb-2">
+                    <span className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#f5d5a8] text-xs font-bold uppercase tracking-wider mb-2 border border-white/15">
                       {selectedJar.category}
                     </span>
-                    <h3 className="text-2xl font-black text-[#173554] tracking-tight">
+                    <h3 className="text-2xl font-black text-white tracking-tight">
                       {selectedJar.name}
                     </h3>
-                    <p className="text-xs text-[#666666] mt-2 leading-relaxed">
+                    <p className="text-xs text-slate-300 mt-2 leading-relaxed font-normal">
                       {selectedJar.description}
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 pt-2">
-                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
-                      <div className="text-[10px] uppercase font-bold text-gray-500">Capacity</div>
-                      <div className="text-sm font-extrabold text-[#173554] mt-0.5">{selectedJar.capacity}</div>
+                    <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+                      <div className="text-[10px] uppercase font-bold text-slate-400">Capacity</div>
+                      <div className="text-sm font-extrabold text-white mt-0.5">{selectedJar.capacity}</div>
                     </div>
-                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
-                      <div className="text-[10px] uppercase font-bold text-gray-500">Material</div>
-                      <div className="text-sm font-extrabold text-[#173554] mt-0.5">{selectedJar.material}</div>
+                    <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+                      <div className="text-[10px] uppercase font-bold text-slate-400">Material</div>
+                      <div className="text-sm font-extrabold text-white mt-0.5">{selectedJar.material}</div>
                     </div>
-                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
-                      <div className="text-[10px] uppercase font-bold text-gray-500">Neck Size</div>
-                      <div className="text-sm font-extrabold text-[#173554] mt-0.5">{selectedJar.specs.neckSize}</div>
+                    <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+                      <div className="text-[10px] uppercase font-bold text-slate-400">Neck Size</div>
+                      <div className="text-sm font-extrabold text-white mt-0.5">{selectedJar.specs.neckSize}</div>
                     </div>
-                    <div className="bg-[#f4f7fa] p-3 rounded-xl border border-[#e2e8f0]">
-                      <div className="text-[10px] uppercase font-bold text-gray-500">Min. Order Qty</div>
-                      <div className="text-sm font-extrabold text-[#234d77] mt-0.5">{selectedJar.moq}</div>
+                    <div className="bg-white/[0.05] p-3 rounded-xl border border-white/10">
+                      <div className="text-[10px] uppercase font-bold text-slate-400">Min. Order Qty</div>
+                      <div className="text-sm font-extrabold text-[#f5d5a8] mt-0.5">{selectedJar.moq}</div>
                     </div>
                   </div>
 
-                  <div className="bg-[#f8fafc] p-3.5 rounded-xl border border-[#dce6f0] space-y-1">
-                    <div className="flex items-center gap-2 text-xs font-bold text-[#234d77]">
-                      <ShieldCheck className="w-4 h-4 text-[#234d77]" />
+                  <div className="bg-white/[0.04] p-3.5 rounded-xl border border-white/10 space-y-1">
+                    <div className="flex items-center gap-2 text-xs font-bold text-[#f5d5a8]">
+                      <ShieldCheck className="w-4 h-4 text-[#d09554]" />
                       <span>Certified Quality Standard</span>
                     </div>
-                    <p className="text-[11px] text-gray-600">
+                    <p className="text-[11px] text-slate-300">
                       100% Leak-tested, virgin food-grade polymer with ISO 9001:2015 traceability.
                     </p>
                   </div>
                 </div>
 
-                <div className="pt-6 space-y-2.5 border-t border-gray-100 mt-6">
+                <div className="pt-6 space-y-2.5 border-t border-white/10 mt-6">
                   <button
                     onClick={() => {
                       const name = selectedJar.name;
                       setSelectedJar(null);
                       if (onOpenQuoteModal) onOpenQuoteModal(name);
                     }}
-                    className="w-full py-3.5 rounded-xl bg-[#234d77] hover:bg-[#1a3d5e] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                    className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#d09554] via-[#dc9f5e] to-[#d09554] hover:brightness-110 text-[#071422] font-black text-sm shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer"
                   >
                     <span>Request Bulk Quote</span>
                     <ExternalLink className="w-4 h-4" />
@@ -405,9 +453,9 @@ export default function Fw3dProductSection({ onOpenQuoteModal }: Fw3dProductSect
 
                   <a
                     href="tel:+923360875171"
-                    className="w-full py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-[#173554] font-semibold text-xs transition-colors flex items-center justify-center gap-2"
+                    className="w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs transition-colors flex items-center justify-center gap-2 border border-white/15"
                   >
-                    <Phone className="w-3.5 h-3.5 text-[#234d77]" />
+                    <Phone className="w-3.5 h-3.5 text-[#d09554]" />
                     <span>Call Factory: +92 336 0875171</span>
                   </a>
                 </div>

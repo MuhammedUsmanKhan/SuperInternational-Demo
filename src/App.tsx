@@ -23,7 +23,10 @@ import ReelsGallerySection from './components/home/ReelsGallerySection';
 import OurClientsSection from './components/home/OurClientsSection';
 import ProductSpecModal from './components/modals/ProductSpecModal';
 import QuoteModal from './components/modals/QuoteModal';
+import CursorFollower from './components/common/CursorFollower';
+import WelcomeLoader from './components/common/WelcomeLoader';
 import { ProductItem, SlideData3D } from './types';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
 const HERO_SLIDES_3D: SlideData3D[] = [
   {
@@ -120,7 +123,8 @@ const HERO_SLIDES_3D: SlideData3D[] = [
   },
 ];
 
-export default function App() {
+function MainContent() {
+  const { isLight } = useTheme();
   const [selectedProduct, setSelectedProduct] = useState<ProductItem | null>(null);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [quotePrefill, setQuotePrefill] = useState<string | undefined>(undefined);
@@ -138,7 +142,17 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-white text-[#222222] selection:bg-[#dce6f0] selection:text-[#234d77] overflow-x-clip font-sans">
+    <div className={`min-h-screen ${
+      isLight
+        ? 'bg-[#faf6f0] text-slate-800 selection:bg-[#d09554]/30 selection:text-[#173554]'
+        : 'bg-[#06121d] text-slate-100 selection:bg-[#234d77] selection:text-white'
+    } overflow-x-clip font-sans transition-colors duration-300`}>
+      {/* Full-Screen Welcome Loader with Diagonal Center-to-Edges Reveal */}
+      <WelcomeLoader />
+
+      {/* Premium Custom Gold Cursor Follower with Directional Inertia Trail */}
+      <CursorFollower />
+
       {/* 1. Header Navigation with Overlapping Centered Emblem */}
       <Header onOpenQuoteModal={() => handleOpenQuote()} />
 
@@ -212,5 +226,13 @@ export default function App() {
         prefillProduct={quotePrefill}
       />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <MainContent />
+    </ThemeProvider>
   );
 }
