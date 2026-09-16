@@ -165,13 +165,10 @@ export default function WelcomeSection({ onOpenQuoteModal }: WelcomeSectionProps
       id="welcome-section" 
       className={`py-12 sm:py-16 ${
         isLight
-          ? 'bg-gradient-to-br from-[#fbf7f0] via-[#f3ede1] to-[#e8ddcc] text-slate-800'
-          : 'bg-[#06121d] text-white'
+          ? 'bg-gradient-to-br from-[#faf5ec] via-[#f1eae0] to-[#e8ddcc] text-slate-800 border-b border-[#d09554]/25'
+          : 'bg-gradient-to-br from-[#06121d] via-[#0b1f35] to-[#071524] text-white border-b border-white/10'
       } relative isolate overflow-hidden transition-colors duration-500`}
     >
-      {/* Architectural CAD Technical Blueprint Grid & Micro-Dot Matrix */}
-      <div className={`absolute inset-0 pointer-events-none z-0 ${isLight ? 'bg-blueprint-atelier-light opacity-85' : 'bg-cad-grid-dark opacity-75'}`} />
-
       {/* Atmospheric Diagonal Studio Auroras (Active exclusively in Light Mode) */}
       {isLight && (
         <>

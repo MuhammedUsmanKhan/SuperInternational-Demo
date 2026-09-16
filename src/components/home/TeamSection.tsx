@@ -7,7 +7,7 @@ export interface TeamMember {
   id: number;
   name: string;
   role: string;
-  department: 'Executive' | 'Engineering' | 'Quality' | 'Operations';
+  department: 'Executive' | 'Marketing' | 'Engineering' | 'Quality' | 'Operations';
   badge: string;
   badgeIcon: 'award' | 'shield' | 'cpu' | 'briefcase';
   experience: string;
@@ -20,19 +20,32 @@ export interface TeamMember {
 const TEAM_MEMBERS: TeamMember[] = [
   {
     id: 1,
-    name: 'Muhammad Usman Khan',
+    name: 'Shujjah',
     role: 'Chief Executive Officer',
     department: 'Executive',
     badge: 'Executive Board',
     badgeIcon: 'award',
-    experience: '40+ Years Industry Pioneer',
-    intro: 'Spearheading four decades of industrial plastic molding excellence, strategic capacity expansion, and establishing premier packaging export standards across 26+ countries.',
+    experience: 'Executive Leadership & Strategy',
+    intro: 'Spearheading industrial plastic molding excellence, strategic capacity expansion, and establishing premier packaging export standards across 26+ countries.',
     image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
     linkedinUrl: 'https://linkedin.com',
-    email: 'ceo@superinternational.com.pk',
+    email: 'shujjah@superinternational.com.pk',
   },
   {
     id: 2,
+    name: 'Maryam',
+    role: 'Head of Brand & Global Marketing',
+    department: 'Marketing',
+    badge: 'Brand Strategy & Growth',
+    badgeIcon: 'briefcase',
+    experience: 'Global Market Expansion',
+    intro: 'Driving global brand identity, multinational client relationships, and international exhibition presence for cutting-edge packaging innovations.',
+    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    linkedinUrl: 'https://linkedin.com',
+    email: 'maryam@superinternational.com.pk',
+  },
+  {
+    id: 3,
     name: 'Engr. Tariq Mehmood',
     role: 'Head of Tooling & Mold R&D',
     department: 'Engineering',
@@ -45,7 +58,7 @@ const TEAM_MEMBERS: TeamMember[] = [
     email: 'tooling@superinternational.com.pk',
   },
   {
-    id: 3,
+    id: 4,
     name: 'Dr. Ayesha Siddiqui',
     role: 'Director of QA & Cleanroom Compliance',
     department: 'Quality',
@@ -53,28 +66,16 @@ const TEAM_MEMBERS: TeamMember[] = [
     badgeIcon: 'shield',
     experience: '16+ Years Medical QA',
     intro: 'Enforcing 100% zero-defect inspection protocols, medical-grade resin purity verifications, and cleanroom packaging conformity for Pakistan’s leading pharmaceutical brands.',
-    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80',
     linkedinUrl: 'https://linkedin.com',
     email: 'qa@superinternational.com.pk',
-  },
-  {
-    id: 4,
-    name: 'Kamran Farooq',
-    role: 'VP of Global Operations & Supply Chain',
-    department: 'Operations',
-    badge: 'Supply Chain Logistics',
-    badgeIcon: 'briefcase',
-    experience: '18+ Years Plant Ops',
-    intro: 'Orchestrating daily production throughput exceeding 500,000 units, temperature-rated cold chain logistics, and resilient end-to-end fulfillment for multinational FMCG giants.',
-    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80',
-    linkedinUrl: 'https://linkedin.com',
-    email: 'operations@superinternational.com.pk',
-  },
+  }
 ];
 
 const FILTER_TABS = [
   { label: 'All Leadership', value: 'ALL' },
   { label: 'Executive Board', value: 'Executive' },
+  { label: 'Marketing & Brand', value: 'Marketing' },
   { label: 'Engineering & Tooling', value: 'Engineering' },
   { label: 'Quality Assurance', value: 'Quality' },
   { label: 'Operations & Supply', value: 'Operations' },
@@ -137,15 +138,12 @@ export default function TeamSection({ onOpenQuoteModal }: TeamSectionProps) {
       id="team-section"
       className={`py-12 sm:py-16 ${
         isLight
-          ? 'bg-gradient-to-br from-[#f8f3ea] via-[#faf5ec] to-[#e6dac6] text-slate-800 border-t border-[#d09554]/25 shadow-sm'
-          : 'bg-[#06121d] text-white border-t border-white/10 shadow-inner'
+          ? 'bg-gradient-to-br from-[#faf5ec] via-[#f1eae0] to-[#e8ddcc] text-slate-800 border-y border-[#d09554]/25 shadow-sm'
+          : 'bg-gradient-to-br from-[#06121d] via-[#0b1f35] to-[#071524] text-white border-y border-white/10 shadow-inner'
       } relative isolate overflow-hidden transition-colors duration-500`}
     >
       {/* Top Shimmer Hairline Divider */}
       <div className="absolute top-0 left-0 right-0 shimmer-hairline pointer-events-none z-20" />
-
-      {/* Architectural CAD Technical Grid */}
-      <div className={`absolute inset-0 pointer-events-none z-0 ${isLight ? 'bg-cad-grid-light opacity-50' : 'bg-cad-grid-dark opacity-75'}`} />
 
       {/* Atmospheric Diagonal Studio Auroras (Active exclusively in Light Mode) */}
       {isLight && (

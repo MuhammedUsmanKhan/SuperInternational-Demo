@@ -91,15 +91,12 @@ export default function WelcomeLoader({ onComplete, minDuration = 1300 }: Welcom
           }
         }}
         className={`absolute inset-0 w-full h-full ${
-          isLight ? 'bg-[#faf6f0]' : 'bg-[#06121d]'
+          isLight ? 'bg-gradient-to-br from-[#faf5ec] via-[#f1eae0] to-[#e8ddcc]' : 'bg-gradient-to-br from-[#06121d] via-[#0b1f35] to-[#071524]'
         }`}
         style={{
           clipPath: 'polygon(0 0, 100% 0, 0 100%)',
         }}
       >
-        {/* Subtle CAD grid texture inside panel */}
-        <div className={`absolute inset-0 pointer-events-none ${isLight ? 'bg-blueprint-atelier-light opacity-70' : 'bg-cad-grid-dark opacity-60'}`} />
-
         {/* Diagonal Glowing Gold Seam on the Hypotenuse (From Top-Right to Bottom-Left) */}
         <div
           className="absolute inset-0 pointer-events-none"
@@ -130,15 +127,12 @@ export default function WelcomeLoader({ onComplete, minDuration = 1300 }: Welcom
           delay: 0.12,
         }}
         className={`absolute inset-0 w-full h-full ${
-          isLight ? 'bg-[#faf6f0]' : 'bg-[#06121d]'
+          isLight ? 'bg-gradient-to-br from-[#faf5ec] via-[#f1eae0] to-[#e8ddcc]' : 'bg-gradient-to-br from-[#06121d] via-[#0b1f35] to-[#071524]'
         }`}
         style={{
           clipPath: 'polygon(100% 0, 100% 100%, 0 100%)',
         }}
       >
-        {/* Subtle CAD grid texture inside panel */}
-        <div className={`absolute inset-0 pointer-events-none ${isLight ? 'bg-blueprint-atelier-light opacity-70' : 'bg-cad-grid-dark opacity-60'}`} />
-
         {/* Diagonal Glowing Gold Seam on the Hypotenuse (From Top-Right to Bottom-Left) */}
         <div
           className="absolute inset-0 pointer-events-none"

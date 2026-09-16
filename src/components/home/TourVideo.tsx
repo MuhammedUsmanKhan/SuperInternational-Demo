@@ -168,15 +168,12 @@ export default function TourVideo() {
       ref={containerRef}
       className={`py-12 sm:py-16 ${
         isLight
-          ? 'bg-gradient-to-br from-[#faf7f2] via-[#f1eae0] to-[#e8ddcc] text-slate-800 border-y border-[#d09554]/25'
-          : 'bg-[#06121d] text-white border-y border-white/10'
+          ? 'bg-gradient-to-br from-[#faf5ec] via-[#f1eae0] to-[#e8ddcc] text-slate-800 border-y border-[#d09554]/25'
+          : 'bg-gradient-to-br from-[#06121d] via-[#0b1f35] to-[#071524] text-white border-y border-white/10'
       } relative overflow-hidden transition-colors duration-500`}
     >
       {/* Top Shimmer Hairline Divider */}
       <div className="absolute top-0 left-0 right-0 shimmer-hairline pointer-events-none" />
-
-      {/* Architectural CAD Technical Blueprint Grid & Micro-Dot Matrix */}
-      <div className={`absolute inset-0 pointer-events-none -z-10 ${isLight ? 'bg-blueprint-atelier-light opacity-80' : 'bg-cad-grid-dark opacity-80'}`} />
 
       {/* Atmospheric Diagonal Studio Auroras (Active exclusively in Light Mode) */}
       {isLight && (

@@ -49,18 +49,7 @@ export default function Footer({ onOpenQuoteModal }: FooterProps) {
         </>
       )}
 
-      {/* Subtle Dot Matrix / Blueprint Texture */}
-      <div className="absolute inset-0 pointer-events-none z-0">
-        <div
-          className={`absolute inset-0 ${
-            isLight ? 'bg-blueprint-atelier-light opacity-60' : 'opacity-[0.035]'
-          }`}
-          style={!isLight ? {
-            backgroundImage: 'radial-gradient(circle, #d09554 1.2px, transparent 1.2px)',
-            backgroundSize: '28px 28px',
-          } : undefined}
-        />
-      </div>
+
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8">
         
