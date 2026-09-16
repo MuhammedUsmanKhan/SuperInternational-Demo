@@ -29,6 +29,9 @@ export const HeroSlide3D: React.FC<HeroSlide3DProps> = ({ slide }) => {
           alt={slide.category}
           className="w-full h-full object-cover object-right sm:object-[88%_center] lg:object-right select-none"
           loading="eager"
+          // @ts-expect-error fetchpriority attribute
+          fetchpriority="high"
+          decoding="async"
           onError={(e) => {
             (e.target as HTMLImageElement).style.opacity = '0.3';
           }}

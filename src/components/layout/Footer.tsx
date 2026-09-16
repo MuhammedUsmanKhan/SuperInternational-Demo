@@ -350,13 +350,13 @@ export default function Footer({ onOpenQuoteModal }: FooterProps) {
                   <span className={`block text-[10px] uppercase font-bold ${isLight ? 'text-slate-500' : 'text-white/40'} tracking-wider`}>Official Email</span>
                   <a
                     href="mailto:info@superinternational.pk"
-                    className={`${isLight ? 'text-[#173554]' : 'text-white'} hover:text-[#d09554] font-semibold transition-colors block truncate`}
+                    className={`${isLight ? 'text-[#173554]' : 'text-white'} hover:text-[#d09554] font-semibold transition-colors block truncate py-1`}
                   >
                     info@superinternational.pk
                   </a>
                   <a
                     href="mailto:waqarali@superinternational.pk"
-                    className={`${isLight ? 'text-slate-500' : 'text-white/60'} hover:text-[#d09554] text-xs transition-colors block truncate mt-0.5`}
+                    className={`${isLight ? 'text-slate-500' : 'text-white/60'} hover:text-[#d09554] text-xs transition-colors block truncate py-1`}
                   >
                     waqarali@superinternational.pk
                   </a>

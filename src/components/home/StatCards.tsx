@@ -66,7 +66,7 @@ export default function StatCards({
               transition={{ duration: 0.2 }}
               className={`group relative p-5 sm:p-6 rounded-2xl sm:rounded-3xl ${
                 isLight
-                  ? 'bg-white/95 hover:bg-white backdrop-blur-xl border-t-2 border-t-[#d09554] border-x border-b border-[#d09554]/25 shadow-[0_10px_30px_rgba(208,149,84,0.1)] hover:shadow-[0_20px_45px_rgba(208,149,84,0.2)] hover:border-t-[#e8c493]'
+                  ? 'bg-white/90 hover:bg-white backdrop-blur-xl border border-[#d09554]/25 shadow-[0_6px_24px_rgba(208,149,84,0.08)] hover:shadow-[0_16px_36px_rgba(208,149,84,0.18)] hover:border-[#d09554]/70'
                   : 'bg-white/[0.05] hover:bg-white/[0.09] backdrop-blur-xl border border-white/15 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_16px_36px_rgba(0,0,0,0.5)] hover:border-[#d09554]/50'
               } transition-all duration-300 flex items-start gap-4 select-none`}
             >
@@ -76,7 +76,7 @@ export default function StatCards({
               {/* Icon Container inside soft rounded square */}
               <div className={`w-12 h-12 rounded-2xl ${
                 isLight
-                  ? 'bg-[#faf5ec] group-hover:bg-[#d09554]/20 text-[#b87c3a] border border-[#d09554]/20'
+                  ? 'bg-[#faf5ec] group-hover:bg-[#d09554]/20 text-[#b87c3a]'
                   : 'bg-white/10 group-hover:bg-[#d09554]/20 text-[#f5d5a8]'
               } flex items-center justify-center shrink-0 transition-colors duration-300 shadow-2xs`}>
                 <Icon className="w-5.5 h-5.5 text-[#d09554] group-hover:scale-110 transition-transform duration-300" />

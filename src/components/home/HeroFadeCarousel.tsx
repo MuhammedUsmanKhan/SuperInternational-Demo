@@ -259,15 +259,15 @@ export default function HeroFadeCarousel({
                   type="button"
                   onClick={() => goToSlide(idx)}
                   aria-label={`Go to slide ${idx + 1}: ${slide.category}`}
-                  className="p-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#d09554] cursor-pointer"
+                  className="min-w-[38px] min-h-[38px] flex items-center justify-center p-1 focus:outline-none focus-visible:ring-1 focus-visible:ring-[#d09554] cursor-pointer"
                 >
                   <span
                     className={`block h-1.5 rounded-full transition-all duration-300 ${
                       isActive
                         ? 'w-6 bg-[#d09554] shadow-[0_0_8px_rgba(208,149,84,0.6)]'
                         : isLight
-                        ? 'w-1.5 bg-black/20 hover:bg-black/40'
-                        : 'w-1.5 bg-white/40 hover:bg-white/70'
+                        ? 'w-1.5 bg-black/40 hover:bg-black/60'
+                        : 'w-1.5 bg-white/60 hover:bg-white/90'
                     }`}
                   />
                 </button>
@@ -298,8 +298,8 @@ export default function HeroFadeCarousel({
                       isActive
                         ? 'bg-[#d09554] text-white shadow-[0_2px_12px_rgba(208,149,84,0.4)] scale-[1.02]'
                         : isLight
-                        ? 'text-[#173554]/80 hover:text-[#173554] hover:bg-[#d09554]/10'
-                        : 'text-white/70 hover:text-white hover:bg-white/10'
+                        ? 'text-[#173554] hover:text-[#173554] hover:bg-[#d09554]/10'
+                        : 'text-white/95 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {/* Active/Inactive Dot Indicator */}
